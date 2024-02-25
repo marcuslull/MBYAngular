@@ -6,15 +6,13 @@ import {Registration} from "./registration";
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    ReactiveFormsModule
-  ],
+  imports: [ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit{
 
-  registerForm: FormGroup = new FormGroup({});
+  protected registerForm: FormGroup = new FormGroup({});
   constructor(private formBuilder: FormBuilder, private registerService: RegisterService) { }
 
   ngOnInit(): void {
@@ -27,10 +25,9 @@ export class RegisterComponent implements OnInit{
 
   onSubmit() {
     if (this.registerForm.valid) {
-      console.log('Form Submitted!');
       let registration: Registration = this.registerForm.value;
       this.registerService.postRegistration(registration)
-      this.registerForm.reset();
+        this.registerForm.reset();
     }
   }
 }
