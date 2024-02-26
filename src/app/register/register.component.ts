@@ -1,18 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {RegisterService} from "./register.service";
-import {Registration} from "./registration";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit{
 
   protected registerForm: FormGroup = new FormGroup({});
+  public errorMessage: string | null = null;
+
   constructor(private formBuilder: FormBuilder, private registerService: RegisterService) { }
 
   ngOnInit(): void {
@@ -25,9 +27,13 @@ export class RegisterComponent implements OnInit{
 
   onSubmit() {
     if (this.registerForm.valid) {
-      let registration: Registration = this.registerForm.value;
-      this.registerService.postRegistration(registration)
-        this.registerForm.reset();
+      this.registerService.postRegistration(this.registerForm.value).subscribe({
+        next: () => {
+          this.errorMessage = "User created";
+          this.registerForm.reset();
+        },
+        error: () => {this.errorMessage = "Conflict: User already exists"}
+      });
     }
   }
 }
