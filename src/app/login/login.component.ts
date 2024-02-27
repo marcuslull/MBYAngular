@@ -32,13 +32,12 @@ export class LoginComponent implements OnInit{
   onSubmit() {
     if (this.loginForm.valid) {
       this.loginService.login().subscribe({
-        next: (response) => {
-          this.errorMessage = null;
-          this.loginForm.reset();
-          console.log(response);
-          this.router.navigate(['/home']);
+        next: (body) => {
+          console.log(body);
+          this.router.navigate(['home']);
         },
-        error: () => {this.errorMessage = "Invalid username or password"}
+        error: () => {
+          this.errorMessage = "Invalid username or password"}
       })
     }
   }

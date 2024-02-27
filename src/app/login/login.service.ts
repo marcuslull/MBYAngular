@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = "http://localhost:8080/login"
+  private apiUrl = "http://localhost:8080/token"
   constructor(private httpClient: HttpClient) {}
   login() :Observable<String>{
     return this.httpClient.post<String>(this.apiUrl, null)
