@@ -3,6 +3,7 @@ import {LoginService} from "./login.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
+import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
 
 @Component({
   selector: 'app-login',
@@ -17,9 +18,13 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit{
 
   protected loginForm: FormGroup = new FormGroup({});
-  public errorMessage: string | null = null;
+  protected errorMessage: string | null = null;
 
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private loginService: LoginService,
+    private router: Router,
+    private jwtAuthenticationService: JwtAuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -31,9 +36,9 @@ export class LoginComponent implements OnInit{
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.loginService.login().subscribe({
+      this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
         next: (body) => {
-          console.log(body);
+          this.jwtAuthenticationService.setJwtToken(body);
           this.router.navigate(['home']);
         },
         error: () => {
