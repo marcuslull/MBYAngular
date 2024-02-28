@@ -4,6 +4,7 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptorService} from "./authentication/auth-interceptor.service";
+import {JwtAuthenticationService} from "./authentication/jwt-authentication.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +14,7 @@ export const appConfig: ApplicationConfig = {
       provide:HTTP_INTERCEPTORS,
       useClass:AuthInterceptorService,
       multi:true
-    }
+    },
+    JwtAuthenticationService
   ]
 };
