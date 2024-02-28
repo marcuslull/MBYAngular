@@ -6,64 +6,36 @@ import {JwtToken} from "./jwt-token";
 })
 export class JwtAuthenticationService {
 
-  getDecryptedJwtString() :String | null {
-    // retrieveJwt()
-    // decryptJwtString(encryptedToken: String)
-    // return the decrypted token string
-    return null
+  private jwt: JwtToken | null = null;
+
+  getJwtString() :string | null {
+    if (this.jwt) {
+      return this.jwt.tokenString
+    }
+    return null;
   }
 
-  saveJwtTokenToLocalStorage(tokenString: String) :void {
-    // decodeJwtString(decryptedTokenString: String)
-    this.decodeJwtString(tokenString);
-    // saveJwt(jwtToken: JwtToken)
+  setJwtToken(tokenString: string) :void {
+    this.jwt = this.decodeJwtString(tokenString);
+    console.log("Logged in: " + this.isLoggedIn());
+    console.log(this.jwt);
   }
 
   logout() :void {
-    // delete any tokens in local storage
+    this.jwt = null;
   }
 
   isLoggedIn() :boolean {
-    // getJwtExpiration()
-    // compare to now
+    if (this.jwt) {
+      // @ts-ignore
+      return this.jwt.exp > Math.floor(Date.now() / 1000);
+    }
     return false;
   }
 
-  private decodeJwtString(decryptedTokenString: String) :JwtToken | null {
-    // extract the data required to build JwtToken from th decrypted token string
-    console.log(JSON.parse(atob(decryptedTokenString.split('.')[1])));
-    // encryptJwtString(decryptedToken: String)
-    // create Jwt object with the data
-    // return JwtToken
-    return null;
-  }
-
-  private saveJwt(jwtToken: JwtToken) : void {
-    // save the token to local storage
-  }
-
-  private retrieveJwt() :JwtToken | null{
-    // get the token from local storage
-    // return the token
-    return null;
-  }
-
-  private getJwtExpiration() :Number | null{
-    // retrieveJwt()
-    // extract the expiration date
-    // return the date
-    return null;
-  }
-
-  private encryptJwtString(decryptedTokenString: String) :String | null {
-    // encrypt the clear token string
-    // return encrypted token string
-    return null;
-  }
-
-  private decryptJwtString(encryptedTokenString: String) :String | null {
-    // decrypt the encrypted token string
-    // return the decrypted token string
-    return null;
+  private decodeJwtString(tokenString: string) :JwtToken {
+    let jwtToken: JwtToken = JSON.parse(atob(tokenString.split('.')[1]));
+    jwtToken.tokenString = tokenString;
+    return jwtToken;
   }
 }

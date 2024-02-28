@@ -18,7 +18,7 @@ import {JwtAuthenticationService} from "../authentication/jwt-authentication.ser
 export class LoginComponent implements OnInit{
 
   protected loginForm: FormGroup = new FormGroup({});
-  public errorMessage: string | null = null;
+  protected errorMessage: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,9 +36,9 @@ export class LoginComponent implements OnInit{
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.loginService.login().subscribe({
+      this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
         next: (body) => {
-          this.jwtAuthenticationService.saveJwtTokenToLocalStorage(body)
+          this.jwtAuthenticationService.setJwtToken(body);
           this.router.navigate(['home']);
         },
         error: () => {
