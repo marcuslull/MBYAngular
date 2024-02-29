@@ -14,6 +14,9 @@ import {NgForOf} from "@angular/common";
 })
 export class YardsComponent {
   protected yardsList: Yard[] = [];
+  protected yardsListIsHidden: boolean = false;
+  protected yardItemIsHidden: boolean = true;
+  protected yardItem: Yard | null = null;
   constructor(private httpService: HttpService) {
   }
     refresh() :void {
@@ -22,5 +25,15 @@ export class YardsComponent {
           this.yardsList = body as Yard[];
         }
       })
+    }
+
+    showYard(yardId: number) :void {
+      console.log(yardId + " clicked")
+      this.httpService.get("yards", yardId).subscribe({
+        next: (body) => {
+          this.yardItem = body as Yard}
+      })
+      this.yardsListIsHidden = true;
+      this.yardItemIsHidden = false;
     }
 }

@@ -1,10 +1,16 @@
 
 <div>
   <button (click)="refresh()">Reload Yards</button>
-<!--  <button (click)="refresh()">New Yard</button>-->
 
-  <ul *ngFor="let yard of yardsList">
-    <li>{{yard.id}} - {{yard.name}} - {{yard.userEmail}}</li>
+  <ul *ngFor="let yard of yardsList" [hidden]="yardsListIsHidden">
+    <li (click)="showYard(yard.id)">{{yard.id}} - {{yard.name}} - {{yard.userEmail}}</li>
   </ul>
+
+  <ul [hidden]="yardItemIsHidden">
+      <li>{{yardItem?.id}}</li>
+      <li>{{yardItem?.name}}</li>
+      <li>{{yardItem?.userEmail}}</li>
+  </ul>
+
 </div>
 
