@@ -1,12 +1,14 @@
 import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {RegisterComponent} from "../register/register.component";
+import {YardsComponent} from "./yards/yards.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    YardsComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
