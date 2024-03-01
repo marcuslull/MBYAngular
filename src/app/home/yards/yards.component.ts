@@ -29,7 +29,7 @@ export class YardsComponent {
 
     showYard(yardId: number) :void {
       console.log(yardId + " clicked")
-      this.httpService.get("yards", yardId).subscribe({
+      this.httpService.get("yard", yardId).subscribe({
         next: (body) => {
           this.yardItem = body as Yard}
       })
