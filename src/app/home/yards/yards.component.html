@@ -1,6 +1,5 @@
 
 <div>
-  <button (click)="refresh()">Reload Yards</button>
 
   <ul *ngFor="let yard of yardsList" [hidden]="yardsListIsHidden">
     <li (click)="showYard(yard.id)">{{yard.id}} - {{yard.name}} - {{yard.userEmail}}</li>
