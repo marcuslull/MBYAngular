@@ -20,10 +20,22 @@ export class HttpService {
     return this.httpClient.get<object[]>(path);
   }
 
-  get(endpoint: string, id: number) :Observable<object> {
+  get(endpoint: string) :Observable<object> {
     this.checkLogonStatus();
-    let path: string = this.apiUrl + endpoint + "/" + id;
+    let path: string = this.apiUrl + endpoint;
     return this.httpClient.get<object>(path);
+  }
+
+  post(endpoint: string, object: Object) :Observable<object> {
+    this.checkLogonStatus();
+    let path: string = this.apiUrl + endpoint;
+    return this.httpClient.post(path, object);
+  }
+
+  delete(endpoint: string) :Observable<object> {
+    this.checkLogonStatus();
+    let path: string = this.apiUrl + endpoint;
+    return this.httpClient.delete(path);
   }
 
   private checkLogonStatus() :void {
