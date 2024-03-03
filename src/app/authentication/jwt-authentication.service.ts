@@ -6,30 +6,26 @@ import {JwtToken} from "./jwt-token";
 })
 export class JwtAuthenticationService {
 
-  private jwt: JwtToken | null = null;
-
   getJwtString() :string | null {
-    if (this.jwt) {
-      return this.jwt.tokenString
-    }
-    return null;
+    return localStorage.getItem("token");
   }
 
   setJwtToken(tokenString: string) :void {
-    this.jwt = this.decodeJwtString(tokenString);
-    console.log("Logged in: " + this.isLoggedIn());
-    console.log(this.jwt);
+    localStorage.setItem("token", tokenString);
   }
 
   logout() :void {
-    this.jwt = null;
+    localStorage.clear();
   }
 
   isLoggedIn() :boolean {
-    if (this.jwt) {
+    let tokenString :string | null = this.getJwtString();
+    if (tokenString) {
+      let jwt :JwtToken = this.decodeJwtString(tokenString);
       // @ts-ignore
-      return this.jwt.exp > Math.floor(Date.now() / 1000);
+      return jwt.exp > Math.floor(Date.now() / 1000);
     }
+    this.logout()
     return false;
   }
 

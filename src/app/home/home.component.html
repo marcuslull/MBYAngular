@@ -3,4 +3,6 @@
     <p>Welcome to the home page</p>
   <button [routerLink]="['/register']">Registration</button>
   <button [routerLink]="['/login']">Login</button>
+  <button (click)="logout()" [routerLink]="['/login']">Logout</button>
 </div>
+<app-yards></app-yards>
