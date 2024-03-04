@@ -1,8 +1,30 @@
-<div>
-    <h1>Home</h1>
-    <p>Welcome to the home page</p>
-  <button [routerLink]="['/register']">Registration</button>
-  <button [routerLink]="['/login']">Login</button>
-  <button (click)="logout()" [routerLink]="['/login']">Logout</button>
+<div class="grid-container">
+
+  <div id="grid-item0">
+    <mat-toolbar color="primary">
+      <button mat-icon-button><mat-icon>menu</mat-icon></button>
+
+      <button mat-button (click)="homeOnClick()">My BackYard</button>
+
+      <span class="spacer"></span>
+
+      <button mat-icon-button (click)="registerOnClick()"><mat-icon>person_add</mat-icon></button>
+
+      <button mat-icon-button (click)="loginOnClick()"><mat-icon>account_circle</mat-icon></button>
+    </mat-toolbar>
+  </div>
+
 </div>
-<app-yards></app-yards>
+
+<div [hidden]="mainIsHidden">
+  <app-yards></app-yards>
+</div>
+
+<div [hidden]="registerIsHidden">
+  <app-register></app-register>
+</div>
+
+<div [hidden]="loginIsHidden">
+  <app-login></app-login>
+</div>
+

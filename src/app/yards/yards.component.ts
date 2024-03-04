@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpService} from "../../http/http.service";
-import {Yard} from "../../model/yard";
+import {HttpService} from "../http/http.service";
+import {Yard} from "../model/yard";
 import {NgForOf, NgIf} from "@angular/common";
-import {JwtAuthenticationService} from "../../authentication/jwt-authentication.service";
+import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({

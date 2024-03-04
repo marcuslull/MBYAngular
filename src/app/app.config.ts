@@ -5,6 +5,7 @@ import {routes} from './app.routes';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptorService} from "./authentication/auth-interceptor.service";
 import {JwtAuthenticationService} from "./authentication/jwt-authentication.service";
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,6 @@ export const appConfig: ApplicationConfig = {
       useClass:AuthInterceptorService,
       multi:true
     },
-    JwtAuthenticationService
+    JwtAuthenticationService, provideAnimationsAsync()
   ]
 };
