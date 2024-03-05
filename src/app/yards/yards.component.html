@@ -1,53 +1,74 @@
+<div class="yards_container">
 
-<div>
-  <div  [hidden]="yardsListIsHidden">
-    <ul *ngFor="let yard of yardsList">
-      <li (click)="showYard(yard.id)">{{yard.id}} - {{yard.name}} - {{yard.userEmail}}</li>
-    </ul>
-    <button (click)="addYard()">Add</button>
+  <div class="yards" *ngIf="!this.yardsListIsHidden">
+    @for(yard of yardsList; track yard.id) {
+      <mat-card class="card" (click)="showYard(yard.id)">
+
+        <mat-card-header>
+          <div mat-card-avatar class="header-image"></div>
+          <mat-card-title>{{ yard.name }}</mat-card-title>
+          <mat-card-subtitle>{{ yard.yardSubType }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <img mat-card-image src="/assets/image/yard.png">
+
+        <mat-card-content></mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button>EDIT</button>
+          <button mat-button>DELETE</button>
+        </mat-card-actions>
+
+      </mat-card>
+    }
   </div>
 
 
 
-  <div [hidden]="yardItemIsHidden">
-    <ul>
-      <li>{{yardItem?.id}}</li>
-      <li>{{yardItem?.name}}</li>
-      <li>{{yardItem?.userEmail}}</li>
-    </ul>
-    <button (click)="deleteYard(yardItem?.id)">Delete</button>
+  <div class="yard_details" *ngIf="!this.yardItemIsHidden">
+    <div class="yard_details_container">
+      <ul>
+        <li>{{yardItem?.id}}</li>
+        <li>{{yardItem?.name}}</li>
+        <li>{{yardItem?.userEmail}}</li>
+      </ul>
+      <button (click)="deleteYard(yardItem?.id)">Delete</button>
+    </div>
   </div>
 
 
 
-  <div [hidden]="yardPostIsHidden">
-    <form [formGroup]="yardFormGroup" (ngSubmit)="postYard()">
+  <div class="yard_details" *ngIf="!this.yardPostIsHidden">
+    <div [hidden]="yardPostIsHidden">
+      <form [formGroup]="yardFormGroup" (ngSubmit)="postYard()">
 
-      <div>
-        <label for="name">Name</label>
-        <input type="text" id="name" formControlName="name">
-        <div *ngIf="yardFormGroup.get('name')?.invalid && yardFormGroup.get('name')?.touched">
-          The yard must have a name.
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" formControlName="name">
+          <div *ngIf="yardFormGroup.get('name')?.invalid && yardFormGroup.get('name')?.touched">
+            The yard must have a name.
+          </div>
+
+          <select formControlName="hardinessZone">
+            <option  *ngFor="let option of hardinessZone" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+
+          <select formControlName="yardSubType">
+            <option *ngFor="let option of yardSubType" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+
+          <button type="submit" [disabled]="yardFormGroup.invalid">Submit</button>
         </div>
-
-        <select formControlName="hardinessZone">
-          <option  *ngFor="let option of hardinessZone" [value]="option.value">
-            {{ option.label }}
-          </option>
-        </select>
-
-        <select formControlName="yardSubType">
-          <option *ngFor="let option of yardSubType" [value]="option.value">
-            {{ option.label }}
-          </option>
-        </select>
-
-        <button type="submit" [disabled]="yardFormGroup.invalid">Submit</button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-
-
-
 </div>
+
+
+
+
 

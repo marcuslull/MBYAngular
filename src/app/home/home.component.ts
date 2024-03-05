@@ -23,31 +23,6 @@ import {LoginComponent} from "../login/login.component";
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
-  mainIsHidden: boolean = false;
-  registerIsHidden: boolean = true;
-  loginIsHidden: boolean = true;
-
-  constructor() {
-  }
-
-  homeOnClick() {
-    this.mainIsHidden = false;
-    this.loginIsHidden = true;
-    this.registerIsHidden = true;
-  }
-
-  registerOnClick() {
-    this.mainIsHidden = true;
-    this.loginIsHidden = true;
-    this.registerIsHidden = false;
-  }
-
-  loginOnClick() {
-    this.mainIsHidden = true;
-    this.loginIsHidden = false;
-    this.registerIsHidden = true;
-  }
 }
 
 

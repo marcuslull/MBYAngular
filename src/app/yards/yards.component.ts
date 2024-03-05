@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../http/http.service";
 import {Yard} from "../model/yard";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
   selector: 'app-yards',
@@ -12,18 +14,21 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
     NgForOf,
     ReactiveFormsModule,
     NgIf,
-    FormsModule
+    FormsModule,
+    MatCardModule,
+    MatButtonModule,
+    NgOptimizedImage
   ],
   templateUrl: './yards.component.html',
   styleUrl: './yards.component.css'
 })
 export class YardsComponent implements OnInit{
   protected yardsList: Yard[] = [];
-  protected yardsListIsHidden: boolean = false;
-  protected yardItemIsHidden: boolean = true;
-  protected yardPostIsHidden: boolean = true;
   protected yardItem: Yard | null = null;
   protected yardFormGroup: FormGroup = new FormGroup({});
+  protected yardsListIsHidden = false;
+  protected yardItemIsHidden = true;
+  protected yardPostIsHidden = true;
 
   protected hardinessZone = [
     { value: 'ZONE_1', label: 'Zone 1' },
@@ -52,8 +57,8 @@ export class YardsComponent implements OnInit{
   constructor(
     private httpService: HttpService,
     private jwtAuthenticationService :JwtAuthenticationService,
-    private formBuilder: FormBuilder) {
-  }
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.yardFormGroup = this.formBuilder.group({
@@ -81,11 +86,22 @@ export class YardsComponent implements OnInit{
   showYard(yardId: number | null) :void {
     this.httpService.get("yard/" + yardId).subscribe({
       next: (body) => {
-        this.yardItem = body as Yard}
+        this.yardItem = body as Yard
+        this.yardsListIsHidden = true;
+        this.yardItemIsHidden = false;
+        this.yardPostIsHidden = true;
+      }
     })
-    this.yardsListIsHidden = true;
-    this.yardItemIsHidden = false;
-    this.yardPostIsHidden = true;
+  }
+
+  deleteYard(yardId: number | null | undefined) :void {
+    this.httpService.delete("yard/" + yardId).subscribe({
+      next: () => {
+        this.yardsListIsHidden = false;
+        this.yardItemIsHidden = true;
+        this.yardPostIsHidden = true;
+      }
+    });
   }
 
   postYard() :void {
@@ -100,14 +116,6 @@ export class YardsComponent implements OnInit{
         }
       })
     }
-  }
-
-  deleteYard(yardId: number | null | undefined) :void {
-    this.httpService.delete("yard/" + yardId).subscribe({
-      next: () => {
-        this.showYards();
-      }
-    });
   }
 
   addYard() :void {

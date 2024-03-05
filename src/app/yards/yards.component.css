@@ -1,0 +1,15 @@
+.yards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  width: 300px;
+  margin: 10px;
+}
+
+.header-image {
+  background-image: url('/assets/image/pine.png');
+  background-size: cover;
+}

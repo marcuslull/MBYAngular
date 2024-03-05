@@ -1,0 +1,18 @@
+.bar { grid-area: bar; }
+.main { grid-area: main; }
+.footer { grid-area: footer; }
+
+.container {
+  display: grid;
+  grid-template-columns: .25fr 2.5fr .25fr;
+  grid-template-rows: auto auto auto;
+  gap: 10px;
+  grid-template-areas:
+    "bar bar bar"
+    ". main ."
+    "footer footer footer";
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

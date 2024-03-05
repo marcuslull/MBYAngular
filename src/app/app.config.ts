@@ -16,6 +16,7 @@ export const appConfig: ApplicationConfig = {
       useClass:AuthInterceptorService,
       multi:true
     },
-    JwtAuthenticationService, provideAnimationsAsync()
+    JwtAuthenticationService,
+    provideAnimationsAsync(),
   ]
 };

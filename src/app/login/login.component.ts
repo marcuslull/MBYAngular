@@ -34,12 +34,11 @@ export class LoginComponent implements OnInit{
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.loginForm.valid) {
       this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
         next: (body) => {
           this.jwtAuthenticationService.setJwtToken(body);
-          this.router.navigate(['home']);
         },
         error: () => {
           this.errorMessage = "Invalid username or password"}
