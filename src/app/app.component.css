@@ -1,5 +1,8 @@
 .header {
   grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .main {
@@ -13,12 +16,16 @@
 .container {
   display: grid;
   grid-template-columns: .25fr 2.5fr .25fr;
-  grid-template-rows: auto auto auto;
-  gap: 10px;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header header"
-    ". main ."
+    "main main main"
     "footer footer footer";
+}
+
+.title {
+  margin-left: 15px;
+  font-size: larger;
 }
 
 .spacer {
