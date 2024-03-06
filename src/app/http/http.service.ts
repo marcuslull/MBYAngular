@@ -12,33 +12,34 @@ export class HttpService {
 
   constructor(private httpClient: HttpClient,
               private jwtAuthenticationService: JwtAuthenticationService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
-  getAll(endpoint: string) :Observable<object[]> {
+  getAll(endpoint: string): Observable<object[]> {
     this.checkLogonStatus();
     let path: string = this.apiUrl + endpoint;
     return this.httpClient.get<object[]>(path);
   }
 
-  get(endpoint: string) :Observable<object> {
+  get(endpoint: string): Observable<object> {
     this.checkLogonStatus();
     let path: string = this.apiUrl + endpoint;
     return this.httpClient.get<object>(path);
   }
 
-  post(endpoint: string, object: Object) :Observable<object> {
+  post(endpoint: string, object: Object): Observable<object> {
     this.checkLogonStatus();
     let path: string = this.apiUrl + endpoint;
     return this.httpClient.post(path, object);
   }
 
-  delete(endpoint: string) :Observable<object> {
+  delete(endpoint: string): Observable<object> {
     this.checkLogonStatus();
     let path: string = this.apiUrl + endpoint;
     return this.httpClient.delete(path);
   }
 
-  private checkLogonStatus() :void {
+  private checkLogonStatus(): void {
     if (!this.jwtAuthenticationService.isLoggedIn()) {
       this.router.navigate(['/login']);
     }

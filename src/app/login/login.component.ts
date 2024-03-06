@@ -15,7 +15,7 @@ import {JwtAuthenticationService} from "../authentication/jwt-authentication.ser
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
   protected loginForm: FormGroup = new FormGroup({});
   protected errorMessage: string | null = null;
@@ -39,9 +39,11 @@ export class LoginComponent implements OnInit{
       this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
         next: (body) => {
           this.jwtAuthenticationService.setJwtToken(body);
+          this.router.navigate(["/home"])
         },
         error: () => {
-          this.errorMessage = "Invalid username or password"}
+          this.errorMessage = "Invalid username or password"
+        }
       })
     }
   }

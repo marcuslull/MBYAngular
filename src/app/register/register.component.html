@@ -1,8 +1,8 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
 
   <div>
     <label for="email">Email</label>
-    <input type="email" id="email" formControlName="email">
+    <input formControlName="email" id="email" type="email">
     <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
       Email is required and must use conventional form
     </div>
@@ -10,7 +10,7 @@
 
   <div>
     <label for="password">Password</label>
-    <input type="password" id="password" formControlName="password">
+    <input formControlName="password" id="password" type="password">
     <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
       Password is required
     </div>
@@ -18,14 +18,14 @@
 
   <div>
     <label for="role">Role (USER or ADMIN)</label>
-    <input type="text" id="role" formControlName="role">
+    <input formControlName="role" id="role" type="text">
     <div *ngIf="registerForm.get('role')?.invalid && registerForm.get('role')?.touched">
       Roll is required and must be either USER or ADMIN
     </div>
   </div>
 
-  <button type="submit" [disabled]="registerForm.invalid">Submit</button>
+  <button [disabled]="registerForm.invalid" type="submit">Submit</button>
 
-  <div *ngIf="errorMessage">{{errorMessage}}</div>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
 
 </form>

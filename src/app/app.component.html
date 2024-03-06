@@ -1,35 +1,26 @@
 <div class="container">
 
-  <div class="bar">
+  <div class="header">
     <mat-toolbar color="primary">
-      <button mat-icon-button><mat-icon>menu</mat-icon></button>
-      <button mat-button (click)="homeOnClick()">My BackYard</button>
+      <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button [routerLink]="['/home']" mat-button>My BackYard</button>
       <span class="spacer"></span>
-      <button mat-icon-button (click)="registerOnClick()"><mat-icon>person_add</mat-icon></button>
-      <button mat-icon-button (click)="loginOnClick()"><mat-icon>account_circle</mat-icon></button>
+      <button [routerLink]="['/register']" mat-icon-button>
+        <mat-icon>person_add</mat-icon>
+      </button>
+      <button [routerLink]="['/login']" mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+      </button>
     </mat-toolbar>
   </div>
 
   <div class="main">
-    <div *ngIf="!homeIsHidden">
-      HOME
-      <app-home></app-home>
-    </div>
-
-
-    <div *ngIf="!registerIsHidden">
-      REGISTER
-      <app-register></app-register>
-    </div>
-
-
-    <div *ngIf="!loginIsHidden">
-      LOGIN
-      <app-login></app-login>
-    </div>
+    <router-outlet/>
   </div>
 
   <div class="footer"></div>
 </div>
 
-<router-outlet />
+

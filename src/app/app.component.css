@@ -1,6 +1,14 @@
-.bar { grid-area: bar; }
-.main { grid-area: main; }
-.footer { grid-area: footer; }
+.header {
+  grid-area: header;
+}
+
+.main {
+  grid-area: main;
+}
+
+.footer {
+  grid-area: footer;
+}
 
 .container {
   display: grid;
@@ -8,7 +16,7 @@
   grid-template-rows: auto auto auto;
   gap: 10px;
   grid-template-areas:
-    "bar bar bar"
+    "header header header"
     ". main ."
     "footer footer footer";
 }

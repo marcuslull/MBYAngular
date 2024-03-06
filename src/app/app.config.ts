@@ -12,9 +12,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:AuthInterceptorService,
-      multi:true
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
     },
     JwtAuthenticationService,
     provideAnimationsAsync(),

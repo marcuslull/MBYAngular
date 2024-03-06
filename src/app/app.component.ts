@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import {RouterLink, RouterOutlet} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
@@ -22,33 +22,12 @@ import {NgIf} from "@angular/common";
     LoginComponent,
     RegisterComponent,
     YardsComponent,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'My BackYard';
-
-  homeIsHidden: boolean = false;
-  registerIsHidden: boolean = true;
-  loginIsHidden: boolean = true;
-
-  homeOnClick() {
-    this.homeIsHidden = false;
-    this.loginIsHidden = true;
-    this.registerIsHidden = true;
-  }
-
-  registerOnClick() {
-    this.homeIsHidden = true;
-    this.loginIsHidden = true;
-    this.registerIsHidden = false;
-  }
-
-  loginOnClick() {
-    this.homeIsHidden = true;
-    this.loginIsHidden = false;
-    this.registerIsHidden = true;
-  }
 }

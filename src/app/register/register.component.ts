@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {RegisterService} from "./register.service";
 import {NgIf} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -10,12 +11,17 @@ import {NgIf} from "@angular/common";
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
 
-  protected registerForm: FormGroup = new FormGroup({});
   public errorMessage: string | null = null;
+  protected registerForm: FormGroup = new FormGroup({});
 
-  constructor(private formBuilder: FormBuilder, private registerService: RegisterService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private registerService: RegisterService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -29,10 +35,11 @@ export class RegisterComponent implements OnInit{
     if (this.registerForm.valid) {
       this.registerService.postRegistration(this.registerForm.value).subscribe({
         next: () => {
-          this.errorMessage = "User created";
-          this.registerForm.reset();
+          this.router.navigate(["/login"])
         },
-        error: () => {this.errorMessage = "Conflict: User already exists"}
+        error: () => {
+          this.errorMessage = "Conflict: User already exists"
+        }
       });
     }
   }

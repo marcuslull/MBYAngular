@@ -1,7 +1,7 @@
 <div class="yards_container">
 
-  <div class="yards" *ngIf="!this.yardsListIsHidden">
-    @for(yard of yardsList; track yard.id) {
+  <div *ngIf="!this.yardsListIsHidden" class="yards">
+    @for (yard of yardsList; track yard.id) {
       <mat-card class="card" (click)="showYard(yard.id)">
 
         <mat-card-header>
@@ -24,33 +24,31 @@
   </div>
 
 
-
-  <div class="yard_details" *ngIf="!this.yardItemIsHidden">
+  <div *ngIf="!this.yardItemIsHidden" class="yard_details">
     <div class="yard_details_container">
       <ul>
-        <li>{{yardItem?.id}}</li>
-        <li>{{yardItem?.name}}</li>
-        <li>{{yardItem?.userEmail}}</li>
+        <li>{{ yardItem?.id }}</li>
+        <li>{{ yardItem?.name }}</li>
+        <li>{{ yardItem?.userEmail }}</li>
       </ul>
       <button (click)="deleteYard(yardItem?.id)">Delete</button>
     </div>
   </div>
 
 
-
-  <div class="yard_details" *ngIf="!this.yardPostIsHidden">
+  <div *ngIf="!this.yardPostIsHidden" class="yard_details">
     <div [hidden]="yardPostIsHidden">
-      <form [formGroup]="yardFormGroup" (ngSubmit)="postYard()">
+      <form (ngSubmit)="postYard()" [formGroup]="yardFormGroup">
 
         <div>
           <label for="name">Name</label>
-          <input type="text" id="name" formControlName="name">
+          <input formControlName="name" id="name" type="text">
           <div *ngIf="yardFormGroup.get('name')?.invalid && yardFormGroup.get('name')?.touched">
             The yard must have a name.
           </div>
 
           <select formControlName="hardinessZone">
-            <option  *ngFor="let option of hardinessZone" [value]="option.value">
+            <option *ngFor="let option of hardinessZone" [value]="option.value">
               {{ option.label }}
             </option>
           </select>
@@ -61,7 +59,7 @@
             </option>
           </select>
 
-          <button type="submit" [disabled]="yardFormGroup.invalid">Submit</button>
+          <button [disabled]="yardFormGroup.invalid" type="submit">Submit</button>
         </div>
       </form>
     </div>
