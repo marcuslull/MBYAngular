@@ -1,0 +1,22 @@
+.loginContainer {
+  margin-top: 100px;
+  margin-left: 10%;
+  margin-right: 10%;
+  display: inline-block;
+}
+
+.loginForm {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.loginForm > * {
+  padding-right: 30px;
+}
+
+.loginError {
+  font-size: large;
+  color: indianred;
+  margin-top: 20px;
+}
