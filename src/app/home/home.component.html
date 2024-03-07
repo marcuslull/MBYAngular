@@ -2,16 +2,27 @@
   <button (click)="drawer.toggle()" mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="breadcrumbs">Breadcrumbs should go here</span>
+  <span class="breadcrumbs">{{ breadcrumbText }}</span>
 </mat-toolbar>
 
 
 <mat-sidenav-container [hasBackdrop]="false" class="drawerContainer">
   <mat-sidenav #drawer [fixedInViewport]="true" class="drawer" mode="over">
-    <h2>Home</h2>
-    <h2>Yards</h2>
-    <h2>Plants</h2>
-    <h2>Animals</h2>
+    <div class="sidenavButtonContainer">
+      <button (click)="topOfPage(); drawer.toggle()" class="sidenavButton" color="accent"
+              mat-button>Top of page
+      </button>
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home']" class="sidenavButton" color="accent"
+              mat-button>Yards
+      </button>
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home']" class="sidenavButton" color="accent"
+              mat-button>Plants
+      </button>
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home']" class="sidenavButton" color="accent"
+              mat-button>Animals
+      </button>
+    </div>
+
   </mat-sidenav>
 
   <mat-sidenav-content>
