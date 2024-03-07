@@ -6,6 +6,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {LoginComponent} from "../login/login.component";
+import {MatDrawerContainer, MatSidenavModule} from "@angular/material/sidenav";
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,9 @@ import {LoginComponent} from "../login/login.component";
     MatButtonModule,
     MatToolbarModule,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    MatDrawerContainer,
+    MatSidenavModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
