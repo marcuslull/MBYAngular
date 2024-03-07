@@ -1,0 +1,22 @@
+.registerContainer {
+  margin-top: 100px;
+  margin-left: 10%;
+  margin-right: 10%;
+  display: inline-block;
+}
+
+.registerForm {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.registerForm > * {
+  padding-right: 30px;
+}
+
+.registerError {
+  font-size: large;
+  color: indianred;
+  margin-top: 20px;
+}

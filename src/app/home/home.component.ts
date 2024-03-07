@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, RouterLink} from "@angular/router";
+import {RouterLink} from "@angular/router";
 import {RegisterComponent} from "../register/register.component";
 import {YardsComponent} from "../yards/yards.component";
 import {MatIconModule} from "@angular/material/icon";
@@ -27,10 +27,11 @@ import {NgIf} from "@angular/common";
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   protected breadcrumbText: string = "/ ";
+
   ngOnInit(): void {
-      this.breadcrumbText = window.location.pathname;
+    this.breadcrumbText = window.location.pathname;
   }
 
   topOfPage() {

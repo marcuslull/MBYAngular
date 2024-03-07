@@ -3,11 +3,15 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {RegisterService} from "./register.service";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
+import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, MatFormField, MatHint, MatIcon, MatInput, MatLabel, MatButton],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

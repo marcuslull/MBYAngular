@@ -1,31 +1,34 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+<div class="registerContainer">
 
-  <div>
-    <label for="email">Email</label>
-    <input formControlName="email" id="email" type="email">
-    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-      Email is required and must use conventional form
-    </div>
-  </div>
+  <h2>Register Form</h2>
 
-  <div>
-    <label for="password">Password</label>
-    <input formControlName="password" id="password" type="password">
-    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-      Password is required
-    </div>
-  </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="registerForm">
 
-  <div>
-    <label for="role">Role (USER or ADMIN)</label>
-    <input formControlName="role" id="role" type="text">
-    <div *ngIf="registerForm.get('role')?.invalid && registerForm.get('role')?.touched">
-      Roll is required and must be either USER or ADMIN
-    </div>
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label for="registerEmail">Email</mat-label>
+      <input formControlName="email" id="registerEmail" matInput type="email">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
 
-  <button [disabled]="registerForm.invalid" type="submit">Submit</button>
+    <mat-form-field appearance="outline">
+      <mat-label for="registerPassword">Password</mat-label>
+      <input formControlName="password" id="registerPassword" matInput type="password">
+      <mat-icon matSuffix>password</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
 
-  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+    <mat-form-field appearance="outline">
+      <mat-label for="registerRole">Role</mat-label>
+      <input formControlName="role" id="registerRole" matInput type="text">
+      <mat-icon matSuffix>role</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
 
-</form>
+    <button [disabled]="registerForm.invalid" class="registerButton" color="primary" mat-raised-button type="submit">
+      Submit
+    </button>
+
+  </form>
+  <div *ngIf="errorMessage" class="registerError">{{ errorMessage }}</div>
+</div>
