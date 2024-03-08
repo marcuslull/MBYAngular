@@ -12,13 +12,13 @@
       <button (click)="topOfPage(); drawer.toggle()" class="sidenavButton" color="accent"
               mat-button>Top of page
       </button>
-      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home']" class="sidenavButton" color="accent"
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home/yards']" class="sidenavButton" color="accent"
               mat-button>Yards
       </button>
-      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home']" class="sidenavButton" color="accent"
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home/yards']" class="sidenavButton" color="accent"
               mat-button>Plants
       </button>
-      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home']" class="sidenavButton" color="accent"
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home/yards']" class="sidenavButton" color="accent"
               mat-button>Animals
       </button>
     </div>
@@ -26,9 +26,15 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-yards></app-yards>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<div class="fabContainer">
+  <button (click)="addYard()" class="fabButton" color="primary" mat-fab>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
 
 
 

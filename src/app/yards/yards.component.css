@@ -1,8 +1,5 @@
 .yardsContainer {
   margin-top: 40px;
-}
-
-.yards {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

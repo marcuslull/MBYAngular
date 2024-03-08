@@ -1,0 +1,26 @@
+<div class="yardFormContainer">
+  <form (ngSubmit)="postYard()" [formGroup]="yardFormGroup">
+
+    <div>
+      <label for="name">Name</label>
+      <input formControlName="name" id="name" type="text">
+      <div *ngIf="yardFormGroup.get('name')?.invalid && yardFormGroup.get('name')?.touched">
+        The yard must have a name.
+      </div>
+
+      <select formControlName="hardinessZone">
+        <option *ngFor="let option of hardinessZone" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+
+      <select formControlName="yardSubType">
+        <option *ngFor="let option of yardSubType" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+
+      <button [disabled]="yardFormGroup.invalid" type="submit">Submit</button>
+    </div>
+  </form>
+</div>

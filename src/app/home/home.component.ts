@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink, RouterOutlet} from "@angular/router";
 import {RegisterComponent} from "../register/register.component";
 import {YardsComponent} from "../yards/yards.component";
 import {MatIconModule} from "@angular/material/icon";
@@ -22,7 +22,8 @@ import {NgIf} from "@angular/common";
     LoginComponent,
     MatDrawerContainer,
     MatSidenavModule,
-    NgIf
+    NgIf,
+    RouterOutlet
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -30,12 +31,19 @@ import {NgIf} from "@angular/common";
 export class HomeComponent implements OnInit {
   protected breadcrumbText: string = "/ ";
 
+  constructor(private router: Router) {
+  }
+
   ngOnInit(): void {
     this.breadcrumbText = window.location.pathname;
   }
 
   topOfPage() {
     window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  addYard() {
+    this.router.navigate(['/home/yardPost'])
   }
 }
 
