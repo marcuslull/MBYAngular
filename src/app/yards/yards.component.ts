@@ -9,6 +9,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {YardsService} from "./yards.service";
 import {Router} from "@angular/router";
 import {MatIcon} from "@angular/material/icon";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogComponent} from "../dialog/dialog.component";
 
 @Component({
   selector: 'app-yards',
@@ -27,13 +29,13 @@ import {MatIcon} from "@angular/material/icon";
   styleUrl: './yards.component.css'
 })
 export class YardsComponent implements OnInit {
-  protected yardsList: Yard[] = [];
 
   constructor(
     private httpService: HttpService,
     private jwtAuthenticationService: JwtAuthenticationService,
-    private yardService: YardsService,
-    private router: Router
+    protected yardService: YardsService,
+    private router: Router,
+    protected dialog: MatDialog
   ) {
   }
 
@@ -46,7 +48,7 @@ export class YardsComponent implements OnInit {
   showYards(): void {
     this.httpService.getAll("yards").subscribe({
       next: (body) => {
-        this.yardsList = body as Yard[];
+        this.yardService.yardsList = body as Yard[];
       }
     })
   }
@@ -60,7 +62,21 @@ export class YardsComponent implements OnInit {
     })
   }
 
-  deleteYard(yardId: number | null | undefined): void {
+  openDeleteDialog(yardId: number | null, enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.yardService.deleteYardId = yardId;
+    let dialogReference = this.dialog.open(DialogComponent, {
+      width: '300px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogReference.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteYard(yardId);
+      }
+    })
+  }
+
+  deleteYard(yardId: number | null) {
     this.httpService.delete("yard/" + yardId).subscribe({
       next: () => {
         this.showYards();
@@ -68,3 +84,4 @@ export class YardsComponent implements OnInit {
     });
   }
 }
+

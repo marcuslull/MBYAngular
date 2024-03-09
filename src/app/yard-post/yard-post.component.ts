@@ -4,12 +4,15 @@ import {Yard} from "../model/yard";
 import {HttpService} from "../http/http.service";
 import {YardsService} from "../yards/yards.service";
 import {Router} from "@angular/router";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-yard-post',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgForOf,
+    NgIf
   ],
   templateUrl: './yard-post.component.html',
   styleUrl: './yard-post.component.css'

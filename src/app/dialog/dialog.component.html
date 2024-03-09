@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Delete Yard</h2>
+<mat-dialog-content>
+  Would you like to delete yard {{ this.yardService.deleteYardId }}?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>CANCEL</button>
+  <button [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>DELETE</button>
+</mat-dialog-actions>

@@ -5,8 +5,7 @@ import {Yard} from "../model/yard";
   providedIn: 'root'
 })
 export class YardsService {
+  yardsList: Yard[] = [];
   yardItem: Yard | null = null;
-
-  constructor() {
-  }
+  deleteYardId: number | null = null;
 }

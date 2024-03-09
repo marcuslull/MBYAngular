@@ -1,6 +1,6 @@
 <div class="yardsContainer">
 
-  @for (yard of yardsList; track yard.id) {
+  @for (yard of this.yardService.yardsList; track yard.id) {
     <mat-card class="card">
 
       <mat-card-header (click)="showYard(yard.id)">
@@ -15,7 +15,9 @@
 
       <mat-card-actions>
         <button mat-button>EDIT</button>
-        <button mat-button (click)="deleteYard(yard.id)">DELETE</button>
+        <button mat-button (click)="openDeleteDialog(yard.id, '200ms', '0ms')">
+          DELETE
+        </button>
       </mat-card-actions>
 
     </mat-card>
