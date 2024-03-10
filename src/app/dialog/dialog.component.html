@@ -1,8 +1,11 @@
-<h2 mat-dialog-title>Delete Yard</h2>
+<h2 mat-dialog-title>{{ this.dialogService.title }}</h2>
 <mat-dialog-content>
-  Would you like to delete yard {{ this.yardService.deleteYardId }}?
+  {{ this.dialogService.content }}
+  <img *ngIf="this.dialogService.image" [src]="this.dialogService.image" alt="" class="dialogImage" mat-card-image>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>CANCEL</button>
-  <button [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>DELETE</button>
+<mat-dialog-actions align="end">
+  <button *ngIf="this.dialogService.closeButton" mat-button mat-dialog-close>CLOSE</button>
+  <button *ngIf="this.dialogService.deleteButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
+    DELETE
+  </button>
 </mat-dialog-actions>

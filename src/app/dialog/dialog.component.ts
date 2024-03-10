@@ -8,6 +8,9 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {YardsService} from "../yards/yards.service";
+import {DialogService} from "./dialog.service";
+import {NgIf} from "@angular/common";
+import {MatCardImage} from "@angular/material/card";
 
 @Component({
   selector: 'app-dialog',
@@ -18,7 +21,9 @@ import {YardsService} from "../yards/yards.service";
     MatDialogActions,
     MatDialogClose,
     MatDialogContent,
-    MatDialogTitle
+    MatDialogTitle,
+    NgIf,
+    MatCardImage
   ],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.css'
@@ -27,7 +32,7 @@ export class DialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-    protected yardService: YardsService
+    protected dialogService: DialogService
   ) {
   }
 

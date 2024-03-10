@@ -12,6 +12,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../dialog/dialog.component";
 import {HomeService} from "../home/home.service";
+import {DialogService} from "../dialog/dialog.service";
 
 @Component({
   selector: 'app-yards',
@@ -37,7 +38,8 @@ export class YardsComponent implements OnInit {
     protected yardService: YardsService,
     private router: Router,
     protected dialog: MatDialog,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private dialogService: DialogService
   ) {
   }
 
@@ -45,7 +47,7 @@ export class YardsComponent implements OnInit {
     if (this.jwtAuthenticationService.isLoggedIn()) {
       this.homeService.breadcrumbText = window.location.pathname;
       this.showYards()
-    }
+    } else (this.router.navigate(['/login'])).then();
   }
 
   showYards(): void {
@@ -69,6 +71,11 @@ export class YardsComponent implements OnInit {
 
   openDeleteDialog(yardId: number | null, enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.yardService.deleteYardId = yardId;
+    this.dialogService.title = "Delete Yard";
+    this.dialogService.content = "Are you sure you want to delete yard: " + yardId + "?";
+    this.dialogService.image = null;
+    this.dialogService.closeButton = true;
+    this.dialogService.deleteButton = true;
     let dialogReference = this.dialog.open(DialogComponent, {
       width: '300px',
       enterAnimationDuration,

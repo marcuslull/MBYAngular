@@ -14,3 +14,11 @@
 .AddAYardForm > * {
   padding-right: 30px;
 }
+
+mat-divider {
+  margin-top: 20px;
+}
+
+.postYardInfoContainer {
+  margin-top: 30px;
+}

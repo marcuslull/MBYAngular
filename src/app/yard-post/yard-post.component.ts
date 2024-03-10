@@ -9,8 +9,12 @@ import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {MatOption, MatSelect} from "@angular/material/select";
-import {MatButton} from "@angular/material/button";
+import {MatAnchor, MatButton} from "@angular/material/button";
 import {HomeService} from "../home/home.service";
+import {MatDivider} from "@angular/material/divider";
+import {DialogComponent} from "../dialog/dialog.component";
+import {DialogService} from "../dialog/dialog.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-yard-post',
@@ -26,7 +30,9 @@ import {HomeService} from "../home/home.service";
     MatLabel,
     MatSelect,
     MatOption,
-    MatButton
+    MatButton,
+    MatDivider,
+    MatAnchor
   ],
   templateUrl: './yard-post.component.html',
   styleUrl: './yard-post.component.css'
@@ -63,7 +69,9 @@ export class YardPostComponent implements OnInit {
     private httpService: HttpService,
     private yardService: YardsService,
     private router: Router,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private dialogService: DialogService,
+    protected dialog: MatDialog,
   ) {
   }
 
@@ -88,4 +96,17 @@ export class YardPostComponent implements OnInit {
     }
   }
 
+  openHardinessZoneDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialogService.title = "Hardiness Zone Map";
+    this.dialogService.content = null;
+    this.dialogService.image = '/assets/image/HardinessZoneMap.png'
+    this.dialogService.closeButton = true;
+    this.dialogService.deleteButton = false;
+    let dialogReference = this.dialog.open(DialogComponent, {
+      width: '90%',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogReference.afterClosed().subscribe();
+  }
 }
