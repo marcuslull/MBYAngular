@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 import {MatIcon} from "@angular/material/icon";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../dialog/dialog.component";
+import {HomeService} from "../home/home.service";
 
 @Component({
   selector: 'app-yards',
@@ -35,12 +36,14 @@ export class YardsComponent implements OnInit {
     private jwtAuthenticationService: JwtAuthenticationService,
     protected yardService: YardsService,
     private router: Router,
-    protected dialog: MatDialog
+    protected dialog: MatDialog,
+    private homeService: HomeService
   ) {
   }
 
   ngOnInit(): void {
     if (this.jwtAuthenticationService.isLoggedIn()) {
+      this.homeService.breadcrumbText = window.location.pathname;
       this.showYards()
     }
   }
@@ -57,7 +60,9 @@ export class YardsComponent implements OnInit {
     this.httpService.get("yard/" + yardId).subscribe({
       next: (body) => {
         this.yardService.yardItem = body as Yard
-        this.router.navigate(['/home/yardDetails'])
+        this.router.navigate(['/home/yardDetails']).then(r => {
+          this.homeService.breadcrumbText = window.location.pathname;
+        })
       }
     })
   }

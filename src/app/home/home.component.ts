@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from "@angular/router";
 import {RegisterComponent} from "../register/register.component";
 import {YardsComponent} from "../yards/yards.component";
@@ -8,6 +8,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {LoginComponent} from "../login/login.component";
 import {MatDrawerContainer, MatSidenavModule} from "@angular/material/sidenav";
 import {NgIf} from "@angular/common";
+import {HomeService} from "./home.service";
 
 @Component({
   selector: 'app-home',
@@ -28,14 +29,11 @@ import {NgIf} from "@angular/common";
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
-  protected breadcrumbText: string = "/ ";
-
-  constructor(private router: Router) {
-  }
-
-  ngOnInit(): void {
-    this.breadcrumbText = window.location.pathname;
+export class HomeComponent {
+  constructor(
+    private router: Router,
+    protected homeService: HomeService
+  ) {
   }
 
   topOfPage() {
@@ -43,7 +41,9 @@ export class HomeComponent implements OnInit {
   }
 
   addYard() {
-    this.router.navigate(['/home/yardPost'])
+    this.router.navigate(['/home/yardPost']).then(r => {
+      this.homeService.breadcrumbText = window.location.pathname;
+    })
   }
 }
 
