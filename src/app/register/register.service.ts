@@ -8,8 +8,11 @@ import {Observable} from "rxjs";
 })
 export class RegisterService {
   private apiUrl = "http://localhost:8080/register"
-  constructor(private httpClient: HttpClient) {}
-  postRegistration(registration: User) :Observable<User>{
+
+  constructor(private httpClient: HttpClient) {
+  }
+
+  postRegistration(registration: User): Observable<User> {
     return this.httpClient.post<User>(this.apiUrl, registration)
   }
 }

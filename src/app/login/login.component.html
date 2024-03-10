@@ -1,23 +1,27 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<div class="loginContainer">
 
-  <div>
-    <label for="email">Email</label>
-    <input type="email" id="email" formControlName="email">
-    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-      Email is required and must use conventional form
-    </div>
-  </div>
+  <h2>Login Form</h2>
 
-  <div>
-    <label for="password">Password</label>
-    <input type="password" id="password" formControlName="password">
-    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-      Password is required
-    </div>
-  </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="loginForm">
 
-  <button type="submit" [disabled]="loginForm.invalid">Submit</button>
+    <mat-form-field appearance="outline">
+      <mat-label for="loginEmail">Email</mat-label>
+      <input formControlName="loginEmail" id="loginEmail" matInput type="email">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
 
-  <div *ngIf="errorMessage">{{errorMessage}}</div>
+    <mat-form-field appearance="outline">
+      <mat-label for="loginPassword">Password</mat-label>
+      <input formControlName="loginPassword" id="loginPassword" matInput type="password">
+      <mat-icon matSuffix>password</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
 
-</form>
+    <button [disabled]="loginForm.invalid" class="loginButton" color="primary" mat-raised-button type="submit">
+      Submit
+    </button>
+
+  </form>
+  <div *ngIf="errorMessage" class="loginError">{{ errorMessage }}</div>
+</div>

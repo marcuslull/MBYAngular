@@ -1,28 +1,50 @@
 import {Component} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink, RouterOutlet} from "@angular/router";
 import {RegisterComponent} from "../register/register.component";
-import {YardsComponent} from "./yards/yards.component";
-import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
+import {YardsComponent} from "../yards/yards.component";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {LoginComponent} from "../login/login.component";
+import {MatDrawerContainer, MatSidenavModule} from "@angular/material/sidenav";
+import {NgIf} from "@angular/common";
+import {HomeService} from "./home.service";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     RouterLink,
-    YardsComponent
+    YardsComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    RegisterComponent,
+    LoginComponent,
+    MatDrawerContainer,
+    MatSidenavModule,
+    NgIf,
+    RouterOutlet
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
-  protected readonly RegisterComponent = RegisterComponent;
-  protected readonly JwtAuthenticationService = JwtAuthenticationService;
-
-  constructor(private jwtAuthenticationService :JwtAuthenticationService) {
+  constructor(
+    private router: Router,
+    protected homeService: HomeService
+  ) {
   }
 
-  protected logout() :void {
-    this.jwtAuthenticationService.logout()
+  topOfPage() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  addYard() {
+    this.router.navigate(['/home/yardPost']).then(r => {
+      this.homeService.breadcrumbText = window.location.pathname;
+    })
   }
 }
+
+

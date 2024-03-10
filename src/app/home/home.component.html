@@ -1,8 +1,42 @@
-<div>
-    <h1>Home</h1>
-    <p>Welcome to the home page</p>
-  <button [routerLink]="['/register']">Registration</button>
-  <button [routerLink]="['/login']">Login</button>
-  <button (click)="logout()" [routerLink]="['/login']">Logout</button>
+<mat-toolbar class="secondary_bar" color="secondary">
+  <button (click)="drawer.toggle()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="breadcrumbs">{{ this.homeService.breadcrumbText }}</span>
+</mat-toolbar>
+
+
+<mat-sidenav-container [hasBackdrop]="false" class="drawerContainer">
+  <mat-sidenav #drawer [fixedInViewport]="true" class="drawer" mode="over">
+    <div class="sidenavButtonContainer">
+      <button (click)="topOfPage(); drawer.toggle()" class="sidenavButton" color="accent"
+              mat-button>Top of page
+      </button>
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home/yards']" class="sidenavButton" color="accent"
+              mat-button>Yards
+      </button>
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home/yards']" class="sidenavButton" color="accent"
+              mat-button>Plants
+      </button>
+      <button (click)="topOfPage(); drawer.toggle()" [routerLink]="['/home/yards']" class="sidenavButton" color="accent"
+              mat-button>Animals
+      </button>
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div class="fabContainer">
+  <button (click)="addYard()" class="fabButton" color="primary" mat-fab>
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
-<app-yards></app-yards>
+
+
+
+
+

@@ -1,1 +1,23 @@
-<router-outlet />
+<div class="container">
+
+  <div class="header">
+    <mat-toolbar color="primary">
+      <span [routerLink]="['/home/yards']" class="title">My BackYard</span>
+      <span class="spacer"></span>
+      <button [routerLink]="['/register']" mat-icon-button>
+        <mat-icon>person_add</mat-icon>
+      </button>
+      <button [routerLink]="['/login']" mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+
+  <div class="main">
+    <router-outlet/>
+  </div>
+
+  <div class="footer"></div>
+</div>
+
+

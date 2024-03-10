@@ -1,0 +1,47 @@
+<div class="postYardContainer">
+
+  <h2>Add A Yard</h2>
+
+  <form (ngSubmit)="postYard()" [formGroup]="yardFormGroup" class="AddAYardForm">
+
+    <mat-form-field appearance="outline">
+      <mat-label for="yardName">Name</mat-label>
+      <input formControlName="name" id="yardName" matInput type="text">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Hardiness zone</mat-label>
+      <mat-select formControlName="hardinessZone">
+        @for (option of hardinessZone; track $index) {
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
+        }
+      </mat-select>
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Subtype</mat-label>
+      <mat-select formControlName="yardSubType">
+        @for (option of yardSubType; track $index) {
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
+        }
+      </mat-select>
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
+
+    <button [disabled]="yardFormGroup.invalid" class="addYardButton" color="primary" mat-raised-button type="submit">
+      Submit
+    </button>
+
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <div class="postYardInfoContainer">
+    <h3><a (click)="openHardinessZoneDialog('200ms', '0ms')" mat-button>Hardiness zone map</a></h3>
+  </div>
+</div>

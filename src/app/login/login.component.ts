@@ -4,18 +4,28 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
+import {MatError, MatFormField, MatHint, MatInput, MatLabel} from "@angular/material/input";
+import {MatIcon} from "@angular/material/icon";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatInput,
+    MatFormField,
+    MatIcon,
+    MatError,
+    MatLabel,
+    MatHint,
+    MatButton
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
   protected loginForm: FormGroup = new FormGroup({});
   protected errorMessage: string | null = null;
@@ -29,20 +39,21 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      loginEmail: ['', [Validators.required, Validators.email]],
+      loginPassword: ['', Validators.required]
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.loginForm.valid) {
-      this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
+      this.loginService.login(this.loginForm.value.loginEmail, this.loginForm.value.loginPassword).subscribe({
         next: (body) => {
           this.jwtAuthenticationService.setJwtToken(body);
-          this.router.navigate(['home']);
+          this.router.navigate(["/home/yards"])
         },
         error: () => {
-          this.errorMessage = "Invalid username or password"}
+          this.errorMessage = "Invalid username or password"
+        }
       })
     }
   }

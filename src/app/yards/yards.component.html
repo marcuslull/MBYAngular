@@ -1,0 +1,25 @@
+<div class="yardsContainer">
+
+  @for (yard of this.yardService.yardsList; track yard.id) {
+    <mat-card class="card">
+
+      <mat-card-header (click)="showYard(yard.id)">
+        <div mat-card-avatar class="header-image"></div>
+        <mat-card-title>{{ yard.name }}</mat-card-title>
+        <mat-card-subtitle>{{ yard.yardSubType }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <img mat-card-image src="/assets/image/yard.png" (click)="showYard(yard.id)">
+
+      <mat-card-content></mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button>EDIT</button>
+        <button mat-button (click)="openDeleteDialog(yard.id, '200ms', '0ms')">
+          DELETE
+        </button>
+      </mat-card-actions>
+
+    </mat-card>
+  }
+</div>

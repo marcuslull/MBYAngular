@@ -1,22 +1,24 @@
-.registerContainer {
+.postYardContainer {
   margin-top: 100px;
   margin-left: 10%;
   margin-right: 10%;
   display: inline-block;
 }
 
-.registerForm {
+.AddAYardForm {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
 }
 
-.registerForm > * {
+.AddAYardForm > * {
   padding-right: 30px;
 }
 
-.registerError {
-  font-size: large;
-  color: indianred;
+mat-divider {
   margin-top: 20px;
+}
+
+.postYardInfoContainer {
+  margin-top: 30px;
 }

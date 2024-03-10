@@ -20,16 +20,14 @@ export class AuthInterceptorService implements HttpInterceptor {
       const encodedCredentials: string = btoa(username + ':' + password);
       const authHeader: string = `Basic ${encodedCredentials}`;
       const authReq = req.clone({
-        setHeaders: { Authorization: authHeader },
+        setHeaders: {Authorization: authHeader},
         responseType: "text"
       });
       return next.handle(authReq);
-    }
-    else if (req.url.endsWith("/register")) {
+    } else if (req.url.endsWith("/register")) {
       console.log("Hit Register")
       return next.handle(req);
-    }
-    else {
+    } else {
       console.log("Hit anything else")
       const token: string | null = this.jwtAuthenticationService.getJwtString();
       if (token) {

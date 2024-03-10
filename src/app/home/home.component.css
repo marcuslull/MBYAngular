@@ -1,0 +1,35 @@
+.secondary_bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.drawerContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.drawer {
+  padding: 75px 50px 0 50px;
+}
+
+.sidenavButtonContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenavButton {
+  margin-bottom: 25px;
+}
+
+.breadcrumbs {
+  margin-left: 3%;
+  font-size: medium;
+}
+
+.fabContainer {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 100;
+}

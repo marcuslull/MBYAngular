@@ -10,22 +10,24 @@ export class LoginService {
   private email: string = "";
   private password: string = "";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
-  login(email: string, password: string) :Observable<string>{
+  login(email: string, password: string): Observable<string> {
     this.email = email;
     this.password = password;
     return this.httpClient.post<string>(this.apiUrl, null)
   }
-  getEmail() :string {
+
+  getEmail(): string {
     return this.email;
   }
 
-  getPassword() :string {
+  getPassword(): string {
     return this.password;
   }
 
-  clearUserPass() :void {
+  clearUserPass(): void {
     this.email = "";
     this.password = "";
   }
