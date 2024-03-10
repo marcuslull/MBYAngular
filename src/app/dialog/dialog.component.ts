@@ -7,7 +7,6 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {YardsService} from "../yards/yards.service";
 import {DialogService} from "./dialog.service";
 import {NgIf} from "@angular/common";
 import {MatCardImage} from "@angular/material/card";
