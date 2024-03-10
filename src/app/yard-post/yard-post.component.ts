@@ -5,6 +5,12 @@ import {HttpService} from "../http/http.service";
 import {YardsService} from "../yards/yards.service";
 import {Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
+import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {MatButton} from "@angular/material/button";
+import {HomeService} from "../home/home.service";
 
 @Component({
   selector: 'app-yard-post',
@@ -12,7 +18,15 @@ import {NgForOf, NgIf} from "@angular/common";
   imports: [
     ReactiveFormsModule,
     NgForOf,
-    NgIf
+    NgIf,
+    MatFormField,
+    MatHint,
+    MatIcon,
+    MatInput,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    MatButton
   ],
   templateUrl: './yard-post.component.html',
   styleUrl: './yard-post.component.css'
@@ -48,7 +62,8 @@ export class YardPostComponent implements OnInit {
     private formBuilder: FormBuilder,
     private httpService: HttpService,
     private yardService: YardsService,
-    private router: Router
+    private router: Router,
+    private homeService: HomeService
   ) {
   }
 
@@ -65,8 +80,9 @@ export class YardPostComponent implements OnInit {
       this.httpService.post("yards", this.yardFormGroup.value).subscribe({
         next: (body) => {
           this.yardService.yardItem = body as Yard;
-          this.yardFormGroup.reset();
-          this.router.navigate(['/home/yardDetails'])
+          this.router.navigate(['/home/yardDetails']).then(r => {
+            this.homeService.breadcrumbText = window.location.pathname;
+          })
         }
       })
     }

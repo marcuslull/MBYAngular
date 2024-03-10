@@ -1,0 +1,16 @@
+.postYardContainer {
+  margin-top: 100px;
+  margin-left: 10%;
+  margin-right: 10%;
+  display: inline-block;
+}
+
+.AddAYardForm {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.AddAYardForm > * {
+  padding-right: 30px;
+}

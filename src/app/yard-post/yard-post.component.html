@@ -1,26 +1,41 @@
-<div class="yardFormContainer">
-  <form (ngSubmit)="postYard()" [formGroup]="yardFormGroup">
+<div class="postYardContainer">
 
-    <div>
-      <label for="name">Name</label>
-      <input formControlName="name" id="name" type="text">
-      <div *ngIf="yardFormGroup.get('name')?.invalid && yardFormGroup.get('name')?.touched">
-        The yard must have a name.
-      </div>
+  <h2>Add A Yard</h2>
 
-      <select formControlName="hardinessZone">
-        <option *ngFor="let option of hardinessZone" [value]="option.value">
-          {{ option.label }}
-        </option>
-      </select>
+  <form (ngSubmit)="postYard()" [formGroup]="yardFormGroup" class="AddAYardForm">
 
-      <select formControlName="yardSubType">
-        <option *ngFor="let option of yardSubType" [value]="option.value">
-          {{ option.label }}
-        </option>
-      </select>
+    <mat-form-field appearance="outline">
+      <mat-label for="yardName">Name</mat-label>
+      <input formControlName="name" id="yardName" matInput type="text">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
 
-      <button [disabled]="yardFormGroup.invalid" type="submit">Submit</button>
-    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Hardiness zone</mat-label>
+      <mat-select formControlName="hardinessZone">
+        @for (option of hardinessZone; track $index) {
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
+        }
+      </mat-select>
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Subtype</mat-label>
+      <mat-select formControlName="yardSubType">
+        @for (option of yardSubType; track $index) {
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
+        }
+      </mat-select>
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint></mat-hint>
+    </mat-form-field>
+
+    <button [disabled]="yardFormGroup.invalid" class="addYardButton" color="primary" mat-raised-button type="submit">
+      Submit
+    </button>
+
   </form>
 </div>
