@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class HttpService {
-  private apiUrl: string = "http://localhost:8080/api/"
+  private apiUrl: string = "https://mbyapisec-7cxa644xka-uc.a.run.app/api/"
 
   constructor(private httpClient: HttpClient,
               private jwtAuthenticationService: JwtAuthenticationService,
