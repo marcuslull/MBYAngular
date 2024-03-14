@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 })
 export class RegisterService {
   private apiUrl = "https://mbyapisec-7cxa644xka-uc.a.run.app/register"
+  // private apiUrl: string = "http://localhost:8080/register"
 
   constructor(private httpClient: HttpClient) {
   }

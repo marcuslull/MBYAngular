@@ -5,6 +5,11 @@
   display: inline-block;
 }
 
+.demoSpan {
+  font-weight: lighter;
+  font-size: medium;
+}
+
 .loginForm {
   display: flex;
   flex-flow: row wrap;

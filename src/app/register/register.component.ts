@@ -3,9 +3,8 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {RegisterService} from "./register.service";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
-import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
+import {MatFormField, MatHint, MatInput, MatLabel} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
-import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 
 @Component({
