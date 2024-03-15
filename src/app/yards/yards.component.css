@@ -5,6 +5,11 @@
   justify-content: space-around;
 }
 
+.inDevMessage {
+  margin-left: 5%;
+  color: indianred;
+}
+
 .card {
   width: 300px;
   margin: 10px;
