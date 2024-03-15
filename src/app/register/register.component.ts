@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {RegisterService} from "./register.service";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 import {MatFormField, MatHint, MatInput, MatLabel} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
+import {HttpService} from "../http/http.service";
 
 @Component({
   selector: 'app-register',
@@ -21,8 +21,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private registerService: RegisterService,
-    private router: Router
+    private router: Router,
+    private httpService: HttpService
   ) {
   }
 
@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      this.registerService.postRegistration(this.registerForm.value).subscribe({
+      this.httpService.postRegistration("register", this.registerForm.value).subscribe({
         next: () => {
           this.router.navigate(["/login"])
         },

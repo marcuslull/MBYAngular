@@ -5,6 +5,12 @@
   display: inline-block;
 }
 
+.demoSpan {
+  font-weight: lighter;
+  font-size: medium;
+  color: indianred;
+}
+
 .registerForm {
   display: flex;
   flex-flow: row wrap;

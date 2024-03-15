@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "./login.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
@@ -7,6 +6,7 @@ import {JwtAuthenticationService} from "../authentication/jwt-authentication.ser
 import {MatError, MatFormField, MatHint, MatInput, MatLabel} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
+import {HttpService} from "../http/http.service";
 
 @Component({
   selector: 'app-login',
@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
     private router: Router,
-    private jwtAuthenticationService: JwtAuthenticationService) {
+    private jwtAuthenticationService: JwtAuthenticationService,
+    private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -46,15 +46,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      this.loginService.login(this.loginForm.value.loginEmail, this.loginForm.value.loginPassword).subscribe({
-        next: (body) => {
-          this.jwtAuthenticationService.setJwtToken(body);
-          this.router.navigate(["/home/yards"])
-        },
-        error: () => {
-          this.errorMessage = "Invalid username or password"
-        }
-      })
+      this.httpService.login("token", this.loginForm.value.loginEmail, this.loginForm.value.loginPassword)
+        .subscribe({
+          next: (body) => {
+            this.jwtAuthenticationService.setJwtToken(body);
+            this.router.navigate(["/home/yards"])
+          },
+          error: () => {
+            this.errorMessage = "Invalid username or password"
+          }
+        })
     }
   }
 }
