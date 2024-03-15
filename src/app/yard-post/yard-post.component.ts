@@ -87,7 +87,7 @@ export class YardPostComponent implements OnInit {
       this.httpService.post("yards", this.yardFormGroup.value).subscribe({
         next: (body) => {
           this.yardService.yardItem = body as Yard;
-          this.router.navigate(['/home/yardDetails']).then(r => {
+          this.router.navigate(['/home/yards']).then(r => {
             this.homeService.breadcrumbText = window.location.pathname;
           })
         }

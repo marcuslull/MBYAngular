@@ -36,25 +36,25 @@ export class HttpService {
 
   getAll(endpoint: string): Observable<object[]> {
     this.checkLogonStatus();
-    let path: string = this.apiUrl + endpoint;
+    let path: string = this.baseUrl + this.apiUrl + endpoint;
     return this.httpClient.get<object[]>(path);
   }
 
   get(endpoint: string): Observable<object> {
     this.checkLogonStatus();
-    let path: string = this.apiUrl + endpoint;
+    let path: string = this.baseUrl + this.apiUrl + endpoint;
     return this.httpClient.get<object>(path);
   }
 
   post(endpoint: string, object: Object): Observable<object> {
     this.checkLogonStatus();
-    let path: string = this.apiUrl + endpoint;
+    let path: string = this.baseUrl + this.apiUrl + endpoint;
     return this.httpClient.post(path, object);
   }
 
   delete(endpoint: string): Observable<object> {
     this.checkLogonStatus();
-    let path: string = this.apiUrl + endpoint;
+    let path: string = this.baseUrl + this.apiUrl + endpoint;
     return this.httpClient.delete(path);
   }
 
