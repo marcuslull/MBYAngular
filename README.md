@@ -1,27 +1,35 @@
-# MBYAngular
+# My BackYard Angular Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.1.
+## ** Under Development **
 
-## Development server
+**Languages**
+* Typescript
+* HTML/CSS
+* Angular framework
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+**Current build workflow**
+1. Docker
+2. Google Cloud Build
+3. Google Artifact Registry
+4. Google Cloud Run
 
-## Code scaffolding
+## Description
+My BackYard is a full stack application designed to act as a handy reference for
+homeowners, gardeners or even landscapers as they tend to their yards or gardens. Inspired by
+my wife, who loves spending time tending to all of our various plants, there came a point where
+she required some sort of note system to help her remember all the information about our
+home's ecosystem.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+I have designed My BackYard as two components divided into a backend and
+frontend that utilizes a REST API for communication between the two components.
+At this stage in the application development functionality is limited and represents only a
+small portion of the eventual functionality. However, I have placed much of my focus on a backend architecture that
+will allow for growth both in scope and demand.
 
-## Build
+## The Frontend
+This front-end client for the My BackYard API is currently under development. This project is in its early stages with very limited functionality. 
+This Angular front-end application uses JWTs for authentication to the backend API. A focus will be on responsive design for screens of all sizes.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## The Backend
+Please find the backend component here:  
+https://github.com/marcuslull/MBYAPISec
