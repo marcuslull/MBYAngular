@@ -1,6 +1,10 @@
 <div class="postYardContainer">
 
-  <h2>Add A Yard</h2>
+  @if (this.yardService.isPut) {
+    <h2>Edit A Yard</h2>
+  } @else {
+    <h2>Add A Yard</h2>
+  }
 
   <form (ngSubmit)="postYard()" [formGroup]="yardFormGroup" class="AddAYardForm">
 

@@ -47,6 +47,7 @@ export class YardsComponent implements OnInit {
     if (this.jwtAuthenticationService.isLoggedIn()) {
       this.homeService.breadcrumbText = window.location.pathname;
       this.showYards()
+      this.homeService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
     } else (this.router.navigate(['/login'])).then();
   }
 
@@ -95,5 +96,13 @@ export class YardsComponent implements OnInit {
       }
     });
   }
-}
 
+  editYard(yard: Yard) {
+    this.yardService.yardItem = yard;
+    this.yardService.isPut = true;
+    this.router.navigate(['/home/yardPost']).then(r => {
+        this.homeService.breadcrumbText = window.location.pathname;
+      }
+    );
+  }
+}
