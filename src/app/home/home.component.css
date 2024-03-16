@@ -27,6 +27,15 @@
   font-size: medium;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
+.loginWarning {
+  color: indianred;
+  margin-right: 1%;
+}
+
 .fabContainer {
   position: fixed;
   bottom: 50px;

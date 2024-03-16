@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from "@angular/router";
 import {RegisterComponent} from "../register/register.component";
 import {YardsComponent} from "../yards/yards.component";
@@ -9,6 +9,7 @@ import {LoginComponent} from "../login/login.component";
 import {MatDrawerContainer, MatSidenavModule} from "@angular/material/sidenav";
 import {NgIf} from "@angular/common";
 import {HomeService} from "./home.service";
+import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
 
 @Component({
   selector: 'app-home',
@@ -29,11 +30,18 @@ import {HomeService} from "./home.service";
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  protected loggedIn: boolean = false;
+
   constructor(
     private router: Router,
-    protected homeService: HomeService
+    protected homeService: HomeService,
+    private jwtAuthenticationService: JwtAuthenticationService
   ) {
+  }
+
+  ngOnInit(): void {
+    this.loggedIn = this.jwtAuthenticationService.isLoggedIn();
   }
 
   topOfPage() {
