@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
     this.yardService.yardItem = null;
     this.yardService.isPut = false;
 
-    this.router.navigate(['/home/yardPost']).then(r => {
+    this.router.navigate(['/home/yardUpdate']).then(r => {
       this.homeService.breadcrumbText = window.location.pathname;
     })
   }

@@ -4,7 +4,7 @@ import {RegisterComponent} from "./register/register.component";
 import {LoginComponent} from "./login/login.component";
 import {YardDetailsComponent} from "./yard-details/yard-details.component";
 import {YardsComponent} from "./yards/yards.component";
-import {YardPostComponent} from "./yard-post/yard-post.component";
+import {YardUpdateComponent} from "./yard-update/yard-update.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: 'home/yards', pathMatch: 'full'},
@@ -14,7 +14,7 @@ export const routes: Routes = [
     path: 'home', component: HomeComponent, children: [
       {path: 'yards', component: YardsComponent},
       {path: 'yardDetails', component: YardDetailsComponent},
-      {path: 'yardPost', component: YardPostComponent}
+      {path: 'yardUpdate', component: YardUpdateComponent}
     ]
   },
 ];

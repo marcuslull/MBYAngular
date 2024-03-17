@@ -100,7 +100,7 @@ export class YardsComponent implements OnInit {
   editYard(yard: Yard) {
     this.yardService.yardItem = yard;
     this.yardService.isPut = true;
-    this.router.navigate(['/home/yardPost']).then(r => {
+    this.router.navigate(['/home/yardUpdate']).then(r => {
         this.homeService.breadcrumbText = window.location.pathname;
       }
     );

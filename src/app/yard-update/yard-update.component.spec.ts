@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {YardPostComponent} from './yard-post.component';
+import {YardUpdateComponent} from './yard-update.component';
 
 describe('YardPostComponent', () => {
-  let component: YardPostComponent;
-  let fixture: ComponentFixture<YardPostComponent>;
+  let component: YardUpdateComponent;
+  let fixture: ComponentFixture<YardUpdateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [YardPostComponent]
+      imports: [YardUpdateComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(YardPostComponent);
+    fixture = TestBed.createComponent(YardUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

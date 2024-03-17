@@ -33,10 +33,10 @@ import {MatDialog} from "@angular/material/dialog";
     MatDivider,
     MatAnchor
   ],
-  templateUrl: './yard-post.component.html',
-  styleUrl: './yard-post.component.css'
+  templateUrl: './yard-update.component.html',
+  styleUrl: './yard-update.component.css'
 })
-export class YardPostComponent implements OnInit {
+export class YardUpdateComponent implements OnInit {
   protected yardFormGroup: FormGroup = new FormGroup({});
 
   protected hardinessZone = [
