@@ -5,4 +5,6 @@ import {Injectable} from '@angular/core';
 })
 export class HomeService {
   breadcrumbText: string = "";
+  loggedIn: boolean = false;
+  fabIsDisabled: boolean = false;
 }

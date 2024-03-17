@@ -52,6 +52,12 @@ export class HttpService {
     return this.httpClient.post(path, object);
   }
 
+  put(endpoint: string, object: Object): Observable<object> {
+    this.checkLogonStatus();
+    let path: string = this.baseUrl + this.apiUrl + endpoint;
+    return this.httpClient.put(path, object);
+  }
+
   delete(endpoint: string): Observable<object> {
     this.checkLogonStatus();
     let path: string = this.baseUrl + this.apiUrl + endpoint;

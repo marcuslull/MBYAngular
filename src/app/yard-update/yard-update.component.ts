@@ -33,10 +33,10 @@ import {MatDialog} from "@angular/material/dialog";
     MatDivider,
     MatAnchor
   ],
-  templateUrl: './yard-post.component.html',
-  styleUrl: './yard-post.component.css'
+  templateUrl: './yard-update.component.html',
+  styleUrl: './yard-update.component.css'
 })
-export class YardPostComponent implements OnInit {
+export class YardUpdateComponent implements OnInit {
   protected yardFormGroup: FormGroup = new FormGroup({});
 
   protected hardinessZone = [
@@ -66,7 +66,7 @@ export class YardPostComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private httpService: HttpService,
-    private yardService: YardsService,
+    protected yardService: YardsService,
     private router: Router,
     private homeService: HomeService,
     private dialogService: DialogService,
@@ -75,23 +75,43 @@ export class YardPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.yardFormGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      hardinessZone: [''],
-      yardSubType: ['']
-    });
+    if (this.yardService.isPut) {
+      this.yardFormGroup = this.formBuilder.group({
+        name: [this.yardService.yardItem?.name, Validators.required],
+        hardinessZone: [this.yardService.yardItem?.hardinessZone],
+        yardSubType: [this.yardService.yardItem?.yardSubType]
+      });
+    } else {
+      this.yardFormGroup = this.formBuilder.group({
+        name: ['', Validators.required],
+        hardinessZone: [''],
+        yardSubType: ['']
+      });
+    }
+    this.homeService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
   }
 
   postYard(): void {
     if (this.yardFormGroup.valid) {
-      this.httpService.post("yards", this.yardFormGroup.value).subscribe({
-        next: (body) => {
-          this.yardService.yardItem = body as Yard;
-          this.router.navigate(['/home/yards']).then(r => {
-            this.homeService.breadcrumbText = window.location.pathname;
-          })
-        }
-      })
+      if (this.yardService.isPut) {
+        this.httpService.put("yard/" + this.yardService.yardItem?.id, this.yardFormGroup.value).subscribe({
+          next: (body) => {
+            this.yardService.yardItem = body as Yard;
+            this.router.navigate(['/home/yards']).then(r => {
+              this.homeService.breadcrumbText = window.location.pathname;
+            })
+          }
+        })
+      } else {
+        this.httpService.post("yards", this.yardFormGroup.value).subscribe({
+          next: (body) => {
+            this.yardService.yardItem = body as Yard;
+            this.router.navigate(['/home/yards']).then(r => {
+              this.homeService.breadcrumbText = window.location.pathname;
+            })
+          }
+        })
+      }
     }
   }
 
