@@ -1,12 +1,6 @@
 import {Component} from '@angular/core';
 import {MatButton, MatButtonModule} from "@angular/material/button";
-import {
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle
-} from "@angular/material/dialog";
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import {DialogService} from "./dialog.service";
 import {NgIf} from "@angular/common";
 import {MatCardImage} from "@angular/material/card";

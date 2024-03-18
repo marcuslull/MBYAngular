@@ -1,14 +1,61 @@
-<div class="yardDetailsContainer">
+<mat-tab-group dynamicHeight>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>list</mat-icon>
+      &nbsp;Details
+    </ng-template>
+    <div class="yardDetailsContainer">
+      <h2>Yard Details</h2>
 
-  <h2>Yard Details</h2>
+      <mat-list>
+        <mat-list-item><span class="titleSpan">ID: </span>{{ this.yardService.yardItem?.id }}</mat-list-item>
+        <mat-list-item><span class="titleSpan">Name: </span>{{ this.yardService.yardItem?.name }}</mat-list-item>
+        <mat-list-item><span class="titleSpan">Type: </span>{{ this.yardService.yardItem?.yardSubType }}</mat-list-item>
+        <mat-list-item><span class="titleSpan">Hardiness zone: </span>{{ this.yardService.yardItem?.hardinessZone }}
+        </mat-list-item>
+      </mat-list>
 
-  <mat-list>
-    <mat-list-item><span class="titleSpan">ID: </span>{{ this.yardService.yardItem?.id }}</mat-list-item>
-    <mat-list-item><span class="titleSpan">Name: </span>{{ this.yardService.yardItem?.name }}</mat-list-item>
-    <mat-list-item><span class="titleSpan">Type: </span>{{ this.yardService.yardItem?.yardSubType }}</mat-list-item>
-    <mat-list-item><span class="titleSpan">Hardiness zone: </span>{{ this.yardService.yardItem?.hardinessZone }}
-    </mat-list-item>
-  </mat-list>
+      <mat-divider></mat-divider>
+    </div>
+  </mat-tab>
 
-  <mat-divider></mat-divider>
-</div>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>text_snippet</mat-icon>
+      &nbsp;Notes
+    </ng-template>
+    <div class="yardDetailsContainer">
+      <h2>Notes - COMING SOON!</h2>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>place</mat-icon>
+      &nbsp;Map
+    </ng-template>
+    <div class="yardDetailsContainer">
+      <h2>Map - COMING SOON!</h2>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>forest</mat-icon>
+      &nbsp;Plants
+    </ng-template>
+    <div class="yardDetailsContainer">
+      <h2>Plants - COMING SOON!</h2>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>pets</mat-icon>
+      &nbsp;Animals
+    </ng-template>
+    <div class="yardDetailsContainer">
+      <h2>Animals - COMING SOON!</h2>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -3,6 +3,8 @@ import {NgIf} from "@angular/common";
 import {YardsService} from "../yards/yards.service";
 import {MatList, MatListItem} from "@angular/material/list";
 import {MatDivider} from "@angular/material/divider";
+import {MatTab, MatTabGroup, MatTabLabel} from "@angular/material/tabs";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-yard-details',
@@ -11,7 +13,11 @@ import {MatDivider} from "@angular/material/divider";
     NgIf,
     MatList,
     MatListItem,
-    MatDivider
+    MatDivider,
+    MatTabGroup,
+    MatTab,
+    MatIcon,
+    MatTabLabel
   ],
   templateUrl: './yard-details.component.html',
   styleUrl: './yard-details.component.css'
