@@ -30,7 +30,6 @@ import {MatCardImage} from "@angular/material/card";
 export class DialogComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
     protected dialogService: DialogService
   ) {
   }
