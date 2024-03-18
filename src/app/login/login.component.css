@@ -26,3 +26,8 @@
   color: indianred;
   margin-top: 20px;
 }
+
+.progressSpinner {
+  display: flex;
+  justify-content: center;
+}

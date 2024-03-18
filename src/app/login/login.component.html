@@ -18,10 +18,18 @@
       <mat-hint></mat-hint>
     </mat-form-field>
 
-    <button [disabled]="loginForm.invalid" class="loginButton" color="primary" mat-raised-button type="submit">
+    <button [disabled]="loginForm.invalid || spinnerAndSubmitToggle" class="loginButton" color="primary"
+            id="loginButton" mat-raised-button type="submit">
       Submit
     </button>
 
   </form>
   <div *ngIf="errorMessage" class="loginError">{{ errorMessage }}</div>
+
+</div>
+
+<div class="progressSpinner">
+  @if (spinnerAndSubmitToggle) {
+    <mat-spinner></mat-spinner>
+  }
 </div>

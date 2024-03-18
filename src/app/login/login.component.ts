@@ -7,6 +7,7 @@ import {MatError, MatFormField, MatHint, MatInput, MatLabel} from "@angular/mate
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 import {HttpService} from "../http/http.service";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ import {HttpService} from "../http/http.service";
     MatError,
     MatLabel,
     MatHint,
-    MatButton
+    MatButton,
+    MatProgressSpinner
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -29,11 +31,12 @@ export class LoginComponent implements OnInit {
 
   protected loginForm: FormGroup = new FormGroup({});
   protected errorMessage: string | null = null;
+  protected spinnerAndSubmitToggle: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private jwtAuthenticationService: JwtAuthenticationService,
+    protected jwtAuthenticationService: JwtAuthenticationService,
     private httpService: HttpService) {
   }
 
@@ -46,9 +49,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
+      this.spinnerAndSubmitToggle = true;
       this.httpService.login("token", this.loginForm.value.loginEmail, this.loginForm.value.loginPassword)
         .subscribe({
           next: (body) => {
+            this.spinnerAndSubmitToggle = false;
             this.jwtAuthenticationService.setJwtToken(body);
             this.router.navigate(["/home/yards"])
           },
