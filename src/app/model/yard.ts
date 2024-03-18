@@ -5,6 +5,7 @@ export interface Yard {
   name: string,
   hardinessZone: string | null,
   yardSubType: string | null,
+  noteIds: string | null,
   plantIds: number[] | null,
   animalIds: number[] | null,
   userEmail: string | null

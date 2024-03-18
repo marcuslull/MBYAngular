@@ -7,3 +7,28 @@
 .titleSpan {
   font-weight: bold;
 }
+
+.notesContainer {
+  margin: 50px 0 0 5%;
+}
+
+mat-panel-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notesContainer > p {
+  margin-left: 2%;
+}
+
+.newNoteField {
+  width: 80%;
+}
+
+.newNoteButton {
+  margin-left: 3%;
+}
+
+.noteP {
+  margin-top: 20px;
+}
