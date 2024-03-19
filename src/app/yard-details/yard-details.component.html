@@ -16,16 +16,59 @@
       </mat-list>
 
       <mat-divider></mat-divider>
+
+      <h3 class="notesTitle">Notes:</h3>
+
+      <div class="notesContainer">
+
+        <div class="currentNotesContainer">
+          @for (note of this.yardService.notesList; track note.id) {
+            <ul>
+              <li><span class="noteLineItem">{{ note.comment }}</span>
+                <button class="noteDeleteIcon" (click)="deleteNote(note.id)" mat-icon-button>
+                  <mat-icon color="warn">delete</mat-icon>
+                </button>
+              </li>
+
+            </ul>
+          }
+        </div>
+
+        <div class="newNoteContainer">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Add Notes
+                </mat-panel-title>
+                <mat-panel-description>
+                  Add a new note
+                  <mat-icon>text_snippet</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-form-field class="newNoteField">
+                <mat-label>New note</mat-label>
+                <textarea [(ngModel)]="newNoteInput" matInput type="text"></textarea>
+              </mat-form-field>
+
+              <button (click)="saveNote()" class="newNoteButton" color="primary" mat-raised-button>Save</button>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+      </div>
     </div>
   </mat-tab>
 
   <mat-tab>
     <ng-template mat-tab-label>
       <mat-icon>text_snippet</mat-icon>
-      &nbsp;Notes
+      &nbsp;Calendar
     </ng-template>
     <div class="yardDetailsContainer">
-      <h2>Notes - COMING SOON!</h2>
+      <h2>Calendar - COMING SOON!</h2>
     </div>
   </mat-tab>
 

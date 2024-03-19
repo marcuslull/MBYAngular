@@ -7,3 +7,37 @@
 .titleSpan {
   font-weight: bold;
 }
+
+.notesTitle {
+  margin-top: 50px;
+}
+
+.notesContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.noteDeleteIcon {
+  min-width: 25px;
+  margin-left: 45px;
+}
+
+.newNoteContainer {
+  width: 100%;
+}
+
+mat-panel-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.newNoteField {
+  width: 100%;
+}
