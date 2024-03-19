@@ -16,7 +16,7 @@ import {
   MatExpansionPanelDescription,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
 
 @Component({
@@ -40,7 +40,8 @@ import {FormsModule} from "@angular/forms";
     MatExpansionPanelDescription,
     MatExpansionModule,
     MatButton,
-    FormsModule
+    FormsModule,
+    MatIconButton
   ],
   templateUrl: './yard-details.component.html',
   styleUrl: './yard-details.component.css'
@@ -59,7 +60,6 @@ export class YardDetailsComponent implements OnInit {
     this.httpService.get("yard/" + this.yardService.yardItem?.id + "/notes").subscribe({
       next: body => {
         this.yardService.notesList = body as Note[];
-        console.log(this.yardService.notesList)
       }
     })
   }
@@ -70,6 +70,18 @@ export class YardDetailsComponent implements OnInit {
       next: body => {
         this.yardService.notesList[this.yardService.notesList.length] = body as Note;
         this.newNoteInput = '';
+      }
+    })
+  }
+
+  deleteNote(id: number | null | undefined) {
+    this.httpService.delete("note/" + id).subscribe({
+      next: value => {
+        for (let num = 0; num < this.yardService.notesList.length; num++) {
+          if (this.yardService.notesList[num].id === id) {
+            this.yardService.notesList.splice(num, 1);
+          }
+        }
       }
     })
   }

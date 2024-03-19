@@ -24,7 +24,12 @@
         <div class="currentNotesContainer">
           @for (note of this.yardService.notesList; track note.id) {
             <ul>
-              <li><span class="noteLineItem">{{ note.comment }}</span></li>
+              <li><span class="noteLineItem">{{ note.comment }}</span>
+                <button class="noteDeleteIcon" (click)="deleteNote(note.id)" mat-icon-button>
+                  <mat-icon color="warn">delete</mat-icon>
+                </button>
+              </li>
+
             </ul>
           }
         </div>
