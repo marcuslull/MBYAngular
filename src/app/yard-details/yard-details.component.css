@@ -8,8 +8,23 @@
   font-weight: bold;
 }
 
-.notesContainer {
+.notesTitle {
   margin: 50px 0 0 5%;
+}
+
+.notesContainer {
+  margin-left: 5%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.noteLineItem {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.newNoteContainer {
+  width: 100%;
 }
 
 mat-panel-description {
@@ -17,18 +32,8 @@ mat-panel-description {
   align-items: center;
 }
 
-.notesContainer > p {
-  margin-left: 2%;
-}
-
 .newNoteField {
-  width: 80%;
+  width: 100%;
 }
 
-.newNoteButton {
-  margin-left: 3%;
-}
 
-.noteP {
-  margin-top: 20px;
-}

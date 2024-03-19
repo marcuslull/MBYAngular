@@ -17,36 +17,42 @@
 
       <mat-divider></mat-divider>
 
+      <h3 class="notesTitle">Notes:</h3>
+
       <div class="notesContainer">
-        <h3>Notes:</h3>
 
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                New note
-              </mat-panel-title>
-              <mat-panel-description>
-                Add a new note for this yard here
-                <mat-icon>text_snippet</mat-icon>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
+        <div class="currentNotesContainer">
+          @for (note of this.yardService.notesList; track note.id) {
+            <ul>
+              <li><span class="noteLineItem">{{ note.comment }}</span></li>
+            </ul>
+          }
+        </div>
 
-            <mat-form-field class="newNoteField">
-              <mat-label>New note</mat-label>
-              <textarea [(ngModel)]="newNoteInput" matInput type="text"></textarea>
-            </mat-form-field>
+        <div class="newNoteContainer">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Add Notes
+                </mat-panel-title>
+                <mat-panel-description>
+                  Add a new note
+                  <mat-icon>text_snippet</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
 
-            <button (click)="saveNote()" class="newNoteButton" color="primary" mat-raised-button>Save</button>
+              <mat-form-field class="newNoteField">
+                <mat-label>New note</mat-label>
+                <textarea [(ngModel)]="newNoteInput" matInput type="text"></textarea>
+              </mat-form-field>
 
-          </mat-expansion-panel>
-        </mat-accordion>
+              <button (click)="saveNote()" class="newNoteButton" color="primary" mat-raised-button>Save</button>
 
-        @for (note of this.yardService.notesList; track note.id) {
-          <ul>
-            <li class="noteP">{{ note.comment }}</li>
-          </ul>
-        }
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
       </div>
     </div>
   </mat-tab>
