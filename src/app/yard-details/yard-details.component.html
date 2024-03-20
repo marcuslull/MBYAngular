@@ -8,10 +8,13 @@
       <h2>Yard Details</h2>
 
       <mat-list>
-        <mat-list-item><span class="titleSpan">ID: </span>{{ this.yardService.yardItem?.id }}</mat-list-item>
-        <mat-list-item><span class="titleSpan">Name: </span>{{ this.yardService.yardItem?.name }}</mat-list-item>
-        <mat-list-item><span class="titleSpan">Type: </span>{{ this.yardService.yardItem?.yardSubType }}</mat-list-item>
-        <mat-list-item><span class="titleSpan">Hardiness zone: </span>{{ this.yardService.yardItem?.hardinessZone }}
+        <mat-list-item><span class="titleSpan">ID: </span>{{ this.stateManagerService.yardItem?.id }}</mat-list-item>
+        <mat-list-item><span class="titleSpan">Name: </span>{{ this.stateManagerService.yardItem?.name }}
+        </mat-list-item>
+        <mat-list-item><span class="titleSpan">Type: </span>{{ this.stateManagerService.yardItem?.yardSubType }}
+        </mat-list-item>
+        <mat-list-item><span
+          class="titleSpan">Hardiness zone: </span>{{ this.stateManagerService.yardItem?.hardinessZone }}
         </mat-list-item>
       </mat-list>
 
@@ -22,7 +25,7 @@
       <div class="notesContainer">
 
         <div class="currentNotesContainer">
-          @for (note of this.yardService.notesList; track note.id) {
+          @for (note of this.stateManagerService.notesList; track note.id) {
             <ul>
               <li><span class="noteLineItem">{{ note.comment }}</span>
                 <button class="noteDeleteIcon" (click)="deleteNote(note.id)" mat-icon-button>

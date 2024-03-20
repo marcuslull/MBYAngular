@@ -2,18 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Yard} from "../model/yard";
 import {HttpService} from "../http/http.service";
-import {YardsService} from "../yards/yards.service";
 import {Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatFormField, MatHint, MatInput, MatLabel} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatAnchor, MatButton} from "@angular/material/button";
-import {HomeService} from "../home/home.service";
 import {MatDivider} from "@angular/material/divider";
 import {DialogComponent} from "../dialog/dialog.component";
 import {DialogService} from "../dialog/dialog.service";
 import {MatDialog} from "@angular/material/dialog";
+import {StateManagerService} from "../state/state-manager.service";
 
 @Component({
   selector: 'app-yard-post',
@@ -66,20 +65,19 @@ export class YardUpdateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private httpService: HttpService,
-    protected yardService: YardsService,
+    protected stateManagerService: StateManagerService,
     private router: Router,
-    private homeService: HomeService,
     private dialogService: DialogService,
     protected dialog: MatDialog,
   ) {
   }
 
   ngOnInit(): void {
-    if (this.yardService.isPut) {
+    if (this.stateManagerService.isPut) {
       this.yardFormGroup = this.formBuilder.group({
-        name: [this.yardService.yardItem?.name, Validators.required],
-        hardinessZone: [this.yardService.yardItem?.hardinessZone],
-        yardSubType: [this.yardService.yardItem?.yardSubType]
+        name: [this.stateManagerService.yardItem?.name, Validators.required],
+        hardinessZone: [this.stateManagerService.yardItem?.hardinessZone],
+        yardSubType: [this.stateManagerService.yardItem?.yardSubType]
       });
     } else {
       this.yardFormGroup = this.formBuilder.group({
@@ -88,26 +86,26 @@ export class YardUpdateComponent implements OnInit {
         yardSubType: ['']
       });
     }
-    this.homeService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
+    this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
   }
 
   postYard(): void {
     if (this.yardFormGroup.valid) {
-      if (this.yardService.isPut) {
-        this.httpService.put("yard/" + this.yardService.yardItem?.id, this.yardFormGroup.value).subscribe({
+      if (this.stateManagerService.isPut) {
+        this.httpService.put("yard/" + this.stateManagerService.yardItem?.id, this.yardFormGroup.value).subscribe({
           next: (body) => {
-            this.yardService.yardItem = body as Yard;
+            this.stateManagerService.yardItem = body as Yard;
             this.router.navigate(['/home/yards']).then(r => {
-              this.homeService.breadcrumbText = window.location.pathname;
+              this.stateManagerService.breadcrumbText = window.location.pathname;
             })
           }
         })
       } else {
         this.httpService.post("yards", this.yardFormGroup.value).subscribe({
           next: (body) => {
-            this.yardService.yardItem = body as Yard;
+            this.stateManagerService.yardItem = body as Yard;
             this.router.navigate(['/home/yards']).then(r => {
-              this.homeService.breadcrumbText = window.location.pathname;
+              this.stateManagerService.breadcrumbText = window.location.pathname;
             })
           }
         })

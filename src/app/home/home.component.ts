@@ -8,9 +8,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {LoginComponent} from "../login/login.component";
 import {MatDrawerContainer, MatSidenavModule} from "@angular/material/sidenav";
 import {NgIf} from "@angular/common";
-import {HomeService} from "./home.service";
 import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
-import {YardsService} from "../yards/yards.service";
+import {StateManagerService} from "../state/state-manager.service";
 
 @Component({
   selector: 'app-home',
@@ -35,14 +34,13 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    protected homeService: HomeService,
-    private yardService: YardsService,
+    protected stateManagerService: StateManagerService,
     private jwtAuthenticationService: JwtAuthenticationService
   ) {
   }
 
   ngOnInit(): void {
-    this.homeService.loggedIn = this.jwtAuthenticationService.isLoggedIn();
+    this.stateManagerService.loggedIn = this.jwtAuthenticationService.isLoggedIn();
   }
 
   topOfPage() {
@@ -51,11 +49,10 @@ export class HomeComponent implements OnInit {
 
   addYard() {
     // let's reset just in case a previous yard edit was interrupted and never resolved
-    this.yardService.yardItem = null;
-    this.yardService.isPut = false;
-
+    this.stateManagerService.yardItem = null;
+    this.stateManagerService.isPut = false;
     this.router.navigate(['/home/yardUpdate']).then(r => {
-      this.homeService.breadcrumbText = window.location.pathname;
+      this.stateManagerService.breadcrumbText = window.location.pathname;
     })
   }
 }

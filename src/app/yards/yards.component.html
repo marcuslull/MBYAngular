@@ -9,7 +9,7 @@
   </div>
 
   <div class="cardContainer">
-    @for (yard of this.yardService.yardsList; track yard.id) {
+    @for (yard of this.stateManagerService.yardsList; track yard.id) {
       <mat-card class="card">
 
         <mat-card-header (click)="showYard(yard.id)">
