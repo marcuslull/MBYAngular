@@ -11,7 +11,6 @@ import {Router} from "@angular/router";
 import {MatIcon} from "@angular/material/icon";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../dialog/dialog.component";
-import {HomeService} from "../home/home.service";
 import {DialogService} from "../dialog/dialog.service";
 
 @Component({
@@ -38,16 +37,15 @@ export class YardsComponent implements OnInit {
     protected yardService: YardsService,
     private router: Router,
     protected dialog: MatDialog,
-    private homeService: HomeService,
     private dialogService: DialogService
   ) {
   }
 
   ngOnInit(): void {
     if (this.jwtAuthenticationService.isLoggedIn()) {
-      this.homeService.breadcrumbText = window.location.pathname;
+      this.yardService.breadcrumbText = window.location.pathname;
       this.showYards()
-      this.homeService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
+      this.yardService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
     } else (this.router.navigate(['/login'])).then();
   }
 
@@ -64,7 +62,7 @@ export class YardsComponent implements OnInit {
       next: (body) => {
         this.yardService.yardItem = body as Yard
         this.router.navigate(['/home/yardDetails']).then(r => {
-          this.homeService.breadcrumbText = window.location.pathname;
+          this.yardService.breadcrumbText = window.location.pathname;
         })
       }
     })
@@ -101,7 +99,7 @@ export class YardsComponent implements OnInit {
     this.yardService.yardItem = yard;
     this.yardService.isPut = true;
     this.router.navigate(['/home/yardUpdate']).then(r => {
-        this.homeService.breadcrumbText = window.location.pathname;
+        this.yardService.breadcrumbText = window.location.pathname;
       }
     );
   }

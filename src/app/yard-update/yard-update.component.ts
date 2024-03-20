@@ -9,7 +9,6 @@ import {MatFormField, MatHint, MatInput, MatLabel} from "@angular/material/input
 import {MatIcon} from "@angular/material/icon";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatAnchor, MatButton} from "@angular/material/button";
-import {HomeService} from "../home/home.service";
 import {MatDivider} from "@angular/material/divider";
 import {DialogComponent} from "../dialog/dialog.component";
 import {DialogService} from "../dialog/dialog.service";
@@ -68,7 +67,6 @@ export class YardUpdateComponent implements OnInit {
     private httpService: HttpService,
     protected yardService: YardsService,
     private router: Router,
-    private homeService: HomeService,
     private dialogService: DialogService,
     protected dialog: MatDialog,
   ) {
@@ -88,7 +86,7 @@ export class YardUpdateComponent implements OnInit {
         yardSubType: ['']
       });
     }
-    this.homeService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
+    this.yardService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
   }
 
   postYard(): void {
@@ -98,7 +96,7 @@ export class YardUpdateComponent implements OnInit {
           next: (body) => {
             this.yardService.yardItem = body as Yard;
             this.router.navigate(['/home/yards']).then(r => {
-              this.homeService.breadcrumbText = window.location.pathname;
+              this.yardService.breadcrumbText = window.location.pathname;
             })
           }
         })
@@ -107,7 +105,7 @@ export class YardUpdateComponent implements OnInit {
           next: (body) => {
             this.yardService.yardItem = body as Yard;
             this.router.navigate(['/home/yards']).then(r => {
-              this.homeService.breadcrumbText = window.location.pathname;
+              this.yardService.breadcrumbText = window.location.pathname;
             })
           }
         })

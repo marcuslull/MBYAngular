@@ -6,6 +6,9 @@ import {Note} from "../model/note";
   providedIn: 'root'
 })
 export class YardsService {
+  breadcrumbText: string = "";
+  loggedIn: boolean = false;
+  fabIsDisabled: boolean = false;
   yardsList: Yard[] = [];
   notesList: Note[] = [];
   yardItem: Yard | null = null;

@@ -1,10 +1,10 @@
 <mat-toolbar class="secondary_bar" color="secondary">
-  <button (click)="drawer.toggle()" [disabled]="!this.homeService.loggedIn" mat-icon-button>
+  <button (click)="drawer.toggle()" [disabled]="!this.yardService.loggedIn" mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="breadcrumbs">{{ this.homeService.breadcrumbText }}</span>
+  <span class="breadcrumbs">{{ this.yardService.breadcrumbText }}</span>
   <span class="spacer"></span>
-  <span [hidden]="this.homeService.loggedIn" class="loginWarning">Please login before continuing ^^^</span>
+  <span [hidden]="this.yardService.loggedIn" class="loginWarning">Please login before continuing ^^^</span>
 </mat-toolbar>
 
 
@@ -33,7 +33,7 @@
 </mat-sidenav-container>
 
 <div class="fabContainer">
-  <button (click)="addYard()" [disabled]="!this.homeService.loggedIn || this.homeService.fabIsDisabled"
+  <button (click)="addYard()" [disabled]="!this.yardService.loggedIn || this.yardService.fabIsDisabled"
           class="fabButton" color="primary" mat-fab>
     <mat-icon>add</mat-icon>
   </button>
