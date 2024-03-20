@@ -6,12 +6,12 @@ import {JwtAuthenticationService} from "../authentication/jwt-authentication.ser
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
-import {YardsService} from "./yards.service";
 import {Router} from "@angular/router";
 import {MatIcon} from "@angular/material/icon";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../dialog/dialog.component";
 import {DialogService} from "../dialog/dialog.service";
+import {StateManagerService} from "../state/state-manager.service";
 
 @Component({
   selector: 'app-yards',
@@ -34,7 +34,7 @@ export class YardsComponent implements OnInit {
   constructor(
     private httpService: HttpService,
     private jwtAuthenticationService: JwtAuthenticationService,
-    protected yardService: YardsService,
+    protected stateManagerService: StateManagerService,
     private router: Router,
     protected dialog: MatDialog,
     private dialogService: DialogService
@@ -43,16 +43,16 @@ export class YardsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.jwtAuthenticationService.isLoggedIn()) {
-      this.yardService.breadcrumbText = window.location.pathname;
+      this.stateManagerService.breadcrumbText = window.location.pathname;
       this.showYards()
-      this.yardService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
+      this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
     } else (this.router.navigate(['/login'])).then();
   }
 
   showYards(): void {
     this.httpService.getAll("yards").subscribe({
       next: (body) => {
-        this.yardService.yardsList = body as Yard[];
+        this.stateManagerService.yardsList = body as Yard[];
       }
     })
   }
@@ -60,16 +60,16 @@ export class YardsComponent implements OnInit {
   showYard(yardId: number | null): void {
     this.httpService.get("yard/" + yardId).subscribe({
       next: (body) => {
-        this.yardService.yardItem = body as Yard
+        this.stateManagerService.yardItem = body as Yard
         this.router.navigate(['/home/yardDetails']).then(r => {
-          this.yardService.breadcrumbText = window.location.pathname;
+          this.stateManagerService.breadcrumbText = window.location.pathname;
         })
       }
     })
   }
 
   openDeleteDialog(yardId: number | null, enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.yardService.deleteYardId = yardId;
+    this.stateManagerService.deleteYardId = yardId;
     this.dialogService.title = "Delete Yard";
     this.dialogService.content = "Are you sure you want to delete yard: " + yardId + "?";
     this.dialogService.image = null;
@@ -96,10 +96,10 @@ export class YardsComponent implements OnInit {
   }
 
   editYard(yard: Yard) {
-    this.yardService.yardItem = yard;
-    this.yardService.isPut = true;
+    this.stateManagerService.yardItem = yard;
+    this.stateManagerService.isPut = true;
     this.router.navigate(['/home/yardUpdate']).then(r => {
-        this.yardService.breadcrumbText = window.location.pathname;
+        this.stateManagerService.breadcrumbText = window.location.pathname;
       }
     );
   }

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NgIf} from "@angular/common";
-import {YardsService} from "../yards/yards.service";
 import {MatList, MatListItem} from "@angular/material/list";
 import {MatDivider} from "@angular/material/divider";
 import {MatTab, MatTabGroup, MatTabLabel} from "@angular/material/tabs";
@@ -18,6 +17,7 @@ import {
 } from "@angular/material/expansion";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
+import {StateManagerService} from "../state/state-manager.service";
 
 @Component({
   selector: 'app-yard-details',
@@ -51,24 +51,24 @@ export class YardDetailsComponent implements OnInit {
 
 
   constructor(
-    protected yardService: YardsService,
+    protected stateManagerService: StateManagerService,
     private httpService: HttpService
   ) {
   }
 
   ngOnInit(): void {
-    this.httpService.get("yard/" + this.yardService.yardItem?.id + "/notes").subscribe({
+    this.httpService.get("yard/" + this.stateManagerService.yardItem?.id + "/notes").subscribe({
       next: body => {
-        this.yardService.notesList = body as Note[];
+        this.stateManagerService.notesList = body as Note[];
       }
     })
   }
 
   saveNote() {
-    const note: Note = {comment: this.newNoteInput, yardId: this.yardService.yardItem?.id};
+    const note: Note = {comment: this.newNoteInput, yardId: this.stateManagerService.yardItem?.id};
     this.httpService.post("notes", note).subscribe({
       next: body => {
-        this.yardService.notesList[this.yardService.notesList.length] = body as Note;
+        this.stateManagerService.notesList[this.stateManagerService.notesList.length] = body as Note;
         this.newNoteInput = '';
       }
     })
@@ -77,9 +77,9 @@ export class YardDetailsComponent implements OnInit {
   deleteNote(id: number | null | undefined) {
     this.httpService.delete("note/" + id).subscribe({
       next: value => {
-        for (let num = 0; num < this.yardService.notesList.length; num++) {
-          if (this.yardService.notesList[num].id === id) {
-            this.yardService.notesList.splice(num, 1);
+        for (let num = 0; num < this.stateManagerService.notesList.length; num++) {
+          if (this.stateManagerService.notesList[num].id === id) {
+            this.stateManagerService.notesList.splice(num, 1);
           }
         }
       }
