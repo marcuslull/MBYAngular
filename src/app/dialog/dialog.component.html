@@ -1,11 +1,20 @@
-<h2 mat-dialog-title>{{ this.dialogService.title }}</h2>
+<h2 mat-dialog-title>
+  <span class="textColor">
+    {{ this.dialogService.title }}
+  </span>
+</h2>
 <mat-dialog-content>
-  {{ this.dialogService.content }}
+  <span class="textColor">
+    {{ this.dialogService.content }}
+  </span>
   <img *ngIf="this.dialogService.image" [src]="this.dialogService.image" alt="" class="dialogImage" mat-card-image>
 </mat-dialog-content>
+
 <mat-dialog-actions align="end">
-  <button *ngIf="this.dialogService.closeButton" mat-button mat-dialog-close>CLOSE</button>
+  <button *ngIf="this.dialogService.closeButton" mat-button mat-dialog-close>
+    <span class="textColor">Edit</span>
+  </button>
   <button *ngIf="this.dialogService.deleteButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
-    DELETE
+    <span class="textColor">Delete</span>
   </button>
 </mat-dialog-actions>

@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --backgroundColor: rgba(224, 223, 205, 0.6);
+  --textColor: #48433e;
+}
 
 html, body {
   height: 100%;
@@ -6,5 +10,13 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Libre Baskerville", "Helvetica Neue", sans-serif;
+}
+
+.backgroundColor {
+  background-color: var(--backgroundColor);
+}
+
+.textColor {
+  color: var(--textColor);
 }

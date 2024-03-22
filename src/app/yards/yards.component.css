@@ -5,10 +5,6 @@
   flex-direction: column;
 }
 
-.inDevMessage {
-  color: indianred;
-}
-
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
@@ -17,11 +13,16 @@
 
 .card {
   width: 300px;
-  margin-top: 40px;
   margin-right: 5%;
+  margin-top: 75px;
+  box-shadow: 3px 3px 20px 0;
 }
 
 .header-image {
   background-image: url('/assets/image/pine.png');
   background-size: cover;
+}
+
+.cardImage {
+  padding: 5%;
 }

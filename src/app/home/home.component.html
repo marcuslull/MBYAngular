@@ -1,4 +1,4 @@
-<mat-toolbar class="secondary_bar" color="secondary">
+<mat-toolbar class="secondary_bar" color="accent">
   <button (click)="drawer.toggle()" [disabled]="!this.stateManagerService.loggedIn" mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
@@ -34,7 +34,7 @@
 
 <div class="fabContainer">
   <button (click)="addYard()" [disabled]="!this.stateManagerService.loggedIn || this.stateManagerService.fabIsDisabled"
-          class="fabButton" color="primary" mat-fab>
+          class="fabButton" color="accent" mat-fab>
     <mat-icon>add</mat-icon>
   </button>
 </div>

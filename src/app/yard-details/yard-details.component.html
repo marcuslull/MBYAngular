@@ -1,21 +1,30 @@
-<mat-tab-group dynamicHeight>
+<mat-tab-group color="accent" dynamicHeight>
   <mat-tab>
     <ng-template mat-tab-label>
       <mat-icon>list</mat-icon>
-      &nbsp;Details
+      &nbsp; Details
     </ng-template>
-    <div class="yardDetailsContainer">
+    <div class="yardDetailsContainer textColor">
       <h2>Yard Details</h2>
 
       <mat-list>
-        <mat-list-item><span class="titleSpan">ID: </span>{{ this.stateManagerService.yardItem?.id }}</mat-list-item>
-        <mat-list-item><span class="titleSpan">Name: </span>{{ this.stateManagerService.yardItem?.name }}
+        <mat-list-item><span class="titleSpan textColor">ID: </span>
+          <span class="textColor">
+            {{ this.stateManagerService.yardItem?.id }}
+          </span></mat-list-item>
+        <mat-list-item><span class="titleSpan textColor">Name: </span>
+          <span class="textColor">
+            {{ this.stateManagerService.yardItem?.name }}
+          </span></mat-list-item>
+        <mat-list-item><span class="titleSpan textColor">Type: </span>
+          <span class="textColor">
+            {{ this.stateManagerService.yardItem?.yardSubType }}
+          </span>
         </mat-list-item>
-        <mat-list-item><span class="titleSpan">Type: </span>{{ this.stateManagerService.yardItem?.yardSubType }}
-        </mat-list-item>
-        <mat-list-item><span
-          class="titleSpan">Hardiness zone: </span>{{ this.stateManagerService.yardItem?.hardinessZone }}
-        </mat-list-item>
+        <mat-list-item><span class="titleSpan textColor">Hardiness zone: </span>
+          <span class="textColor">
+            {{ this.stateManagerService.yardItem?.hardinessZone }}
+          </span></mat-list-item>
       </mat-list>
 
       <mat-divider></mat-divider>
@@ -27,9 +36,9 @@
         <div class="currentNotesContainer">
           @for (note of this.stateManagerService.notesList; track note.id) {
             <ul>
-              <li><span class="noteLineItem">{{ note.comment }}</span>
+              <li><span class="noteLineItem textColor">{{ note.comment }}</span>
                 <button class="noteDeleteIcon" (click)="deleteNote(note.id)" mat-icon-button>
-                  <mat-icon color="warn">delete</mat-icon>
+                  <mat-icon color="accent">delete</mat-icon>
                 </button>
               </li>
 
@@ -40,9 +49,11 @@
         <div class="newNoteContainer">
           <mat-accordion>
             <mat-expansion-panel>
-              <mat-expansion-panel-header>
+              <mat-expansion-panel-header class="backgroundColor">
                 <mat-panel-title>
-                  Add Notes
+                  <span class="textColor">
+                    Add Notes
+                  </span>
                 </mat-panel-title>
                 <mat-panel-description>
                   Add a new note
@@ -50,12 +61,12 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
 
-              <mat-form-field class="newNoteField">
+              <mat-form-field class="newNoteField" color="accent">
                 <mat-label>New note</mat-label>
                 <textarea [(ngModel)]="newNoteInput" matInput type="text"></textarea>
               </mat-form-field>
 
-              <button (click)="saveNote()" class="newNoteButton" color="primary" mat-raised-button>Save</button>
+              <button (click)="saveNote()" class="newNoteButton" color="accent" mat-raised-button>Save</button>
 
             </mat-expansion-panel>
           </mat-accordion>
@@ -70,7 +81,7 @@
       <mat-icon>text_snippet</mat-icon>
       &nbsp;Calendar
     </ng-template>
-    <div class="yardDetailsContainer">
+    <div class="yardDetailsContainer textColor">
       <h2>Calendar - COMING SOON!</h2>
     </div>
   </mat-tab>
@@ -80,7 +91,7 @@
       <mat-icon>place</mat-icon>
       &nbsp;Map
     </ng-template>
-    <div class="yardDetailsContainer">
+    <div class="yardDetailsContainer textColor">
       <h2>Map - COMING SOON!</h2>
     </div>
   </mat-tab>
@@ -90,7 +101,7 @@
       <mat-icon>forest</mat-icon>
       &nbsp;Plants
     </ng-template>
-    <div class="yardDetailsContainer">
+    <div class="yardDetailsContainer textColor">
       <h2>Plants - COMING SOON!</h2>
     </div>
   </mat-tab>
@@ -100,7 +111,7 @@
       <mat-icon>pets</mat-icon>
       &nbsp;Animals
     </ng-template>
-    <div class="yardDetailsContainer">
+    <div class="yardDetailsContainer textColor">
       <h2>Animals - COMING SOON!</h2>
     </div>
   </mat-tab>

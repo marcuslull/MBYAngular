@@ -1,0 +1,88 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$pri: #48433E;
+$acc: #927838;
+$txtl: #f6f4f3;
+$txtd: #171312;
+
+$primary: (
+  100: #dcd9d7,
+  200: #b9b4ae,
+  300: #968e86,
+  400: #6f6861,
+  500: #48433e,
+  600: #393531,
+  700: #2b2825,
+  800: #1c1b19,
+  900: #0e0d0c,
+  contrast: (
+    100: $txtd,
+    200: $txtd,
+    300: $txtd,
+    400: $txtd,
+    500: $txtl,
+    600: $txtl,
+    700: $txtl,
+    800: $txtl,
+    900: $txtl,
+  )
+);
+$MBYAngular-primary: mat.define-palette($primary, 500, 200, 800);
+
+$accent: (
+  100: #eee6d3,
+  200: #ddcea6,
+  300: #cdb57a,
+  400: #bc9c4e,
+  500: #927838,
+  600: #76622d,
+  700: #594922,
+  800: #3b3116,
+  900: #1e180b,
+  contrast: (
+    50: $txtd,
+    100: $txtd,
+    200: $txtd,
+    300: $txtd,
+    400: $txtd,
+    500: $txtl,
+    600: $txtl,
+    700: $txtl,
+    800: $txtl,
+    900: $txtl,
+    950: $txtl,
+  )
+);
+$MBYAngular-accent: mat.define-palette($accent, 600, 200, 800);
+
+// The warn palette is optional (defaults to red).
+$MBYAngular-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+
+$MBYAngular-theme: mat.define-light-theme((
+  color: (
+    primary: $MBYAngular-primary,
+    accent: $MBYAngular-accent,
+    warn: $MBYAngular-warn,
+  ),
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($MBYAngular-theme);
+
