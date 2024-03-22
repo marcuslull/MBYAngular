@@ -1,32 +1,33 @@
 <div class="registerContainer">
 
-  <h2>Register Form <span class="demoSpan">(Currently Disabled - Use the demo creds on the login page)</span></h2>
+  <h2 class="textColor">Register Form <span
+    class="demoSpan">(Currently Disabled - Use the demo creds on the login page)</span></h2>
 
   <!--    <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="registerForm">-->
   <form [formGroup]="registerForm" class="registerForm">
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" color="accent">
       <mat-label for="registerEmail">Email</mat-label>
-      <input formControlName="email" id="registerEmail" matInput type="email">
+      <input class="textColor" formControlName="email" id="registerEmail" matInput type="email">
       <mat-icon matSuffix>email</mat-icon>
       <mat-hint></mat-hint>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" color="accent">
       <mat-label for="registerPassword">Password</mat-label>
       <input formControlName="password" id="registerPassword" matInput type="password">
       <mat-icon matSuffix>password</mat-icon>
       <mat-hint></mat-hint>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" color="accent">
       <mat-label for="registerRole">Role</mat-label>
       <input formControlName="role" id="registerRole" matInput type="text">
       <mat-icon matSuffix>role</mat-icon>
       <mat-hint></mat-hint>
     </mat-form-field>
 
-    <button [disabled]="registerForm.invalid" class="registerButton" color="primary" mat-raised-button type="submit">
+    <button [disabled]="registerForm.invalid" class="registerButton" color="accent" mat-raised-button type="submit">
       Submit
     </button>
 

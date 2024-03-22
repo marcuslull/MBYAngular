@@ -1,7 +1,7 @@
 <div class="yardsContainer">
 
 
-  <div class="inDevMessage">
+  <div class="textColor">
     <h2>In Early Development</h2>
     <p>Please find more info here: <a href="https://github.com/marcuslull/MBYAngular" target="_blank">Github
       repository</a></p>
@@ -12,20 +12,20 @@
     @for (yard of this.stateManagerService.yardsList; track yard.id) {
       <mat-card class="card">
 
-        <mat-card-header (click)="showYard(yard.id)">
+        <mat-card-header class="backgroundColor textColor" (click)="showYard(yard.id)">
           <div mat-card-avatar class="header-image"></div>
           <mat-card-title>{{ yard.name }}</mat-card-title>
           <mat-card-subtitle>{{ yard.yardSubType }}</mat-card-subtitle>
         </mat-card-header>
 
-        <img mat-card-image src="/assets/image/yard.png" (click)="showYard(yard.id)">
+        <img class="cardImage backgroundColor" mat-card-image src="/assets/image/yard.png" (click)="showYard(yard.id)">
 
         <mat-card-content></mat-card-content>
 
-        <mat-card-actions>
-          <button mat-button (click)="editYard(yard)">EDIT</button>
-          <button mat-button (click)="openDeleteDialog(yard.id, '200ms', '0ms')">
-            DELETE
+        <mat-card-actions class="backgroundColor">
+          <button mat-button (click)="editYard(yard)"><span class="textColor">Edit</span></button>
+          <button class="textColor" mat-button (click)="openDeleteDialog(yard.id, '200ms', '0ms')">
+            <span class="textColor">Delete</span>
           </button>
         </mat-card-actions>
 
