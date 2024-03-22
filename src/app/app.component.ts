@@ -33,13 +33,19 @@ export class AppComponent {
   title = 'My BackYard';
 
   constructor(
-    private stateManagementService: StateManagerService,
+    private stateManagerService: StateManagerService,
     private router: Router
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.stateManagementService.retrieveState();
+        this.stateManagerService.retrieveState();
       }
+    })
+  }
+
+  navigateToYards(): void {
+    this.router.navigate(["/home/yards"]).then(r => {
+      this.stateManagerService.breadcrumbText = window.location.pathname;
     })
   }
 }

@@ -86,7 +86,6 @@ export class YardUpdateComponent implements OnInit {
         yardSubType: ['']
       });
     }
-    this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
   }
 
   postYard(): void {
@@ -94,8 +93,8 @@ export class YardUpdateComponent implements OnInit {
       if (this.stateManagerService.isPut) {
         this.httpService.put("yard/" + this.stateManagerService.yardItem?.id, this.yardFormGroup.value).subscribe({
           next: (body) => {
-            this.stateManagerService.yardItem = body as Yard;
             this.router.navigate(['/home/yards']).then(r => {
+              this.stateManagerService.yardItem = body as Yard;
               this.stateManagerService.breadcrumbText = window.location.pathname;
             })
           }
@@ -103,8 +102,8 @@ export class YardUpdateComponent implements OnInit {
       } else {
         this.httpService.post("yards", this.yardFormGroup.value).subscribe({
           next: (body) => {
-            this.stateManagerService.yardItem = body as Yard;
             this.router.navigate(['/home/yards']).then(r => {
+              this.stateManagerService.yardItem = body as Yard;
               this.stateManagerService.breadcrumbText = window.location.pathname;
             })
           }
