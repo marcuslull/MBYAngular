@@ -8,7 +8,6 @@
 .demoSpan {
   font-weight: lighter;
   font-size: medium;
-  color: indianred;
 }
 
 .loginForm {
@@ -23,7 +22,6 @@
 
 .loginError {
   font-size: large;
-  color: indianred;
   margin-top: 20px;
 }
 

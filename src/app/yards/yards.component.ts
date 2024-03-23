@@ -106,4 +106,8 @@ export class YardsComponent implements OnInit {
       }
     );
   }
+
+  getLabel(yardSubType: string | null) {
+    return this.stateManagerService.yardSubType.find(option => option.value === yardSubType)?.label;
+  }
 }

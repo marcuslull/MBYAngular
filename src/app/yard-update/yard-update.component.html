@@ -18,7 +18,7 @@
     <mat-form-field appearance="outline" color="accent">
       <mat-label>Hardiness zone</mat-label>
       <mat-select formControlName="hardinessZone">
-        @for (option of hardinessZone; track $index) {
+        @for (option of this.stateManagerService.hardinessZone; track $index) {
           <mat-option [value]="option.value">{{ option.label }}</mat-option>
         }
       </mat-select>
@@ -29,7 +29,7 @@
     <mat-form-field appearance="outline" color="accent">
       <mat-label>Subtype</mat-label>
       <mat-select formControlName="yardSubType">
-        @for (option of yardSubType; track $index) {
+        @for (option of this.stateManagerService.yardSubType; track $index) {
           <mat-option [value]="option.value">{{ option.label }}</mat-option>
         }
       </mat-select>
