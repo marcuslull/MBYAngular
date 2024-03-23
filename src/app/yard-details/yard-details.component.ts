@@ -85,4 +85,12 @@ export class YardDetailsComponent implements OnInit {
       }
     })
   }
+
+  getLabel(value: string | null | undefined, arrayToCheck: string) {
+    // I cannot figure out how to do this in TS
+    // @ts-ignore
+    const targetArray: string[] = this.stateManagerService[arrayToCheck]
+    // @ts-ignore
+    return targetArray.find(option => option.value === value)?.label;
+  }
 }

@@ -18,12 +18,12 @@
           </span></mat-list-item>
         <mat-list-item><span class="titleSpan textColor">Type: </span>
           <span class="textColor">
-            {{ this.stateManagerService.yardItem?.yardSubType }}
+            {{ this.getLabel(this.stateManagerService.yardItem?.yardSubType, "yardSubType") }}
           </span>
         </mat-list-item>
         <mat-list-item><span class="titleSpan textColor">Hardiness zone: </span>
           <span class="textColor">
-            {{ this.stateManagerService.yardItem?.hardinessZone }}
+            {{ this.getLabel(this.stateManagerService.yardItem?.hardinessZone, "hardinessZone") }}
           </span></mat-list-item>
       </mat-list>
 

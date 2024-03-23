@@ -55,7 +55,8 @@ export class LoginComponent implements OnInit {
           next: (body) => {
             this.spinnerAndSubmitToggle = false;
             this.jwtAuthenticationService.setJwtToken(body);
-            this.router.navigate(["/home/yards"])
+            this.router.navigate(["/home/yards"]).then(r => {
+            })
           },
           error: () => {
             this.errorMessage = "Invalid username or password"

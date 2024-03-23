@@ -43,10 +43,12 @@ export class YardsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.jwtAuthenticationService.isLoggedIn()) {
-      this.stateManagerService.breadcrumbText = window.location.pathname;
       this.showYards()
       this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
-    } else (this.router.navigate(['/login'])).then();
+    } else {
+      this.router.navigate(['/login']).then(r => {
+      });
+    }
   }
 
   showYards(): void {
@@ -60,8 +62,8 @@ export class YardsComponent implements OnInit {
   showYard(yardId: number | null): void {
     this.httpService.get("yard/" + yardId).subscribe({
       next: (body) => {
-        this.stateManagerService.yardItem = body as Yard
         this.router.navigate(['/home/yardDetails']).then(r => {
+          this.stateManagerService.yardItem = body as Yard
           this.stateManagerService.breadcrumbText = window.location.pathname;
         })
       }
@@ -96,11 +98,16 @@ export class YardsComponent implements OnInit {
   }
 
   editYard(yard: Yard) {
-    this.stateManagerService.yardItem = yard;
-    this.stateManagerService.isPut = true;
     this.router.navigate(['/home/yardUpdate']).then(r => {
         this.stateManagerService.breadcrumbText = window.location.pathname;
+        this.stateManagerService.yardItem = yard;
+        this.stateManagerService.isPut = true;
+        this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
       }
     );
+  }
+
+  getLabel(yardSubType: string | null) {
+    return this.stateManagerService.yardSubType.find(option => option.value === yardSubType)?.label;
   }
 }

@@ -15,7 +15,7 @@
         <mat-card-header class="backgroundColor textColor" (click)="showYard(yard.id)">
           <div mat-card-avatar class="header-image"></div>
           <mat-card-title>{{ yard.name }}</mat-card-title>
-          <mat-card-subtitle>{{ yard.yardSubType }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ getLabel(yard.yardSubType) }}</mat-card-subtitle>
         </mat-card-header>
 
         <img class="cardImage backgroundColor" mat-card-image src="/assets/image/yard.png" (click)="showYard(yard.id)">

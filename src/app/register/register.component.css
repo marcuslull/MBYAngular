@@ -8,7 +8,6 @@
 .demoSpan {
   font-weight: lighter;
   font-size: medium;
-  color: indianred;
 }
 
 .registerForm {
@@ -23,6 +22,5 @@
 
 .registerError {
   font-size: large;
-  color: indianred;
   margin-top: 20px;
 }

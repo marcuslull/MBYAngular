@@ -68,7 +68,7 @@ $accent: (
 $MBYAngular-accent: mat.define-palette($accent, 600, 200, 800);
 
 // The warn palette is optional (defaults to red).
-$MBYAngular-warn: mat.define-palette(mat.$red-palette);
+$MBYAngular-warn: mat.define-palette(mat.$green-palette, 700);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".

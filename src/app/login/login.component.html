@@ -1,6 +1,7 @@
 <div class="loginContainer">
 
-  <h2 class="textColor">Login Form <span class="demoSpan">(Demo Creds: user&#64;email.com - password)</span></h2>
+  <h2 class="textColor">Login Form <span class="demoSpan warning">(Demo Creds: user&#64;email.com - password)</span>
+  </h2>
 
   <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="loginForm">
 
@@ -24,7 +25,7 @@
     </button>
 
   </form>
-  <div *ngIf="errorMessage" class="loginError">{{ errorMessage }}</div>
+  <div *ngIf="errorMessage" class="loginError warning">{{ errorMessage }}</div>
 
 </div>
 

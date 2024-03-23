@@ -38,7 +38,8 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       this.httpService.postRegistration("register", this.registerForm.value).subscribe({
         next: () => {
-          this.router.navigate(["/login"])
+          this.router.navigate(["/login"]).then(r => {
+          })
         },
         error: () => {
           this.errorMessage = "Conflict: User already exists"
