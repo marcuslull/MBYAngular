@@ -7,27 +7,40 @@
     <div class="yardDetailsContainer textColor">
       <h2>Yard Details</h2>
 
-      <mat-list>
-        <mat-list-item><span class="titleSpan textColor">ID: </span>
-          <span class="textColor">
+      <div class="detailsContent">
+        <div class="detailsContainer">
+          <mat-list>
+            <mat-list-item><span class="titleSpan textColor">ID: </span>
+              <span class="textColor">
             {{ this.stateManagerService.yardItem?.id }}
           </span></mat-list-item>
-        <mat-list-item><span class="titleSpan textColor">Name: </span>
-          <span class="textColor">
+            <mat-list-item><span class="titleSpan textColor">Name: </span>
+              <span class="textColor">
             {{ this.stateManagerService.yardItem?.name }}
           </span></mat-list-item>
-        <mat-list-item><span class="titleSpan textColor">Type: </span>
-          <span class="textColor">
+            <mat-list-item><span class="titleSpan textColor">Type: </span>
+              <span class="textColor">
             {{ this.getLabel(this.stateManagerService.yardItem?.yardSubType, "yardSubType") }}
           </span>
-        </mat-list-item>
-        <mat-list-item><span class="titleSpan textColor">Hardiness zone: </span>
-          <span class="textColor">
+            </mat-list-item>
+            <mat-list-item><span class="titleSpan textColor">Hardiness zone: </span>
+              <span class="textColor">
             {{ this.getLabel(this.stateManagerService.yardItem?.hardinessZone, "hardinessZone") }}
           </span></mat-list-item>
-      </mat-list>
+          </mat-list>
+        </div>
+
+        <div class="thumbnailPickerContainer">
+          <h3 class="thumbnailPickerTitle">Thumbnail Image</h3>
+
+          <img class="cardImage backgroundColor" mat-card-image src="assets/image/yard.png">
+
+        </div>
+      </div>
+
 
       <mat-divider></mat-divider>
+
 
       <h3 class="notesTitle">Notes:</h3>
 

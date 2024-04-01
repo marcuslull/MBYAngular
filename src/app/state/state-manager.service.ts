@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Yard} from "../model/yard";
 import {Note} from "../model/note";
+import {Image} from "../model/image";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateManagerService {
+
   loggedIn: boolean = false;
   fabIsDisabled: boolean = false;
   deleteYardId: number | null = null;
@@ -33,26 +35,14 @@ export class StateManagerService {
     {value: 'SUB_SECTION', label: 'Sub Section'}
   ];
 
-  // we are going private here, so we can detect any change through the setter. This is key for the state manager.
-  private _breadcrumbText: string = "";
+  private _yardItem: Yard | null = null;
 
-  get breadcrumbText(): string {
-    return this._breadcrumbText;
+  get yardItem(): Yard | null {
+    return this._yardItem;
   }
 
-  set breadcrumbText(value: string) {
-    this._breadcrumbText = value;
-    this.saveState();
-  }
-
-  private _yardsList: Yard[] = [];
-
-  get yardsList(): Yard[] {
-    return this._yardsList;
-  }
-
-  set yardsList(value: Yard[]) {
-    this._yardsList = value;
+  set yardItem(value: Yard | null) {
+    this._yardItem = value;
     this.saveState();
   }
 
@@ -67,15 +57,36 @@ export class StateManagerService {
     this.saveState();
   }
 
-  private _yardItem: Yard | null = null;
+  private _yardsList: Yard[] = [];
 
-  get yardItem(): Yard | null {
-    return this._yardItem;
+  get yardsList(): Yard[] {
+    return this._yardsList;
   }
 
-  set yardItem(value: Yard | null) {
-    this._yardItem = value;
+  set yardsList(value: Yard[]) {
+    this._yardsList = value;
     this.saveState();
+  }
+
+  private _breadcrumbText: string = "";
+
+  get breadcrumbText(): string {
+    return this._breadcrumbText;
+  }
+
+  set breadcrumbText(value: string) {
+    this._breadcrumbText = value;
+    this.saveState();
+  }
+
+  private _imageList: Image[] = [];
+
+  get imageList(): Image[] {
+    return this._imageList;
+  }
+
+  set imageList(value: Image[]) {
+    this._imageList = value;
   }
 
   retrieveState() {

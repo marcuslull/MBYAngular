@@ -8,5 +8,6 @@ export interface Yard {
   noteIds: string | null,
   plantIds: number[] | null,
   animalIds: number[] | null,
-  userEmail: string | null
+  userEmail: string | null,
+  thumbnailImageId: number | null
 }

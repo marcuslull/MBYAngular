@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
 import {Router} from "@angular/router";
@@ -9,8 +9,8 @@ import {User} from "../model/user";
   providedIn: 'root'
 })
 export class HttpService {
-  private baseUrl: string = "https://mbyapisec-7cxa644xka-uc.a.run.app/"
-  // private baseUrl: string = "http://localhost:8080/"
+  // private baseUrl: string = "https://mbyapisec-7cxa644xka-uc.a.run.app/"
+  private baseUrl: string = "http://localhost:8080/"
   private apiUrl: string = "api/"
 
   private email: string = "";
@@ -50,6 +50,15 @@ export class HttpService {
     this.checkLogonStatus();
     let path: string = this.baseUrl + this.apiUrl + endpoint;
     return this.httpClient.post(path, object);
+  }
+
+  multipartPost(endpoint: string, file: File): Observable<object> {
+    this.checkLogonStatus();
+    const path: string = this.baseUrl + this.apiUrl + endpoint + "?file=" + file.name;
+    const httpOptions = {headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})};
+    const formData: FormData = new FormData();
+    formData.append("file", file, file.name); // Content-Disposition: form-data; name="file"; filename="Screenshot.png"
+    return this.httpClient.post(path, formData, httpOptions);
   }
 
   put(endpoint: string, object: Object): Observable<object> {

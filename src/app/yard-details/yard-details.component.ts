@@ -18,6 +18,16 @@ import {
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
 import {StateManagerService} from "../state/state-manager.service";
+import {
+  MatCard,
+  MatCardActions,
+  MatCardAvatar,
+  MatCardContent,
+  MatCardHeader,
+  MatCardImage,
+  MatCardSubtitle,
+  MatCardTitle
+} from "@angular/material/card";
 
 @Component({
   selector: 'app-yard-details',
@@ -41,7 +51,15 @@ import {StateManagerService} from "../state/state-manager.service";
     MatExpansionModule,
     MatButton,
     FormsModule,
-    MatIconButton
+    MatIconButton,
+    MatCard,
+    MatCardActions,
+    MatCardAvatar,
+    MatCardContent,
+    MatCardHeader,
+    MatCardImage,
+    MatCardSubtitle,
+    MatCardTitle
   ],
   templateUrl: './yard-details.component.html',
   styleUrl: './yard-details.component.css'

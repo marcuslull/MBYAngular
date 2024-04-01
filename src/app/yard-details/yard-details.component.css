@@ -8,6 +8,12 @@
   margin-right: 1%;
 }
 
+.detailsContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .notesTitle {
   margin-top: 50px;
 }
