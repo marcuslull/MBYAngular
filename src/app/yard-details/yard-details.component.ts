@@ -28,6 +28,9 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from "@angular/material/card";
+import {DialogService} from "../dialog/dialog.service";
+import {DialogComponent} from "../dialog/dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-yard-details',
@@ -70,7 +73,9 @@ export class YardDetailsComponent implements OnInit {
 
   constructor(
     protected stateManagerService: StateManagerService,
-    private httpService: HttpService
+    protected dialog: MatDialog,
+    private httpService: HttpService,
+    private dialogService: DialogService
   ) {
   }
 
@@ -110,5 +115,24 @@ export class YardDetailsComponent implements OnInit {
     const targetArray: string[] = this.stateManagerService[arrayToCheck]
     // @ts-ignore
     return targetArray.find(option => option.value === value)?.label;
+  }
+
+  openThumbnailUpdateDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
+    this.dialogService.title = "Update Thumbnail Image"
+    this.dialogService.content = "Select or upload a new image, then click save"
+    this.dialogService.closeButton = false;
+    this.dialogService.deleteButton = false;
+    this.dialogService.uploadButton = true;
+    this.dialogService.saveButton = true;
+    let dialogReference = this.dialog.open(DialogComponent, {
+      width: '80%',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogReference.beforeClosed().subscribe(result => {
+      if (result) {
+        // TODO: set the yards thumbnail
+      }
+    })
   }
 }

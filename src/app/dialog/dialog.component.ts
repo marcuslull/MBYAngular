@@ -2,8 +2,11 @@ import {Component} from '@angular/core';
 import {MatButton, MatButtonModule} from "@angular/material/button";
 import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import {DialogService} from "./dialog.service";
-import {NgIf} from "@angular/common";
+import {NgIf, NgOptimizedImage} from "@angular/common";
 import {MatCardImage} from "@angular/material/card";
+import {Image} from "../model/image";
+import {StateManagerService} from "../state/state-manager.service";
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-dialog',
@@ -16,16 +19,20 @@ import {MatCardImage} from "@angular/material/card";
     MatDialogContent,
     MatDialogTitle,
     NgIf,
-    MatCardImage
+    MatCardImage,
+    NgOptimizedImage
   ],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.css'
 })
 export class DialogComponent {
 
+  protected readonly Image = Image;
+  protected readonly of = of;
+
   constructor(
-    protected dialogService: DialogService
+    protected dialogService: DialogService,
+    protected stateManagerService: StateManagerService
   ) {
   }
-
 }

@@ -31,9 +31,14 @@
         </div>
 
         <div class="thumbnailPickerContainer">
-          <h3 class="thumbnailPickerTitle">Thumbnail Image</h3>
+          <div class="thumbnailTitleContainer">
+            <span class="thumbnailPickerTitle">Thumbnail Image</span>
+            <button (click)="openThumbnailUpdateDialog('200ms', '0ms')" class="thumbnailUpdateButton" mat-icon-button>
+              <mat-icon color="accent">edit</mat-icon>
+            </button>
+          </div>
 
-          <img class="cardImage backgroundColor" mat-card-image src="assets/image/yard.png">
+          <img class="thumbnailImage" mat-card-image src="assets/image/yard.png">
 
         </div>
       </div>

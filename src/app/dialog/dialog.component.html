@@ -8,6 +8,9 @@
     {{ this.dialogService.content }}
   </span>
   <img *ngIf="this.dialogService.image" [src]="this.dialogService.image" alt="" class="dialogImage" mat-card-image>
+  @for (image of this.stateManagerService.imageList; track image.id) {
+    <img [src]="image" mat-card-image alt="" class="image">
+  }
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
@@ -16,5 +19,12 @@
   </button>
   <button *ngIf="this.dialogService.deleteButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
     <span class="textColor">Delete</span>
+  </button>
+  <button *ngIf="this.dialogService.uploadButton" [mat-dialog-close]="false" cdkFocusInitial mat-button
+          mat-dialog-close>
+    <span class="textColor">Upload</span>
+  </button>
+  <button *ngIf="this.dialogService.saveButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
+    <span class="textColor">Save</span>
   </button>
 </mat-dialog-actions>

@@ -9,4 +9,6 @@ export class DialogService {
   image: string | null = null;
   closeButton: boolean = true;
   deleteButton: boolean = true;
+  saveButton: boolean = false;
+  uploadButton: boolean = false;
 }

@@ -12,6 +12,26 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.detailsContainer {
+  margin-top: 30px;
+  flex-grow: 2;
+}
+
+.thumbnailTitleContainer {
+  display: flex;
+  align-items: center;
+}
+
+.thumbnailUpdateButton {
+  margin-left: 15px;
+}
+
+.thumbnailImage {
+  width: 200px;
 }
 
 .notesTitle {
