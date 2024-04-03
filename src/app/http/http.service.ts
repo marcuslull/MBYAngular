@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {JwtAuthenticationService} from "../authentication/jwt-authentication.service";
 import {Router} from "@angular/router";
@@ -55,10 +55,9 @@ export class HttpService {
   multipartPost(endpoint: string, file: File): Observable<object> {
     this.checkLogonStatus();
     const path: string = this.baseUrl + this.apiUrl + endpoint + "?file=" + file.name;
-    const httpOptions = {headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})};
     const formData: FormData = new FormData();
-    formData.append("file", file, file.name); // Content-Disposition: form-data; name="file"; filename="Screenshot.png"
-    return this.httpClient.post(path, formData, httpOptions);
+    formData.append("file", file, file.name);
+    return this.httpClient.post(path, formData);
   }
 
   put(endpoint: string, object: Object): Observable<object> {

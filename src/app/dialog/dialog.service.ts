@@ -10,5 +10,5 @@ export class DialogService {
   closeButton: boolean = true;
   deleteButton: boolean = true;
   saveButton: boolean = false;
-  uploadButton: boolean = false;
+  upload: boolean = false;
 }

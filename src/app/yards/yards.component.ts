@@ -77,6 +77,8 @@ export class YardsComponent implements OnInit {
     this.dialogService.image = null;
     this.dialogService.closeButton = true;
     this.dialogService.deleteButton = true;
+    this.dialogService.upload = false;
+    this.dialogService.saveButton = false;
     let dialogReference = this.dialog.open(DialogComponent, {
       width: '300px',
       enterAnimationDuration,

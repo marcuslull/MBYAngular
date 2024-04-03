@@ -119,10 +119,10 @@ export class YardDetailsComponent implements OnInit {
 
   openThumbnailUpdateDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
     this.dialogService.title = "Update Thumbnail Image"
-    this.dialogService.content = "Select or upload a new image, then click save"
-    this.dialogService.closeButton = false;
+    this.dialogService.content = "Select or upload an image then click save"
+    this.dialogService.closeButton = true;
     this.dialogService.deleteButton = false;
-    this.dialogService.uploadButton = true;
+    this.dialogService.upload = true;
     this.dialogService.saveButton = true;
     let dialogReference = this.dialog.open(DialogComponent, {
       width: '80%',

@@ -14,15 +14,20 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+  <input #fileInput (change)="onFileSelected($event)" *ngIf="this.dialogService.upload" class="input" type="file">
+  <div class="fileUploadContainer">
+    {{ fileName }}
+
+    <button *ngIf="this.dialogService.upload" (click)="openUploadDialog()" class="upload-btn" color="primary" mat-mini-fab>
+      <mat-icon>attach_file</mat-icon>
+    </button>
+  </div>
+
   <button *ngIf="this.dialogService.closeButton" mat-button mat-dialog-close>
     <span class="textColor">Close</span>
   </button>
   <button *ngIf="this.dialogService.deleteButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
     <span class="textColor">Delete</span>
-  </button>
-  <button *ngIf="this.dialogService.uploadButton" [mat-dialog-close]="false" cdkFocusInitial mat-button
-          mat-dialog-close>
-    <span class="textColor">Upload</span>
   </button>
   <button *ngIf="this.dialogService.saveButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
     <span class="textColor">Save</span>
