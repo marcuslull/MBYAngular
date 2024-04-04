@@ -111,7 +111,6 @@ export class YardDetailsComponent implements OnInit {
   }
 
   getLabel(value: string | null | undefined, arrayToCheck: string) {
-    // I cannot figure out how to do this in TS
     // @ts-ignore
     const targetArray: string[] = this.stateManagerService[arrayToCheck]
     // @ts-ignore
@@ -123,22 +122,22 @@ export class YardDetailsComponent implements OnInit {
   }
 
   private getImages(enterAnimationDuration: string, exitAnimationDuration: string) {
-    // get image info
     const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images"
     this.httpService.getAll(endpoint).subscribe({
       next: value => {
         value.forEach(object => {
           const image: Image = object as Image;
-          this.stateManagerService.imageList.push(image);
+          if (!this.stateManagerService.imageList.find(existingImage => existingImage.id === image.id)) {
+            this.stateManagerService.imageList.push(image);
+          }
         })
-        this.stateManagerService.imageList.forEach(image => this.httpService.getFile("image/" + image.id)
-          .subscribe({
-            next: blob => {
-              const urlCreator = window.URL;
-              // @ts-ignore
-              image.file = urlCreator.createObjectURL(blob);
-            }
-          }));
+        this.stateManagerService.imageList.forEach(image => {
+          this.httpService.getFile("image/" + image.id).subscribe({
+              next: blob => {
+                const urlCreator = window.URL;
+                // @ts-ignore
+                image.file = urlCreator.createObjectURL(blob);
+              }})});
         this.displayImageDialog(enterAnimationDuration, exitAnimationDuration);
       }
     })
