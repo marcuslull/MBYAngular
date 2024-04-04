@@ -1,35 +1,55 @@
-<h2 mat-dialog-title>
-  <span class="textColor">
+<div class="backgroundColor textColor">
+  <h2 mat-dialog-title>
+  <span class="textColor dialogTitle">
     {{ this.dialogService.title }}
   </span>
-</h2>
-<mat-dialog-content>
-  <span class="textColor">
-    {{ this.dialogService.content }}
-  </span>
-  <img *ngIf="this.dialogService.image" [src]="this.dialogService.image" alt="" class="dialogImage" mat-card-image>
-  @for (image of this.stateManagerService.imageList; track image.id) {
-    <img [src]="image" mat-card-image alt="" class="image">
-  }
-</mat-dialog-content>
+  </h2>
 
-<mat-dialog-actions align="end">
-  <input #fileInput (change)="onFileSelected($event)" *ngIf="this.dialogService.upload" class="input" type="file">
-  <div class="fileUploadContainer">
-    {{ fileName }}
 
-    <button *ngIf="this.dialogService.upload" (click)="openUploadDialog()" class="upload-btn" color="primary" mat-mini-fab>
-      <mat-icon>attach_file</mat-icon>
+  <mat-dialog-content>
+    <span class="textColor">{{ this.dialogService.content }}</span>
+
+    <img *ngIf="this.dialogService.image" [src]="this.dialogService.image" alt="" class="dialogImage" mat-card-image>
+
+    <div class="thumbnails">
+      @for (image of this.stateManagerService.imageList; track image.id) {
+
+        <div class="image">
+          <img [src]="image.file" mat-card-image alt="">
+        </div>
+
+      }
+    </div>
+
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <input #fileInput (change)="onFileSelected($event)" *ngIf="this.dialogService.upload" class="input" type="file">
+
+    <div *ngIf="this.dialogService.upload" class="fileUploadContainer">
+
+      <button (click)="openUploadDialog()" class="upload-btn" color="accent" mat-mini-fab>
+        <mat-icon>attach_file</mat-icon>
+      </button>
+
+      <span class="fileNameSpan">{{ fileName || "Upload" }}</span>
+
+    </div>
+
+    <span class="spacer"></span>
+
+    <button *ngIf="this.dialogService.closeButton" mat-button mat-dialog-close>
+      <span class="textColor">Close</span>
     </button>
-  </div>
+    <button *ngIf="this.dialogService.deleteButton" [mat-dialog-close]="true" cdkFocusInitial mat-button
+            mat-dialog-close>
+      <span class="textColor">Delete</span>
+    </button>
+    <button *ngIf="this.dialogService.saveButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
+      <span class="textColor">Save</span>
+    </button>
+  </mat-dialog-actions>
+</div>
 
-  <button *ngIf="this.dialogService.closeButton" mat-button mat-dialog-close>
-    <span class="textColor">Close</span>
-  </button>
-  <button *ngIf="this.dialogService.deleteButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
-    <span class="textColor">Delete</span>
-  </button>
-  <button *ngIf="this.dialogService.saveButton" [mat-dialog-close]="true" cdkFocusInitial mat-button mat-dialog-close>
-    <span class="textColor">Save</span>
-  </button>
-</mat-dialog-actions>
+

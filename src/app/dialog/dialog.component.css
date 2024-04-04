@@ -1,3 +1,37 @@
+.dialogTitle {
+  font-size: 1.5em;
+}
+
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+
+.image {
+  margin: 40px 60px 0 0;
+}
+
+.image > img {
+  max-width: 250px;
+  box-shadow: #48433e 10px 10px 10px;
+}
+
+.fileUploadContainer {
+  display: flex;
+  align-items: center;
+}
+
 .input {
   display: none;
+}
+
+.fileNameSpan {
+  margin-left: 10%;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }

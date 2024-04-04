@@ -31,6 +31,7 @@ import {
 import {DialogService} from "../dialog/dialog.service";
 import {DialogComponent} from "../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Image} from "../model/image";
 
 @Component({
   selector: 'app-yard-details',
@@ -118,8 +119,34 @@ export class YardDetailsComponent implements OnInit {
   }
 
   openThumbnailUpdateDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
+    this.getImages(enterAnimationDuration, exitAnimationDuration);
+  }
+
+  private getImages(enterAnimationDuration: string, exitAnimationDuration: string) {
+    // get image info
+    const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images"
+    this.httpService.getAll(endpoint).subscribe({
+      next: value => {
+        value.forEach(object => {
+          const image: Image = object as Image;
+          this.stateManagerService.imageList.push(image);
+        })
+        this.stateManagerService.imageList.forEach(image => this.httpService.getFile("image/" + image.id)
+          .subscribe({
+            next: blob => {
+              const urlCreator = window.URL;
+              // @ts-ignore
+              image.file = urlCreator.createObjectURL(blob);
+            }
+          }));
+        this.displayImageDialog(enterAnimationDuration, exitAnimationDuration);
+      }
+    })
+  }
+
+  private displayImageDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
     this.dialogService.title = "Update Thumbnail Image"
-    this.dialogService.content = "Select or upload an image then click save"
+    this.dialogService.content = "Select an image, then click save, or upload a new image."
     this.dialogService.closeButton = true;
     this.dialogService.deleteButton = false;
     this.dialogService.upload = true;

@@ -46,6 +46,12 @@ export class HttpService {
     return this.httpClient.get<object>(path);
   }
 
+  getFile(endpoint: string): Observable<object> {
+    this.checkLogonStatus();
+    let path: string = this.baseUrl + this.apiUrl + endpoint;
+    return this.httpClient.get(path, {responseType: "blob"});
+  }
+
   post(endpoint: string, object: Object): Observable<object> {
     this.checkLogonStatus();
     let path: string = this.baseUrl + this.apiUrl + endpoint;
