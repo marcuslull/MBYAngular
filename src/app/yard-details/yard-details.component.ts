@@ -31,7 +31,7 @@ import {
 import {DialogService} from "../dialog/dialog.service";
 import {DialogComponent} from "../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {Image} from "../model/image";
+import {ImageService} from "../image/image.service";
 
 @Component({
   selector: 'app-yard-details',
@@ -74,9 +74,10 @@ export class YardDetailsComponent implements OnInit {
 
   constructor(
     protected stateManagerService: StateManagerService,
-    protected dialog: MatDialog,
     private httpService: HttpService,
-    private dialogService: DialogService
+    private imageService: ImageService,
+    private dialogService: DialogService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -118,28 +119,10 @@ export class YardDetailsComponent implements OnInit {
   }
 
   openThumbnailUpdateDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
-    this.getImages(enterAnimationDuration, exitAnimationDuration);
-  }
-
-  private getImages(enterAnimationDuration: string, exitAnimationDuration: string) {
-    const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images"
-    this.httpService.getAll(endpoint).subscribe({
-      next: value => {
-        value.forEach(object => {
-          const image: Image = object as Image;
-          if (!this.stateManagerService.imageList.find(existingImage => existingImage.id === image.id)) {
-            this.stateManagerService.imageList.push(image);
-          }
-        })
-        this.stateManagerService.imageList.forEach(image => {
-          this.httpService.getFile("image/" + image.id).subscribe({
-              next: blob => {
-                const urlCreator = window.URL;
-                // @ts-ignore
-                image.file = urlCreator.createObjectURL(blob);
-              }})});
+    this.imageService.getImages().subscribe(result => {
+      if (result) {
         this.displayImageDialog(enterAnimationDuration, exitAnimationDuration);
-      }
+      } // TODO: need some sort of notification here
     })
   }
 

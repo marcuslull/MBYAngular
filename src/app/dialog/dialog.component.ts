@@ -8,6 +8,7 @@ import {StateManagerService} from "../state/state-manager.service";
 import {of} from "rxjs";
 import {HttpService} from "../http/http.service";
 import {MatIcon} from "@angular/material/icon";
+import {ImageService} from "../image/image.service";
 
 @Component({
   selector: 'app-dialog',
@@ -37,7 +38,8 @@ export class DialogComponent {
   constructor(
     protected dialogService: DialogService,
     protected stateManagerService: StateManagerService,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private imageService: ImageService
   ) {
   }
 
@@ -47,12 +49,16 @@ export class DialogComponent {
     if (file) {
       this.fileName = file.name;
       this.httpService.multipartPost("yard/1/images", file).subscribe({
-        next: value => console.log(value),
+        next: value => {
+          this.fileName = "Upload successful";
+          this.imageService.getImages().subscribe()
+        }
       });
     }
   }
 
   openUploadDialog() {
+    // simulates a click on a file upload form element calling onFileSelected()
     // @ts-ignore
     this.fileInput.nativeElement.click();
   }
