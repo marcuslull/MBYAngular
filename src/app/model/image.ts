@@ -6,5 +6,5 @@ export interface Image {
   fileSize: string | null,
   path: string | null,
   yardId: number | null,
-  file: object | null
+  localFile: string | null
 }

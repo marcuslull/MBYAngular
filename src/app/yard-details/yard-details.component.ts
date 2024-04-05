@@ -144,7 +144,7 @@ export class YardDetailsComponent implements OnInit {
       // update the yards thumbnail image ID when clicking save
       if (result) {
         if (this.stateManagerService.yardItem && this.stateManagerService.yardItem) {
-          (this.stateManagerService.yardItem as Yard).thumbnailImageId = (this.stateManagerService.selectedImage as Image).id;
+          (this.stateManagerService.yardItem as Yard).thumbnailImageId = (this.stateManagerService.yardThumbnailImage as Image).id;
         }
       }
     })

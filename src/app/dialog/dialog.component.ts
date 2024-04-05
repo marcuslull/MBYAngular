@@ -65,6 +65,6 @@ export class DialogComponent {
   }
 
   selectImage(image: Image) {
-    this.stateManagerService.selectedImage = image;
+    this.stateManagerService.yardThumbnailImage = image;
   }
 }
