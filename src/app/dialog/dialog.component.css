@@ -14,8 +14,23 @@
   margin: 40px 60px 0 0;
 }
 
-.image > img {
+.selectable-image {
+  cursor: pointer;
+  opacity: 1;
   max-width: 250px;
+  box-shadow: #48433e 5px 5px 5px;
+}
+
+.selectable-image:hover {
+  opacity: .7;
+  border: 1px solid #ccc;
+  box-shadow: #48433e 10px 10px 10px;
+}
+
+.selectable-image:active,
+.selectable-image:focus {
+  opacity: 1;
+  border: 3px solid var(--warning);
   box-shadow: #48433e 10px 10px 10px;
 }
 

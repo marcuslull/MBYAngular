@@ -12,6 +12,7 @@ export class StateManagerService {
   fabIsDisabled: boolean = false;
   deleteYardId: number | null = null;
   isPut: boolean = false;
+  selectedImage: Image | null = null;
   hardinessZone = [
     {value: 'ZONE_1', label: 'Zone 1'},
     {value: 'ZONE_2', label: 'Zone 2'},

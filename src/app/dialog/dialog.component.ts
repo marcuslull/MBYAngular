@@ -9,6 +9,7 @@ import {of} from "rxjs";
 import {HttpService} from "../http/http.service";
 import {MatIcon} from "@angular/material/icon";
 import {ImageService} from "../image/image.service";
+import {Image} from "../model/image";
 
 @Component({
   selector: 'app-dialog',
@@ -61,5 +62,9 @@ export class DialogComponent {
     // simulates a click on a file upload form element calling onFileSelected()
     // @ts-ignore
     this.fileInput.nativeElement.click();
+  }
+
+  selectImage(image: Image) {
+    this.stateManagerService.selectedImage = image;
   }
 }

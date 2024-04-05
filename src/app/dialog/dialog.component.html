@@ -15,7 +15,8 @@
       @for (image of this.stateManagerService.imageList; track image.id) {
 
         <div class="image">
-          <img [src]="image.file" mat-card-image alt="">
+          <img [src]="image.file" mat-card-image alt="" class="selectable-image" (click)="selectImage(image)"
+               tabindex="0">
         </div>
 
       }

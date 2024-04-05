@@ -32,6 +32,8 @@ import {DialogService} from "../dialog/dialog.service";
 import {DialogComponent} from "../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ImageService} from "../image/image.service";
+import {Yard} from "../model/yard";
+import {Image} from "../model/image";
 
 @Component({
   selector: 'app-yard-details',
@@ -139,8 +141,11 @@ export class YardDetailsComponent implements OnInit {
       exitAnimationDuration,
     });
     dialogReference.beforeClosed().subscribe(result => {
+      // update the yards thumbnail image ID when clicking save
       if (result) {
-        // TODO: set the yards thumbnail
+        if (this.stateManagerService.yardItem && this.stateManagerService.yardItem) {
+          (this.stateManagerService.yardItem as Yard).thumbnailImageId = (this.stateManagerService.selectedImage as Image).id;
+        }
       }
     })
   }
