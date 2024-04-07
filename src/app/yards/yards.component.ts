@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {HttpService} from "../http/http.service";
 import {Yard} from "../model/yard";
 import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
@@ -12,6 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../dialog/dialog.component";
 import {DialogService} from "../dialog/dialog.service";
 import {StateManagerService} from "../state/state-manager.service";
+import {ImageService} from "../image/image.service";
 
 @Component({
   selector: 'app-yards',
@@ -27,7 +28,8 @@ import {StateManagerService} from "../state/state-manager.service";
     MatIcon
   ],
   templateUrl: './yards.component.html',
-  styleUrl: './yards.component.css'
+  styleUrl: './yards.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class YardsComponent implements OnInit {
 
@@ -37,11 +39,15 @@ export class YardsComponent implements OnInit {
     protected stateManagerService: StateManagerService,
     private router: Router,
     protected dialog: MatDialog,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    protected imageService: ImageService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit(): void {
+    console.log("yards init.....")
+    this.stateManagerService.yardsList.forEach(yard => console.log("Yard ID: " + yard.id + " present. Thumbnail ID: " + yard.thumbnailImageId))
     if (this.jwtAuthenticationService.isLoggedIn()) {
       this.showYards()
       this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
@@ -52,9 +58,19 @@ export class YardsComponent implements OnInit {
   }
 
   showYards(): void {
+    console.log("Checking for new yards...")
     this.httpService.getAll("yards").subscribe({
       next: (body) => {
-        this.stateManagerService.yardsList = body as Yard[];
+        let newYardList = body as Yard[];
+        newYardList.forEach(newYard => {
+          const foundYard = this.stateManagerService.yardsList.find(existingYard => existingYard.id === newYard.id);
+          if (foundYard === undefined) {
+            console.log("found a new yard... adding to the list, ID: " + newYard.id)
+            this.stateManagerService.yardsList.push(newYard)
+            console.log("YardsList now has a length of: " + this.stateManagerService.yardsList.length)
+            this.cdr.detectChanges();
+          }
+        })
       }
     })
   }

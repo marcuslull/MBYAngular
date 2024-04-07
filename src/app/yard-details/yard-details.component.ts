@@ -68,16 +68,17 @@ import {Image} from "../model/image";
     MatCardTitle
   ],
   templateUrl: './yard-details.component.html',
-  styleUrl: './yard-details.component.css'
+  styleUrl: './yard-details.component.css',
 })
 export class YardDetailsComponent implements OnInit {
   newNoteInput: string = '';
+  thumbnailImage: string | null = "";
 
 
   constructor(
     protected stateManagerService: StateManagerService,
     private httpService: HttpService,
-    private imageService: ImageService,
+    protected imageService: ImageService,
     private dialogService: DialogService,
     private dialog: MatDialog
   ) {
@@ -89,6 +90,7 @@ export class YardDetailsComponent implements OnInit {
         this.stateManagerService.notesList = body as Note[];
       }
     })
+    this.thumbnailImage = this.imageService.getThumbnail(this.stateManagerService.yardItem?.id)
   }
 
   saveNote() {
@@ -121,10 +123,8 @@ export class YardDetailsComponent implements OnInit {
   }
 
   openThumbnailUpdateDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
-    this.imageService.getImages().subscribe(result => {
-      if (result) {
-        this.displayImageDialog(enterAnimationDuration, exitAnimationDuration);
-      } // TODO: need some sort of notification here
+    this.imageService.getImages().subscribe(() => {
+      this.displayImageDialog(enterAnimationDuration, exitAnimationDuration);
     })
   }
 
@@ -143,8 +143,14 @@ export class YardDetailsComponent implements OnInit {
     dialogReference.beforeClosed().subscribe(result => {
       // update the yards thumbnail image ID when clicking save
       if (result) {
-        if (this.stateManagerService.yardItem && this.stateManagerService.yardItem) {
-          (this.stateManagerService.yardItem as Yard).thumbnailImageId = (this.stateManagerService.yardThumbnailImage as Image).id;
+        console.log("old thumbnail ID: " + this.stateManagerService.yardItem?.thumbnailImageId);
+        (this.stateManagerService.yardItem as Yard).thumbnailImageId = (this.stateManagerService.yardThumbnailImage as Image).id;
+        const possibleYard = this.stateManagerService.yardsList.find(yard => yard.id === this.stateManagerService.yardItem?.id);
+        if (possibleYard != undefined) {
+          possibleYard.thumbnailImageId = (this.stateManagerService.yardThumbnailImage as Image).id;
+          console.log("new thumbnail ID: " + possibleYard.thumbnailImageId)
+          const yardCheck = this.stateManagerService.yardsList.find(yard => yard.thumbnailImageId === (this.stateManagerService.yardThumbnailImage as Image).id);
+          console.log("This is the yardCheck: " + yardCheck?.thumbnailImageId);
         }
       }
     })

@@ -47,9 +47,12 @@ export class DialogComponent {
   onFileSelected(event: Event) {
     // @ts-ignore
     const file = event.target.files[0];
+    console.log("Event target 0: " + file.name)
     if (file) {
       this.fileName = file.name;
-      this.httpService.multipartPost("yard/1/images", file).subscribe({
+      const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images";
+      console.log("POST endpoint: " + endpoint);
+      this.httpService.multipartPost(endpoint, file).subscribe({
         next: value => {
           this.fileName = "Upload successful";
           this.imageService.getImages().subscribe()
@@ -66,5 +69,6 @@ export class DialogComponent {
 
   selectImage(image: Image) {
     this.stateManagerService.yardThumbnailImage = image;
+    console.log("Selected image: " + this.stateManagerService.yardThumbnailImage.fileName)
   }
 }

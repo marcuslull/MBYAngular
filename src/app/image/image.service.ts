@@ -15,19 +15,37 @@ export class ImageService {
   ) {
   }
 
+  getThumbnail(yardId: number | null | undefined) {
+
+    const possibleYard = this.stateManagerService.yardsList.find(yard => yard.id === yardId);
+    console.log("getting thumbnail... found a yard match, ID: " + possibleYard?.id);
+    if (possibleYard != undefined) {
+      if (possibleYard.thumbnailImageId != undefined) {
+        const possibleImage = this.stateManagerService.imageList.find(image => image.id === possibleYard.thumbnailImageId);
+        console.log("getting thumbnail... found an image match, ID: " + possibleImage?.id)
+        if (possibleImage != undefined) {
+          console.log("The thumbnail image ID for yard: " + possibleYard.id + " is " + possibleYard.thumbnailImageId)
+          return possibleImage.localFile
+        }
+      }
+    }
+    console.log("The thumbnail image ID for yard: " + this.stateManagerService.yardItem?.id + " is undefined. Using default")
+    return "/assets/image/yard.png"
+  }
+
   getImages(): Observable<boolean> {
-    const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images";
     // callers should be notified of completion
     return new Observable(subscriber => {
+      // start fresh
+      this.stateManagerService.imageList = [];
+      console.log(this.stateManagerService.imageList)
       // getting all the yards image info
+      console.log("GET YardId: " + this.stateManagerService.yardItem?.id);
+      const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images";
       this.httpService.getAll(endpoint).subscribe({
         next: value => {
-          value.forEach(object => {
-            const image: Image = object as Image;
-            // we don't want to add duplicates to imageList
-            if (!this.stateManagerService.imageList.find(existingImage => existingImage.id === image.id)) {
-              this.stateManagerService.imageList.push(image);
-            }
+          value.forEach(image => {
+            this.stateManagerService.imageList.push(image as Image);
           })
           // downloading each image
           this.stateManagerService.imageList.forEach(image => {
@@ -43,10 +61,10 @@ export class ImageService {
               }
             )
           })
+          console.log(this.stateManagerService.imageList)
         }
       })
-      subscriber.next(true);
-      subscriber.complete();
+      subscriber.next();
     })
   }
 
