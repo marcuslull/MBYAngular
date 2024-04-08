@@ -12,7 +12,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../dialog/dialog.component";
 import {DialogService} from "../dialog/dialog.service";
 import {StateManagerService} from "../state/state-manager.service";
-import {ImageService} from "../image/image.service";
 
 @Component({
   selector: 'app-yards',
@@ -40,14 +39,11 @@ export class YardsComponent implements OnInit {
     private router: Router,
     protected dialog: MatDialog,
     private dialogService: DialogService,
-    protected imageService: ImageService,
     private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit(): void {
-    console.log("yards init.....")
-    this.stateManagerService.yardsList.forEach(yard => console.log("Yard ID: " + yard.id + " present. Thumbnail ID: " + yard.localThumbnailImageId))
     if (this.jwtAuthenticationService.isLoggedIn()) {
       this.showYards()
       this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
@@ -58,17 +54,14 @@ export class YardsComponent implements OnInit {
   }
 
   showYards(): void {
-    console.log("Checking for new yards...")
     this.httpService.getAll("yards").subscribe({
       next: (body) => {
         let newYardList = body as Yard[];
         newYardList.forEach(newYard => {
-          newYard.localThumbnailImageUrl = this.imageService.getThumbnail(newYard.id);
+          newYard.localThumbnailImageUrl = "/assets/image/yard.png";
           const foundYard = this.stateManagerService.yardsList.find(existingYard => existingYard.id === newYard.id);
           if (foundYard === undefined) {
-            console.log("found a new yard... adding to the list, ID: " + newYard.id)
             this.stateManagerService.yardsList.push(newYard)
-            console.log("YardsList now has a length of: " + this.stateManagerService.yardsList.length)
             this.cdr.detectChanges();
           }
         })
@@ -77,13 +70,8 @@ export class YardsComponent implements OnInit {
   }
 
   showYard(yardId: number | null): void {
-    this.httpService.get("yard/" + yardId).subscribe({
-      next: (body) => {
-        this.router.navigate(['/home/yardDetails']).then(r => {
-          this.stateManagerService.yardItem = body as Yard
-          this.stateManagerService.breadcrumbText = window.location.pathname;
-        })
-      }
+    this.router.navigate(['/home/yardDetails']).then(r => {
+      this.stateManagerService.yardItem = this.stateManagerService.yardsList.find(yard => yard.id === yardId);
     })
   }
 
@@ -121,7 +109,7 @@ export class YardsComponent implements OnInit {
         this.stateManagerService.breadcrumbText = window.location.pathname;
         this.stateManagerService.yardItem = yard;
         this.stateManagerService.isPut = true;
-        this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
+        this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of problems with edit vs post
       }
     );
   }

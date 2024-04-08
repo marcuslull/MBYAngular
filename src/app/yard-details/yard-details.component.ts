@@ -32,7 +32,6 @@ import {DialogService} from "../dialog/dialog.service";
 import {DialogComponent} from "../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ImageService} from "../image/image.service";
-import {Image} from "../model/image";
 
 @Component({
   selector: 'app-yard-details',
@@ -71,8 +70,7 @@ import {Image} from "../model/image";
 })
 export class YardDetailsComponent implements OnInit {
   newNoteInput: string = '';
-  thumbnailImage: string | null | undefined = "";
-
+  thumbnailImageForTemplateDisplay: string | null | undefined = "";
 
   constructor(
     protected stateManagerService: StateManagerService,
@@ -89,7 +87,7 @@ export class YardDetailsComponent implements OnInit {
         this.stateManagerService.notesList = body as Note[];
       }
     })
-    this.thumbnailImage = this.stateManagerService.yardsList.find(yard => this.stateManagerService.yardItem?.id === yard.id)?.localThumbnailImageUrl;
+    this.thumbnailImageForTemplateDisplay = this.stateManagerService.yardItem?.localThumbnailImageUrl;
   }
 
   saveNote() {
@@ -142,25 +140,15 @@ export class YardDetailsComponent implements OnInit {
     dialogReference.beforeClosed().subscribe(result => {
       // update the yards thumbnail image ID when clicking save
       if (result) {
-        console.log("old thumbnail ID: " + this.stateManagerService.yardItem?.localThumbnailImageId);
-        console.log("yard thumbnail image: " + this.stateManagerService.yardThumbnailImage?.id);
-        console.log("current yard item: " + this.stateManagerService.yardItem?.id);
-        if (this.stateManagerService.yardItem != null && this.stateManagerService.yardThumbnailImage != undefined) {
-          console.log("In the if...")
-
-          this.stateManagerService.yardItem.localThumbnailImageId = this.stateManagerService.yardThumbnailImage?.id;
-          console.log("Yard items thumbnailId after update: " + this.stateManagerService.yardItem.localThumbnailImageId);
-          console.log("yard list length: " + this.stateManagerService.yardsList.length);
-          const possibleYard = this.stateManagerService.yardsList.find(yard => yard.id === this.stateManagerService.yardItem?.id);
-          console.log("possible yard ID: " + possibleYard?.id)
-          this.stateManagerService.yardsList.forEach(yard => console.log("Yard List contains: " + yard.id))
-          if (possibleYard != undefined) {
-            possibleYard.localThumbnailImageId = (this.stateManagerService.yardThumbnailImage).id;
-            possibleYard.localThumbnailImageUrl = this.imageService.getThumbnail(possibleYard.id);
-            this.thumbnailImage = possibleYard.localThumbnailImageUrl;
-            console.log("new thumbnail ID: " + possibleYard.localThumbnailImageId)
-            const yardCheck = this.stateManagerService.yardsList.find(yard => yard.localThumbnailImageId === (this.stateManagerService.yardThumbnailImage as Image).id);
-            console.log("This is the yardCheck: " + yardCheck?.localThumbnailImageId);
+        if (this.stateManagerService.yardItem != null && this.stateManagerService.thumbnailSelectedFromDialog != undefined) {
+          // find our yard
+          const yardToUpdate = this.stateManagerService.yardsList.find(yard => yard.id === this.stateManagerService.yardItem?.id);
+          if (yardToUpdate != undefined) {
+            // update its thumbnail
+            yardToUpdate.localThumbnailImageUrl = this.stateManagerService.thumbnailSelectedFromDialog.localFile;
+            this.stateManagerService.yardItem.localThumbnailImageUrl = yardToUpdate.localThumbnailImageUrl; // TODO: would be nice to get rid of the yardItem in favor of just a yardId
+            // update local template var
+            this.thumbnailImageForTemplateDisplay = yardToUpdate.localThumbnailImageUrl;
           }
         }
       }

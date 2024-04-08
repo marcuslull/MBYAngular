@@ -10,6 +10,5 @@ export interface Yard {
   animalIds: number[] | null,
   imageIds: number[] | null,
   userEmail: string | null,
-  localThumbnailImageId: number | null,
   localThumbnailImageUrl: string | null,
 }

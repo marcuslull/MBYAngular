@@ -33,8 +33,6 @@ import {Yard} from "../model/yard";
 export class DialogComponent {
   @ViewChild('fileInput') fileInput: ElementRef | undefined; // gives a view of the file selected on an upload
   protected fileName: string = "";
-
-  protected readonly Image = Image;
   protected readonly of = of;
 
   constructor(
@@ -48,26 +46,20 @@ export class DialogComponent {
   onFileSelected(event: Event) {
     // @ts-ignore
     const file = event.target.files[0];
-    console.log("Event target 0: " + file.name)
     if (file) {
       this.fileName = file.name;
       const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images";
-      console.log("New file selected - posting to POST endpoint: " + endpoint);
       this.httpService.multipartPost(endpoint, file).subscribe({
         next: value => {
           this.fileName = "Upload successful";
-          console.log("Refreshing imageList from server because it has the new image and is authoritative")
           this.imageService.getImages().subscribe()
-          console.log("Refreshing yard from server because it has an update imageList and is authoritative")
           this.httpService.get("yard/" + this.stateManagerService.yardItem?.id).subscribe({
             next: value1 => {
               let returnedYard = value1 as Yard;
               const possibleImageIndex = this.stateManagerService.yardsList.findIndex(yard => yard.id === returnedYard.id);
               if (possibleImageIndex != undefined) {
-                console.log("found the updated yard, transposing thumbnailId so we dont lose that info since it is a local only field")
-                returnedYard.localThumbnailImageId = this.stateManagerService.yardsList[possibleImageIndex].localThumbnailImageId;
+                returnedYard.localThumbnailImageUrl = this.stateManagerService.yardsList[possibleImageIndex].localThumbnailImageUrl;
                 this.stateManagerService.yardsList[possibleImageIndex] = returnedYard;
-                console.log("Transposed thumbnailId: " + this.stateManagerService.yardsList[possibleImageIndex].localThumbnailImageId)
               }
             }
           })
@@ -83,7 +75,6 @@ export class DialogComponent {
   }
 
   selectImage(image: Image) {
-    this.stateManagerService.yardThumbnailImage = image;
-    console.log("Selected image: " + this.stateManagerService.yardThumbnailImage.fileName)
+    this.stateManagerService.thumbnailSelectedFromDialog = image;
   }
 }

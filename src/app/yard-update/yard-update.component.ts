@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Yard} from "../model/yard";
 import {HttpService} from "../http/http.service";
 import {Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
@@ -70,18 +69,14 @@ export class YardUpdateComponent implements OnInit {
         this.httpService.put("yard/" + this.stateManagerService.yardItem?.id, this.yardFormGroup.value).subscribe({
           next: (body) => {
             this.router.navigate(['/home/yards']).then(r => {
-              this.stateManagerService.yardItem = body as Yard; // TODO: I think I can remove these because there is no reason to set if we are redirected to yards
-              this.stateManagerService.breadcrumbText = window.location.pathname;
+              this.stateManagerService.isPut = false; // resolving the edit
             })
           }
         })
       } else {
         this.httpService.post("yards", this.yardFormGroup.value).subscribe({
           next: (body) => {
-            this.router.navigate(['/home/yards']).then(r => {
-              this.stateManagerService.yardItem = body as Yard; // TODO: I think I can remove these because there is no reason to set if we are redirected to yards
-              this.stateManagerService.breadcrumbText = window.location.pathname;
-            })
+            this.router.navigate(['/home/yards']).then()
           }
         })
       }

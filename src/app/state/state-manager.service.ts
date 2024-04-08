@@ -12,9 +12,9 @@ export class StateManagerService {
   fabIsDisabled: boolean = false;
   deleteYardId: number | null = null;
   isPut: boolean = false;
-  yardThumbnailImage: Image | null = null;
+  thumbnailSelectedFromDialog: Image | null = null;
   yardsList: Yard[] = [];
-  yardItem: Yard | null = null;
+  yardItem: Yard | undefined = undefined;
   notesList: Note[] = [];
   breadcrumbText: string = "";
   imageList: Image[] = [];
