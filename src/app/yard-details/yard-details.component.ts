@@ -89,7 +89,7 @@ export class YardDetailsComponent implements OnInit {
         this.stateManagerService.notesList = body as Note[];
       }
     })
-    this.thumbnailImage = this.stateManagerService.yardsList.find(yard => this.stateManagerService.yardItem?.id === yard.id)?.thumbnailImageLocalUrl;
+    this.thumbnailImage = this.stateManagerService.yardsList.find(yard => this.stateManagerService.yardItem?.id === yard.id)?.localThumbnailImageUrl;
   }
 
   saveNote() {
@@ -142,25 +142,25 @@ export class YardDetailsComponent implements OnInit {
     dialogReference.beforeClosed().subscribe(result => {
       // update the yards thumbnail image ID when clicking save
       if (result) {
-        console.log("old thumbnail ID: " + this.stateManagerService.yardItem?.thumbnailImageId);
+        console.log("old thumbnail ID: " + this.stateManagerService.yardItem?.localThumbnailImageId);
         console.log("yard thumbnail image: " + this.stateManagerService.yardThumbnailImage?.id);
         console.log("current yard item: " + this.stateManagerService.yardItem?.id);
         if (this.stateManagerService.yardItem != null && this.stateManagerService.yardThumbnailImage != undefined) {
           console.log("In the if...")
 
-          this.stateManagerService.yardItem.thumbnailImageId = this.stateManagerService.yardThumbnailImage?.id;
-          console.log("Yard items thumbnailId after update: " + this.stateManagerService.yardItem.thumbnailImageId);
+          this.stateManagerService.yardItem.localThumbnailImageId = this.stateManagerService.yardThumbnailImage?.id;
+          console.log("Yard items thumbnailId after update: " + this.stateManagerService.yardItem.localThumbnailImageId);
           console.log("yard list length: " + this.stateManagerService.yardsList.length);
           const possibleYard = this.stateManagerService.yardsList.find(yard => yard.id === this.stateManagerService.yardItem?.id);
           console.log("possible yard ID: " + possibleYard?.id)
           this.stateManagerService.yardsList.forEach(yard => console.log("Yard List contains: " + yard.id))
           if (possibleYard != undefined) {
-            possibleYard.thumbnailImageId = (this.stateManagerService.yardThumbnailImage).id;
-            possibleYard.thumbnailImageLocalUrl = this.imageService.getThumbnail(possibleYard.id);
-            this.thumbnailImage = possibleYard.thumbnailImageLocalUrl;
-            console.log("new thumbnail ID: " + possibleYard.thumbnailImageId)
-            const yardCheck = this.stateManagerService.yardsList.find(yard => yard.thumbnailImageId === (this.stateManagerService.yardThumbnailImage as Image).id);
-            console.log("This is the yardCheck: " + yardCheck?.thumbnailImageId);
+            possibleYard.localThumbnailImageId = (this.stateManagerService.yardThumbnailImage).id;
+            possibleYard.localThumbnailImageUrl = this.imageService.getThumbnail(possibleYard.id);
+            this.thumbnailImage = possibleYard.localThumbnailImageUrl;
+            console.log("new thumbnail ID: " + possibleYard.localThumbnailImageId)
+            const yardCheck = this.stateManagerService.yardsList.find(yard => yard.localThumbnailImageId === (this.stateManagerService.yardThumbnailImage as Image).id);
+            console.log("This is the yardCheck: " + yardCheck?.localThumbnailImageId);
           }
         }
       }

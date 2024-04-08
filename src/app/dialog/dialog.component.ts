@@ -10,6 +10,7 @@ import {HttpService} from "../http/http.service";
 import {MatIcon} from "@angular/material/icon";
 import {ImageService} from "../image/image.service";
 import {Image} from "../model/image";
+import {Yard} from "../model/yard";
 
 @Component({
   selector: 'app-dialog',
@@ -51,11 +52,25 @@ export class DialogComponent {
     if (file) {
       this.fileName = file.name;
       const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images";
-      console.log("POST endpoint: " + endpoint);
+      console.log("New file selected - posting to POST endpoint: " + endpoint);
       this.httpService.multipartPost(endpoint, file).subscribe({
         next: value => {
           this.fileName = "Upload successful";
+          console.log("Refreshing imageList from server because it has the new image and is authoritative")
           this.imageService.getImages().subscribe()
+          console.log("Refreshing yard from server because it has an update imageList and is authoritative")
+          this.httpService.get("yard/" + this.stateManagerService.yardItem?.id).subscribe({
+            next: value1 => {
+              let returnedYard = value1 as Yard;
+              const possibleImageIndex = this.stateManagerService.yardsList.findIndex(yard => yard.id === returnedYard.id);
+              if (possibleImageIndex != undefined) {
+                console.log("found the updated yard, transposing thumbnailId so we dont lose that info since it is a local only field")
+                returnedYard.localThumbnailImageId = this.stateManagerService.yardsList[possibleImageIndex].localThumbnailImageId;
+                this.stateManagerService.yardsList[possibleImageIndex] = returnedYard;
+                console.log("Transposed thumbnailId: " + this.stateManagerService.yardsList[possibleImageIndex].localThumbnailImageId)
+              }
+            }
+          })
         }
       });
     }

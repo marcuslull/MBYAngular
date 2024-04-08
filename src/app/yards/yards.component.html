@@ -18,7 +18,7 @@
           <mat-card-subtitle>{{ getLabel(yard.yardSubType) }}</mat-card-subtitle>
         </mat-card-header>
 
-        <img class="cardImage backgroundColor" mat-card-image [src]="yard.thumbnailImageLocalUrl"
+        <img class="cardImage backgroundColor" mat-card-image [src]="yard.localThumbnailImageUrl"
              (click)="showYard(yard.id)" alt="">
 
         <mat-card-content></mat-card-content>

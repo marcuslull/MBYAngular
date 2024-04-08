@@ -20,11 +20,11 @@ export class ImageService {
     const possibleYard = this.stateManagerService.yardsList.find(yard => yard.id === yardId);
     console.log("getting thumbnail... found a yard match, ID: " + possibleYard?.id);
     if (possibleYard != undefined) {
-      if (possibleYard.thumbnailImageId != undefined) {
-        const possibleImage = this.stateManagerService.imageList.find(image => image.id === possibleYard.thumbnailImageId);
+      if (possibleYard.localThumbnailImageId != undefined) {
+        const possibleImage = this.stateManagerService.imageList.find(image => image.id === possibleYard.localThumbnailImageId);
         console.log("getting thumbnail... found an image match, ID: " + possibleImage?.id)
         if (possibleImage != undefined) {
-          console.log("The thumbnail image ID for yard: " + possibleYard.id + " is " + possibleYard.thumbnailImageId)
+          console.log("The thumbnail image ID for yard: " + possibleYard.id + " is " + possibleYard.localThumbnailImageId)
           return possibleImage.localFile
         }
       }

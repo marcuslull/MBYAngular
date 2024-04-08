@@ -47,7 +47,7 @@ export class YardsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("yards init.....")
-    this.stateManagerService.yardsList.forEach(yard => console.log("Yard ID: " + yard.id + " present. Thumbnail ID: " + yard.thumbnailImageId))
+    this.stateManagerService.yardsList.forEach(yard => console.log("Yard ID: " + yard.id + " present. Thumbnail ID: " + yard.localThumbnailImageId))
     if (this.jwtAuthenticationService.isLoggedIn()) {
       this.showYards()
       this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
@@ -63,7 +63,7 @@ export class YardsComponent implements OnInit {
       next: (body) => {
         let newYardList = body as Yard[];
         newYardList.forEach(newYard => {
-          newYard.thumbnailImageLocalUrl = this.imageService.getThumbnail(newYard.id);
+          newYard.localThumbnailImageUrl = this.imageService.getThumbnail(newYard.id);
           const foundYard = this.stateManagerService.yardsList.find(existingYard => existingYard.id === newYard.id);
           if (foundYard === undefined) {
             console.log("found a new yard... adding to the list, ID: " + newYard.id)
