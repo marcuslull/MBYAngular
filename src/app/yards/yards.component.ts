@@ -63,6 +63,7 @@ export class YardsComponent implements OnInit {
       next: (body) => {
         let newYardList = body as Yard[];
         newYardList.forEach(newYard => {
+          newYard.thumbnailImageLocalUrl = this.imageService.getThumbnail(newYard.id);
           const foundYard = this.stateManagerService.yardsList.find(existingYard => existingYard.id === newYard.id);
           if (foundYard === undefined) {
             console.log("found a new yard... adding to the list, ID: " + newYard.id)

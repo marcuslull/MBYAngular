@@ -13,6 +13,12 @@ export class StateManagerService {
   deleteYardId: number | null = null;
   isPut: boolean = false;
   yardThumbnailImage: Image | null = null;
+  yardsList: Yard[] = [];
+  yardItem: Yard | null = null;
+  notesList: Note[] = [];
+  breadcrumbText: string = "";
+  imageList: Image[] = [];
+
   hardinessZone = [
     {value: 'ZONE_1', label: 'Zone 1'},
     {value: 'ZONE_2', label: 'Zone 2'},
@@ -35,60 +41,6 @@ export class StateManagerService {
     {value: 'GARDEN', label: 'Garden'},
     {value: 'SUB_SECTION', label: 'Sub Section'}
   ];
-
-  private _yardItem: Yard | null = null;
-
-  get yardItem(): Yard | null {
-    return this._yardItem;
-  }
-
-  set yardItem(value: Yard | null) {
-    this._yardItem = value;
-    this.saveState();
-  }
-
-  private _notesList: Note[] = [];
-
-  get notesList(): Note[] {
-    return this._notesList;
-  }
-
-  set notesList(value: Note[]) {
-    this._notesList = value;
-    this.saveState();
-  }
-
-  private _yardsList: Yard[] = [];
-
-  get yardsList(): Yard[] {
-    return this._yardsList;
-  }
-
-  set yardsList(value: Yard[]) {
-    this._yardsList = value;
-    this.saveState();
-  }
-
-  private _breadcrumbText: string = "";
-
-  get breadcrumbText(): string {
-    return this._breadcrumbText;
-  }
-
-  set breadcrumbText(value: string) {
-    this._breadcrumbText = value;
-    this.saveState();
-  }
-
-  private _imageList: Image[] = [];
-
-  get imageList(): Image[] {
-    return this._imageList;
-  }
-
-  set imageList(value: Image[]) {
-    this._imageList = value;
-  }
 
   retrieveState() {
     // There has been a browser nav event, lets reload the state, so we have something to display
