@@ -43,23 +43,23 @@ export class DialogComponent {
   ) {
   }
 
-  onFileSelected(event: Event) {
-    // @ts-ignore
-    const file = event.target.files[0];
+  onImageSelectedFromUpload(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files ? target.files[0] : null;
     if (file) {
       this.fileName = file.name;
-      const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images";
+      const endpoint = "yard/" + this.stateManagerService.currentlySelectedYard?.id + "/images";
       this.httpService.multipartPost(endpoint, file).subscribe({
         next: value => {
           this.fileName = "Upload successful";
-          this.imageService.getImages().subscribe()
-          this.httpService.get("yard/" + this.stateManagerService.yardItem?.id).subscribe({
+          this.imageService.getAllImagedFromBackend().subscribe()
+          this.httpService.get("yard/" + this.stateManagerService.currentlySelectedYard?.id).subscribe({
             next: value1 => {
               let returnedYard = value1 as Yard;
-              const possibleImageIndex = this.stateManagerService.yardsList.findIndex(yard => yard.id === returnedYard.id);
+              const possibleImageIndex = this.stateManagerService.globalYardList.findIndex(yard => yard.id === returnedYard.id);
               if (possibleImageIndex != undefined) {
-                returnedYard.localThumbnailImageUrl = this.stateManagerService.yardsList[possibleImageIndex].localThumbnailImageUrl;
-                this.stateManagerService.yardsList[possibleImageIndex] = returnedYard;
+                returnedYard.localThumbnailImageUrl = this.stateManagerService.globalYardList[possibleImageIndex].localThumbnailImageUrl;
+                this.stateManagerService.globalYardList[possibleImageIndex] = returnedYard;
               }
             }
           })
@@ -70,11 +70,12 @@ export class DialogComponent {
 
   openUploadDialog() {
     // simulates a click on a file upload form element calling onFileSelected()
-    // @ts-ignore
-    this.fileInput.nativeElement.click();
+    if (this.fileInput != undefined) {
+      this.fileInput.nativeElement.click();
+    }
   }
 
-  selectImage(image: Image) {
+  currentlySelectedImage(image: Image) {
     this.stateManagerService.thumbnailSelectedFromDialog = image;
   }
 }

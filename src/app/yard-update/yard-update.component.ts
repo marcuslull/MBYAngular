@@ -48,11 +48,11 @@ export class YardUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.stateManagerService.isPut) {
+    if (this.stateManagerService.isYardEdit) {
       this.yardFormGroup = this.formBuilder.group({
-        name: [this.stateManagerService.yardItem?.name, Validators.required],
-        hardinessZone: [this.stateManagerService.yardItem?.hardinessZone],
-        yardSubType: [this.stateManagerService.yardItem?.yardSubType]
+        name: [this.stateManagerService.currentlySelectedYard?.name, Validators.required],
+        hardinessZone: [this.stateManagerService.currentlySelectedYard?.hardinessZone],
+        yardSubType: [this.stateManagerService.currentlySelectedYard?.yardSubType]
       });
     } else {
       this.yardFormGroup = this.formBuilder.group({
@@ -65,11 +65,11 @@ export class YardUpdateComponent implements OnInit {
 
   postYard(): void {
     if (this.yardFormGroup.valid) {
-      if (this.stateManagerService.isPut) {
-        this.httpService.put("yard/" + this.stateManagerService.yardItem?.id, this.yardFormGroup.value).subscribe({
+      if (this.stateManagerService.isYardEdit) {
+        this.httpService.put("yard/" + this.stateManagerService.currentlySelectedYard?.id, this.yardFormGroup.value).subscribe({
           next: (body) => {
             this.router.navigate(['/home/yards']).then(r => {
-              this.stateManagerService.isPut = false; // resolving the edit
+              this.stateManagerService.isYardEdit = false; // resolving the edit
             })
           }
         })

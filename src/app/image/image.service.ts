@@ -15,24 +15,17 @@ export class ImageService {
   ) {
   }
 
-  getImages(): Observable<boolean> {
-    // callers should be notified of completion
+  getAllImagedFromBackend(): Observable<boolean> {
     return new Observable(subscriber => {
-      // start fresh
-      this.stateManagerService.imageList = [];
-      // getting all the yards image info
-      const endpoint = "yard/" + this.stateManagerService.yardItem?.id + "/images";
+      const endpoint = "yard/" + this.stateManagerService.currentlySelectedYard?.id + "/images";
       this.httpService.getAll(endpoint).subscribe({
         next: value => {
-          value.forEach(image => {
-            this.stateManagerService.imageList.push(image as Image);
-          })
-          // downloading each image
-          this.stateManagerService.imageList.forEach(image => {
+          this.stateManagerService.imageListForCurrentYard = value as Image[];
+          this.stateManagerService.imageListForCurrentYard.forEach(image => {
             this.httpService.getFile("image/" + image.id).subscribe({
                 next: blob => {
                   // convert to BASE64 for local storage and easy referencing in HTML
-                  this.blobToBase64(blob as Blob).then(string => {
+                  this.convertBlobToBase64String(blob as Blob).then(string => {
                     if (image.fileName?.split(".")[-1] === "png") {
                       image.localFile = "data:image/png;base64," + string;
                     } else image.localFile = "data:image/jpg;base64," + string;
@@ -47,7 +40,7 @@ export class ImageService {
     })
   }
 
-  private blobToBase64(blob: Blob): Promise<string> {
+  private convertBlobToBase64String(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob);

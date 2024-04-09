@@ -12,20 +12,20 @@
           <mat-list>
             <mat-list-item><span class="titleSpan textColor">ID: </span>
               <span class="textColor">
-            {{ this.stateManagerService.yardItem?.id }}
+            {{ this.stateManagerService.currentlySelectedYard?.id }}
           </span></mat-list-item>
             <mat-list-item><span class="titleSpan textColor">Name: </span>
               <span class="textColor">
-            {{ this.stateManagerService.yardItem?.name }}
+            {{ this.stateManagerService.currentlySelectedYard?.name }}
           </span></mat-list-item>
             <mat-list-item><span class="titleSpan textColor">Type: </span>
               <span class="textColor">
-            {{ this.getLabel(this.stateManagerService.yardItem?.yardSubType, "yardSubType") }}
+            {{ this.getLabel(this.stateManagerService.currentlySelectedYard?.yardSubType, "yardSubType") }}
           </span>
             </mat-list-item>
             <mat-list-item><span class="titleSpan textColor">Hardiness zone: </span>
               <span class="textColor">
-            {{ this.getLabel(this.stateManagerService.yardItem?.hardinessZone, "hardinessZone") }}
+            {{ this.getLabel(this.stateManagerService.currentlySelectedYard?.hardinessZone, "hardinessZone") }}
           </span></mat-list-item>
           </mat-list>
         </div>
@@ -52,7 +52,7 @@
       <div class="notesContainer">
 
         <div class="currentNotesContainer">
-          @for (note of this.stateManagerService.notesList; track note.id) {
+          @for (note of this.stateManagerService.notesListForCurrentYard; track note.id) {
             <ul>
               <li><span class="noteLineItem textColor">{{ note.comment }}</span>
                 <button class="noteDeleteIcon" (click)="deleteNote(note.id)" mat-icon-button>

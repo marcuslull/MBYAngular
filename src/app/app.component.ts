@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
+import {Component, HostListener} from '@angular/core';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
@@ -36,16 +36,24 @@ export class AppComponent {
     private stateManagerService: StateManagerService,
     private router: Router
   ) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.stateManagerService.retrieveState();
-      }
-    })
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.stateManagerService.retrieveState();
+    //   }
+    // })
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event: Event) {
+    this.stateManagerService.saveState();
+  }
+
+  @HostListener('window:load', ['$event'])
+  loadHandler(event: Event) {
+    this.stateManagerService.retrieveState();
   }
 
   navigateToYards(): void {
-    this.router.navigate(["/home/yards"]).then(r => {
-      this.stateManagerService.breadcrumbText = window.location.pathname;
-    })
+    this.router.navigate(["/home/yards"]).then();
   }
 }

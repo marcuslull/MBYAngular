@@ -12,10 +12,11 @@
     <img *ngIf="this.dialogService.image" [src]="this.dialogService.image" alt="" class="dialogImage" mat-card-image>
 
     <div class="thumbnails">
-      @for (image of this.stateManagerService.imageList; track image.id) {
+      @for (image of this.stateManagerService.imageListForCurrentYard; track image.id) {
 
         <div class="image">
-          <img [src]="image.localFile" mat-card-image alt="" class="selectable-image" (click)="selectImage(image)"
+          <img [src]="image.localFile" mat-card-image alt="" class="selectable-image"
+               (click)="currentlySelectedImage(image)"
                tabindex="0">
         </div>
 
@@ -26,7 +27,8 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <input #fileInput (change)="onFileSelected($event)" *ngIf="this.dialogService.upload" class="input" type="file">
+    <input #fileInput (change)="onImageSelectedFromUpload($event)" *ngIf="this.dialogService.upload" class="input"
+           type="file">
 
     <div *ngIf="this.dialogService.upload" class="fileUploadContainer">
 

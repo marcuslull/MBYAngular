@@ -82,19 +82,19 @@ export class YardDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpService.get("yard/" + this.stateManagerService.yardItem?.id + "/notes").subscribe({
+    this.httpService.get("yard/" + this.stateManagerService.currentlySelectedYard?.id + "/notes").subscribe({
       next: body => {
-        this.stateManagerService.notesList = body as Note[];
+        this.stateManagerService.notesListForCurrentYard = body as Note[];
       }
     })
-    this.thumbnailImageForTemplateDisplay = this.stateManagerService.yardItem?.localThumbnailImageUrl;
+    this.thumbnailImageForTemplateDisplay = this.stateManagerService.currentlySelectedYard?.localThumbnailImageUrl;
   }
 
   saveNote() {
-    const note: Note = {comment: this.newNoteInput, yardId: this.stateManagerService.yardItem?.id};
+    const note: Note = {comment: this.newNoteInput, yardId: this.stateManagerService.currentlySelectedYard?.id};
     this.httpService.post("notes", note).subscribe({
       next: body => {
-        this.stateManagerService.notesList[this.stateManagerService.notesList.length] = body as Note;
+        this.stateManagerService.notesListForCurrentYard[this.stateManagerService.notesListForCurrentYard.length] = body as Note;
         this.newNoteInput = '';
       }
     })
@@ -103,9 +103,9 @@ export class YardDetailsComponent implements OnInit {
   deleteNote(id: number | null | undefined) {
     this.httpService.delete("note/" + id).subscribe({
       next: value => {
-        for (let num = 0; num < this.stateManagerService.notesList.length; num++) {
-          if (this.stateManagerService.notesList[num].id === id) {
-            this.stateManagerService.notesList.splice(num, 1);
+        for (let num = 0; num < this.stateManagerService.notesListForCurrentYard.length; num++) {
+          if (this.stateManagerService.notesListForCurrentYard[num].id === id) {
+            this.stateManagerService.notesListForCurrentYard.splice(num, 1);
           }
         }
       }
@@ -120,7 +120,7 @@ export class YardDetailsComponent implements OnInit {
   }
 
   openThumbnailUpdateDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
-    this.imageService.getImages().subscribe(() => {
+    this.imageService.getAllImagedFromBackend().subscribe(() => {
       this.displayImageDialog(enterAnimationDuration, exitAnimationDuration);
     })
   }
@@ -140,13 +140,13 @@ export class YardDetailsComponent implements OnInit {
     dialogReference.beforeClosed().subscribe(result => {
       // update the yards thumbnail image ID when clicking save
       if (result) {
-        if (this.stateManagerService.yardItem != null && this.stateManagerService.thumbnailSelectedFromDialog != undefined) {
+        if (this.stateManagerService.currentlySelectedYard != null && this.stateManagerService.thumbnailSelectedFromDialog != undefined) {
           // find our yard
-          const yardToUpdate = this.stateManagerService.yardsList.find(yard => yard.id === this.stateManagerService.yardItem?.id);
+          const yardToUpdate = this.stateManagerService.globalYardList.find(yard => yard.id === this.stateManagerService.currentlySelectedYard?.id);
           if (yardToUpdate != undefined) {
             // update its thumbnail
             yardToUpdate.localThumbnailImageUrl = this.stateManagerService.thumbnailSelectedFromDialog.localFile;
-            this.stateManagerService.yardItem.localThumbnailImageUrl = yardToUpdate.localThumbnailImageUrl; // TODO: would be nice to get rid of the yardItem in favor of just a yardId
+            this.stateManagerService.currentlySelectedYard.localThumbnailImageUrl = yardToUpdate.localThumbnailImageUrl;
             // update local template var
             this.thumbnailImageForTemplateDisplay = yardToUpdate.localThumbnailImageUrl;
           }

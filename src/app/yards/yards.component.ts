@@ -59,9 +59,9 @@ export class YardsComponent implements OnInit {
         let newYardList = body as Yard[];
         newYardList.forEach(newYard => {
           newYard.localThumbnailImageUrl = "/assets/image/yard.png";
-          const foundYard = this.stateManagerService.yardsList.find(existingYard => existingYard.id === newYard.id);
+          const foundYard = this.stateManagerService.globalYardList.find(existingYard => existingYard.id === newYard.id);
           if (foundYard === undefined) {
-            this.stateManagerService.yardsList.push(newYard)
+            this.stateManagerService.globalYardList.push(newYard)
             this.cdr.detectChanges();
           }
         })
@@ -71,7 +71,7 @@ export class YardsComponent implements OnInit {
 
   showYard(yardId: number | null): void {
     this.router.navigate(['/home/yardDetails']).then(r => {
-      this.stateManagerService.yardItem = this.stateManagerService.yardsList.find(yard => yard.id === yardId);
+      this.stateManagerService.currentlySelectedYard = this.stateManagerService.globalYardList.find(yard => yard.id === yardId);
     })
   }
 
@@ -106,9 +106,8 @@ export class YardsComponent implements OnInit {
 
   editYard(yard: Yard) {
     this.router.navigate(['/home/yardUpdate']).then(r => {
-        this.stateManagerService.breadcrumbText = window.location.pathname;
-        this.stateManagerService.yardItem = yard;
-        this.stateManagerService.isPut = true;
+        this.stateManagerService.currentlySelectedYard = yard;
+        this.stateManagerService.isYardEdit = true;
         this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of problems with edit vs post
       }
     );

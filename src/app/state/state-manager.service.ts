@@ -11,13 +11,13 @@ export class StateManagerService {
   loggedIn: boolean = false;
   fabIsDisabled: boolean = false;
   deleteYardId: number | null = null;
-  isPut: boolean = false;
+  isYardEdit: boolean = false;
+
   thumbnailSelectedFromDialog: Image | null = null;
-  yardsList: Yard[] = [];
-  yardItem: Yard | undefined = undefined;
-  notesList: Note[] = [];
-  breadcrumbText: string = "";
-  imageList: Image[] = [];
+  globalYardList: Yard[] = [];
+  currentlySelectedYard: Yard | undefined = undefined;
+  notesListForCurrentYard: Note[] = [];
+  imageListForCurrentYard: Image[] = [];
 
   hardinessZone = [
     {value: 'ZONE_1', label: 'Zone 1'},
@@ -43,6 +43,7 @@ export class StateManagerService {
   ];
 
   retrieveState() {
+    console.log("RetrieveState " + this.globalYardList.length)
     // There has been a browser nav event, lets reload the state, so we have something to display
     const yardState = sessionStorage.getItem("yardState");
     if (yardState) {
@@ -55,7 +56,8 @@ export class StateManagerService {
     }
   }
 
-  private saveState() {
+  saveState() {
+    console.log("SaveState " + this.globalYardList.length)
     // a key var has changed, lets save the state so there is something to come back to during a browser nav event
     const yardState = JSON.stringify(this);
     sessionStorage.setItem("yardState", yardState);
