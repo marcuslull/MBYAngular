@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
   addYard() {
     this.router.navigate(['/home/yardUpdate']).then(r => {
       // let's reset just in case a previous yard edit was interrupted and never resolved
-      this.stateManagerService.currentlySelectedYard = undefined;
+      this.stateManagerService.currentlySelectedYard = null
       this.stateManagerService.isYardEdit = false;
     })
   }

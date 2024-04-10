@@ -59,7 +59,9 @@ export class DialogComponent {
               const possibleImageIndex = this.stateManagerService.globalYardList.findIndex(yard => yard.id === returnedYard.id);
               if (possibleImageIndex != undefined) {
                 returnedYard.localThumbnailImageUrl = this.stateManagerService.globalYardList[possibleImageIndex].localThumbnailImageUrl;
-                this.stateManagerService.globalYardList[possibleImageIndex] = returnedYard;
+                let tempYardList = this.stateManagerService.globalYardList;
+                tempYardList[possibleImageIndex] = returnedYard;
+                this.stateManagerService.globalYardList = tempYardList;
               }
             }
           })

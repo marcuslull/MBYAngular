@@ -44,13 +44,15 @@ export class YardsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.jwtAuthenticationService.isLoggedIn()) {
-      this.showYards()
-      this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
-    } else {
-      this.router.navigate(['/login']).then(r => {
-      });
-    }
+    this.stateManagerService.retrieveState().then(() => {
+      if (this.jwtAuthenticationService.isLoggedIn()) {
+        this.showYards()
+      } else {
+        this.router.navigate(['/login']).then(r => {
+          this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
+        });
+      }
+    })
   }
 
   showYards(): void {
@@ -61,7 +63,9 @@ export class YardsComponent implements OnInit {
           newYard.localThumbnailImageUrl = "/assets/image/yard.png";
           const foundYard = this.stateManagerService.globalYardList.find(existingYard => existingYard.id === newYard.id);
           if (foundYard === undefined) {
-            this.stateManagerService.globalYardList.push(newYard)
+            let tempYardList = this.stateManagerService.globalYardList;
+            tempYardList.push(newYard);
+            this.stateManagerService.globalYardList = tempYardList;
             this.cdr.detectChanges();
           }
         })
@@ -71,7 +75,10 @@ export class YardsComponent implements OnInit {
 
   showYard(yardId: number | null): void {
     this.router.navigate(['/home/yardDetails']).then(r => {
-      this.stateManagerService.currentlySelectedYard = this.stateManagerService.globalYardList.find(yard => yard.id === yardId);
+      const foundYard = this.stateManagerService.globalYardList.find(yard => yard.id === yardId);
+      if (foundYard != undefined) {
+        this.stateManagerService.currentlySelectedYard = foundYard;
+      }
     })
   }
 

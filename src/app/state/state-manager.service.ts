@@ -12,13 +12,10 @@ export class StateManagerService {
   fabIsDisabled: boolean = false;
   deleteYardId: number | null = null;
   isYardEdit: boolean = false;
-
   thumbnailSelectedFromDialog: Image | null = null;
-  globalYardList: Yard[] = [];
-  currentlySelectedYard: Yard | undefined = undefined;
+  currentlySelectedYard: Yard | null = null;
   notesListForCurrentYard: Note[] = [];
   imageListForCurrentYard: Image[] = [];
-
   hardinessZone = [
     {value: 'ZONE_1', label: 'Zone 1'},
     {value: 'ZONE_2', label: 'Zone 2'},
@@ -34,6 +31,9 @@ export class StateManagerService {
     {value: 'ZONE_12', label: 'Zone 12'},
     {value: 'ZONE_13', label: 'Zone 13'}
   ];
+  // private _currentlySelectedYard: Yard | null = null;
+  // private _notesListForCurrentYard: Note[] = [];
+  // private _imageListForCurrentYard: Image[] = [];
   yardSubType = [
     {value: 'BACK_YARD', label: 'Back Yard'},
     {value: 'FRONT_YARD', label: 'Front Yard'},
@@ -42,24 +42,62 @@ export class StateManagerService {
     {value: 'SUB_SECTION', label: 'Sub Section'}
   ];
 
-  retrieveState() {
-    console.log("RetrieveState " + this.globalYardList.length)
-    // There has been a browser nav event, lets reload the state, so we have something to display
-    const yardState = sessionStorage.getItem("yardState");
-    if (yardState) {
-      let retrievedState = JSON.parse(yardState);
-      for (const key in retrievedState) {
-        if (this.hasOwnProperty(key)) {
-          Object.assign(this, retrievedState);
-        }
-      }
-    }
+  // get currentlySelectedYard(): Yard | null {
+  //   return this._currentlySelectedYard;
+  // }
+  //
+  // get notesListForCurrentYard(): Note[] {
+  //   return this._notesListForCurrentYard;
+  // }
+  //
+  // get imageListForCurrentYard(): Image[] {
+  //   return this._imageListForCurrentYard;
+  // }
+
+  // Stateful fields
+  private _globalYardList: Yard[] = [];
+
+  // set currentlySelectedYard(value: Yard | null) {
+  //   this._currentlySelectedYard = value;
+  //   this.saveState();
+  // }
+  //
+  // set notesListForCurrentYard(value: Note[]) {
+  //   this._notesListForCurrentYard = value;
+  //   this.saveState();
+  // }
+  //
+  // set imageListForCurrentYard(value: Image[]) {
+  //   this._imageListForCurrentYard = value;
+  //   this.saveState();
+  // }
+
+  get globalYardList(): Yard[] {
+    return this._globalYardList;
   }
 
-  saveState() {
-    console.log("SaveState " + this.globalYardList.length)
-    // a key var has changed, lets save the state so there is something to come back to during a browser nav event
+  set globalYardList(value: Yard[]) {
+    this._globalYardList = value;
+    this.saveState();
+  }
+
+  retrieveState() {
+    return new Promise<void>(resolve => {
+      const yardState = sessionStorage.getItem("yardState");
+      if (yardState) {
+        let retrievedState = JSON.parse(yardState);
+        for (const key in retrievedState) {
+          Object.assign(this, retrievedState);
+        }
+        console.log("Retrieve state finished")
+      }
+      resolve()
+    })
+  }
+
+  private saveState() {
     const yardState = JSON.stringify(this);
     sessionStorage.setItem("yardState", yardState);
+    console.log("Save state finished")
   }
 }
