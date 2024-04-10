@@ -82,12 +82,14 @@ export class YardDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpService.get("yard/" + this.stateManagerService.currentlySelectedYard?.id + "/notes").subscribe({
-      next: body => {
-        this.stateManagerService.notesListForCurrentYard = body as Note[];
-      }
+    this.stateManagerService.retrieveState().then(() => {
+      this.httpService.get("yard/" + this.stateManagerService.currentlySelectedYard?.id + "/notes").subscribe({
+        next: body => {
+          this.stateManagerService.notesListForCurrentYard = body as Note[];
+        }
+      })
+      this.thumbnailImageForTemplateDisplay = this.stateManagerService.currentlySelectedYard?.localThumbnailImageUrl;
     })
-    this.thumbnailImageForTemplateDisplay = this.stateManagerService.currentlySelectedYard?.localThumbnailImageUrl;
   }
 
   saveNote() {
@@ -146,7 +148,10 @@ export class YardDetailsComponent implements OnInit {
           if (yardToUpdate != undefined) {
             // update its thumbnail
             yardToUpdate.localThumbnailImageUrl = this.stateManagerService.thumbnailSelectedFromDialog.localFile;
-            this.stateManagerService.currentlySelectedYard.localThumbnailImageUrl = yardToUpdate.localThumbnailImageUrl;
+            this.stateManagerService.currentlySelectedYard = {
+              ...this.stateManagerService.currentlySelectedYard,
+              localThumbnailImageUrl: yardToUpdate.localThumbnailImageUrl,
+            };
             // update local template var
             this.thumbnailImageForTemplateDisplay = yardToUpdate.localThumbnailImageUrl;
           }

@@ -13,7 +13,6 @@ export class StateManagerService {
   deleteYardId: number | null = null;
   isYardEdit: boolean = false;
   thumbnailSelectedFromDialog: Image | null = null;
-  currentlySelectedYard: Yard | null = null;
   notesListForCurrentYard: Note[] = [];
   imageListForCurrentYard: Image[] = [];
   hardinessZone = [
@@ -31,8 +30,6 @@ export class StateManagerService {
     {value: 'ZONE_12', label: 'Zone 12'},
     {value: 'ZONE_13', label: 'Zone 13'}
   ];
-  // private _currentlySelectedYard: Yard | null = null;
-  // private _notesListForCurrentYard: Note[] = [];
   // private _imageListForCurrentYard: Image[] = [];
   yardSubType = [
     {value: 'BACK_YARD', label: 'Back Yard'},
@@ -41,11 +38,14 @@ export class StateManagerService {
     {value: 'GARDEN', label: 'Garden'},
     {value: 'SUB_SECTION', label: 'Sub Section'}
   ];
+  // private _notesListForCurrentYard: Note[] = [];
 
-  // get currentlySelectedYard(): Yard | null {
-  //   return this._currentlySelectedYard;
-  // }
-  //
+  private _currentlySelectedYard: Yard | null = null;
+
+  get currentlySelectedYard(): Yard | null {
+    return this._currentlySelectedYard;
+  }
+
   // get notesListForCurrentYard(): Note[] {
   //   return this._notesListForCurrentYard;
   // }
@@ -54,14 +54,14 @@ export class StateManagerService {
   //   return this._imageListForCurrentYard;
   // }
 
+  set currentlySelectedYard(value: Yard | null) {
+    this._currentlySelectedYard = value;
+    this.saveState();
+  }
+
   // Stateful fields
   private _globalYardList: Yard[] = [];
 
-  // set currentlySelectedYard(value: Yard | null) {
-  //   this._currentlySelectedYard = value;
-  //   this.saveState();
-  // }
-  //
   // set notesListForCurrentYard(value: Note[]) {
   //   this._notesListForCurrentYard = value;
   //   this.saveState();

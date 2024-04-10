@@ -77,7 +77,7 @@ export class YardsComponent implements OnInit {
     this.router.navigate(['/home/yardDetails']).then(r => {
       const foundYard = this.stateManagerService.globalYardList.find(yard => yard.id === yardId);
       if (foundYard != undefined) {
-        this.stateManagerService.currentlySelectedYard = foundYard;
+        this.stateManagerService.currentlySelectedYard = {...foundYard};
       }
     })
   }
@@ -113,7 +113,7 @@ export class YardsComponent implements OnInit {
 
   editYard(yard: Yard) {
     this.router.navigate(['/home/yardUpdate']).then(r => {
-        this.stateManagerService.currentlySelectedYard = yard;
+        this.stateManagerService.currentlySelectedYard = {...yard};
         this.stateManagerService.isYardEdit = true;
         this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of problems with edit vs post
       }
