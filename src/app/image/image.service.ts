@@ -34,6 +34,10 @@ export class ImageService {
               }
             )
           })
+          // need to trigger the setter for state saving - Is this the best way???
+          let tempImageList :Image[] = [];
+          tempImageList = this.stateManagerService.imageListForCurrentYard;
+          this.stateManagerService.imageListForCurrentYard = tempImageList;
         }
       })
       subscriber.next();

@@ -96,7 +96,9 @@ export class YardDetailsComponent implements OnInit {
     const note: Note = {comment: this.newNoteInput, yardId: this.stateManagerService.currentlySelectedYard?.id};
     this.httpService.post("notes", note).subscribe({
       next: body => {
-        this.stateManagerService.notesListForCurrentYard[this.stateManagerService.notesListForCurrentYard.length] = body as Note;
+        let tempNoteList = this.stateManagerService.notesListForCurrentYard;
+        tempNoteList[tempNoteList.length] = {...body as Note};
+        this.stateManagerService.notesListForCurrentYard = tempNoteList;
         this.newNoteInput = '';
       }
     })
@@ -107,7 +109,7 @@ export class YardDetailsComponent implements OnInit {
       next: value => {
         for (let num = 0; num < this.stateManagerService.notesListForCurrentYard.length; num++) {
           if (this.stateManagerService.notesListForCurrentYard[num].id === id) {
-            this.stateManagerService.notesListForCurrentYard.splice(num, 1);
+            this.stateManagerService.notesListForCurrentYard = this.stateManagerService.notesListForCurrentYard.splice(num, 1);
           }
         }
       }

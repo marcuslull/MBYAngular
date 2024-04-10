@@ -13,8 +13,6 @@ export class StateManagerService {
   deleteYardId: number | null = null;
   isYardEdit: boolean = false;
   thumbnailSelectedFromDialog: Image | null = null;
-  notesListForCurrentYard: Note[] = [];
-  imageListForCurrentYard: Image[] = [];
   hardinessZone = [
     {value: 'ZONE_1', label: 'Zone 1'},
     {value: 'ZONE_2', label: 'Zone 2'},
@@ -30,7 +28,6 @@ export class StateManagerService {
     {value: 'ZONE_12', label: 'Zone 12'},
     {value: 'ZONE_13', label: 'Zone 13'}
   ];
-  // private _imageListForCurrentYard: Image[] = [];
   yardSubType = [
     {value: 'BACK_YARD', label: 'Back Yard'},
     {value: 'FRONT_YARD', label: 'Front Yard'},
@@ -38,42 +35,42 @@ export class StateManagerService {
     {value: 'GARDEN', label: 'Garden'},
     {value: 'SUB_SECTION', label: 'Sub Section'}
   ];
-  // private _notesListForCurrentYard: Note[] = [];
 
+  // Stateful fields
+  private _globalYardList: Yard[] = [];
+  private _notesListForCurrentYard: Note[] = [];
   private _currentlySelectedYard: Yard | null = null;
+  private _imageListForCurrentYard: Image[] = [];
+
+  get globalYardList(): Yard[] {
+    return this._globalYardList;
+  }
 
   get currentlySelectedYard(): Yard | null {
     return this._currentlySelectedYard;
   }
 
-  // get notesListForCurrentYard(): Note[] {
-  //   return this._notesListForCurrentYard;
-  // }
-  //
-  // get imageListForCurrentYard(): Image[] {
-  //   return this._imageListForCurrentYard;
-  // }
+  get notesListForCurrentYard(): Note[] {
+    return this._notesListForCurrentYard;
+  }
+
+  get imageListForCurrentYard(): Image[] {
+    return this._imageListForCurrentYard;
+  }
 
   set currentlySelectedYard(value: Yard | null) {
     this._currentlySelectedYard = value;
     this.saveState();
   }
 
-  // Stateful fields
-  private _globalYardList: Yard[] = [];
+  set notesListForCurrentYard(value: Note[]) {
+    this._notesListForCurrentYard = value;
+    this.saveState();
+  }
 
-  // set notesListForCurrentYard(value: Note[]) {
-  //   this._notesListForCurrentYard = value;
-  //   this.saveState();
-  // }
-  //
-  // set imageListForCurrentYard(value: Image[]) {
-  //   this._imageListForCurrentYard = value;
-  //   this.saveState();
-  // }
-
-  get globalYardList(): Yard[] {
-    return this._globalYardList;
+  set imageListForCurrentYard(value: Image[]) {
+    this._imageListForCurrentYard = value;
+    this.saveState();
   }
 
   set globalYardList(value: Yard[]) {
