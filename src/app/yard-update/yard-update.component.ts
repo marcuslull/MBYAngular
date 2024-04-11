@@ -12,6 +12,7 @@ import {DialogComponent} from "../dialog/dialog.component";
 import {DialogService} from "../dialog/dialog.service";
 import {MatDialog} from "@angular/material/dialog";
 import {StateManagerService} from "../state/state-manager.service";
+import {Yard} from "../model/yard";
 
 @Component({
   selector: 'app-yard-post',
@@ -68,9 +69,17 @@ export class YardUpdateComponent implements OnInit {
       if (this.stateManagerService.isYardEdit) {
         this.httpService.put("yard/" + this.stateManagerService.currentlySelectedYard?.id, this.yardFormGroup.value).subscribe({
           next: (body) => {
-            this.router.navigate(['/home/yards']).then(r => {
-              this.stateManagerService.isYardEdit = false; // resolving the edit
-            })
+            let yardToUpdateIndex = this.stateManagerService.globalYardList.findIndex(yard => yard.id === (body as Yard).id);
+            if (yardToUpdateIndex != undefined) {
+              const thumbnailUrl = this.stateManagerService.globalYardList[yardToUpdateIndex].localThumbnailImageUrl; // this is not part of server schema, so we need it before overwriting
+              let newYardListWithUpdatedYard = this.stateManagerService.globalYardList;
+              newYardListWithUpdatedYard[yardToUpdateIndex] = body as Yard;
+              newYardListWithUpdatedYard[yardToUpdateIndex].localThumbnailImageUrl = thumbnailUrl;
+              this.stateManagerService.globalYardList = newYardListWithUpdatedYard;
+              this.router.navigate(['/home/yards']).then(r => {
+                this.stateManagerService.retrieveState().then(); // need this here otherwise vars change after check error
+              })
+            }
           }
         })
       } else {

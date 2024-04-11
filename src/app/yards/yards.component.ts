@@ -56,16 +56,15 @@ export class YardsComponent implements OnInit {
   }
 
   showYards(): void {
+    this.stateManagerService.fabIsDisabled = false;
+    this.stateManagerService.isYardEdit = false;
     this.httpService.getAll("yards").subscribe({
       next: (body) => {
-        console.log("GET all: " + (body as Yard[]).length)
         let newYardList = body as Yard[];
         if (newYardList.length === 0) {
           this.stateManagerService.globalYardList = [];
-          console.log("Global yard list length: " + this.stateManagerService.globalYardList.length)
           this.cdr.detectChanges();
-        }
-        else {
+        } else {
           newYardList.forEach(newYard => {
             newYard.localThumbnailImageUrl = "/assets/image/yard.png";
             const foundYard = this.stateManagerService.globalYardList.find(existingYard => existingYard.id === newYard.id);
@@ -74,7 +73,6 @@ export class YardsComponent implements OnInit {
               tempYardList.push(newYard);
               this.stateManagerService.globalYardList = tempYardList;
               this.cdr.detectChanges();
-              console.log("Global yard list length: " + this.stateManagerService.globalYardList.length)
             }
           })
         }
@@ -107,7 +105,6 @@ export class YardsComponent implements OnInit {
     });
     dialogReference.afterClosed().subscribe(result => {
       if (result) {
-        console.log("We have a result: " + result + "  yardId: " + yardId)
         this.deleteYard(yardId);
       }
     })
@@ -116,7 +113,6 @@ export class YardsComponent implements OnInit {
   deleteYard(yardId: number | null) {
     this.httpService.delete("yard/" + yardId).subscribe({
       next: () => {
-        console.log("DELETE request to the server has processed.")
         this.showYards();
       }
     });
