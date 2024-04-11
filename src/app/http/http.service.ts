@@ -46,10 +46,24 @@ export class HttpService {
     return this.httpClient.get<object>(path);
   }
 
+  getFile(endpoint: string): Observable<object> {
+    this.checkLogonStatus();
+    let path: string = this.baseUrl + this.apiUrl + endpoint;
+    return this.httpClient.get(path, {responseType: "blob"});
+  }
+
   post(endpoint: string, object: Object): Observable<object> {
     this.checkLogonStatus();
     let path: string = this.baseUrl + this.apiUrl + endpoint;
     return this.httpClient.post(path, object);
+  }
+
+  multipartPost(endpoint: string, file: File): Observable<object> {
+    this.checkLogonStatus();
+    const path: string = this.baseUrl + this.apiUrl + endpoint + "?file=" + file.name;
+    const formData: FormData = new FormData();
+    formData.append("file", file, file.name);
+    return this.httpClient.post(path, formData);
   }
 
   put(endpoint: string, object: Object): Observable<object> {

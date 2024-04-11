@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
@@ -8,7 +8,6 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {YardsComponent} from "./yards/yards.component";
 import {NgIf} from "@angular/common";
-import {StateManagerService} from "./state/state-manager.service";
 
 @Component({
   selector: 'app-root',
@@ -33,19 +32,11 @@ export class AppComponent {
   title = 'My BackYard';
 
   constructor(
-    private stateManagerService: StateManagerService,
     private router: Router
   ) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.stateManagerService.retrieveState();
-      }
-    })
   }
 
   navigateToYards(): void {
-    this.router.navigate(["/home/yards"]).then(r => {
-      this.stateManagerService.breadcrumbText = window.location.pathname;
-    })
+    this.router.navigate(["/home/yards"]).then();
   }
 }

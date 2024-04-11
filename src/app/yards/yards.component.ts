@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {HttpService} from "../http/http.service";
 import {Yard} from "../model/yard";
 import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
@@ -27,7 +27,8 @@ import {StateManagerService} from "../state/state-manager.service";
     MatIcon
   ],
   templateUrl: './yards.component.html',
-  styleUrl: './yards.component.css'
+  styleUrl: './yards.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class YardsComponent implements OnInit {
 
@@ -37,35 +38,53 @@ export class YardsComponent implements OnInit {
     protected stateManagerService: StateManagerService,
     private router: Router,
     protected dialog: MatDialog,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit(): void {
-    if (this.jwtAuthenticationService.isLoggedIn()) {
-      this.showYards()
-      this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
-    } else {
-      this.router.navigate(['/login']).then(r => {
-      });
-    }
+    this.stateManagerService.retrieveState().then(() => {
+      if (this.jwtAuthenticationService.isLoggedIn()) {
+        this.showYards()
+      } else {
+        this.router.navigate(['/login']).then(r => {
+          this.stateManagerService.fabIsDisabled = false; // in case the user navigated away from edit or post yard before resolving
+        });
+      }
+    })
   }
 
   showYards(): void {
+    this.stateManagerService.fabIsDisabled = false;
+    this.stateManagerService.isYardEdit = false;
     this.httpService.getAll("yards").subscribe({
       next: (body) => {
-        this.stateManagerService.yardsList = body as Yard[];
+        let newYardList = body as Yard[];
+        if (newYardList.length === 0) {
+          this.stateManagerService.globalYardList = [];
+          this.cdr.detectChanges();
+        } else {
+          newYardList.forEach(newYard => {
+            newYard.localThumbnailImageUrl = "/assets/image/yard.png";
+            const foundYard = this.stateManagerService.globalYardList.find(existingYard => existingYard.id === newYard.id);
+            if (foundYard === undefined) {
+              let tempYardList = this.stateManagerService.globalYardList;
+              tempYardList.push(newYard);
+              this.stateManagerService.globalYardList = tempYardList;
+              this.cdr.detectChanges();
+            }
+          })
+        }
       }
     })
   }
 
   showYard(yardId: number | null): void {
-    this.httpService.get("yard/" + yardId).subscribe({
-      next: (body) => {
-        this.router.navigate(['/home/yardDetails']).then(r => {
-          this.stateManagerService.yardItem = body as Yard
-          this.stateManagerService.breadcrumbText = window.location.pathname;
-        })
+    this.router.navigate(['/home/yardDetails']).then(r => {
+      const foundYard = this.stateManagerService.globalYardList.find(yard => yard.id === yardId);
+      if (foundYard != undefined) {
+        this.stateManagerService.currentlySelectedYard = {...foundYard};
       }
     })
   }
@@ -77,6 +96,8 @@ export class YardsComponent implements OnInit {
     this.dialogService.image = null;
     this.dialogService.closeButton = true;
     this.dialogService.deleteButton = true;
+    this.dialogService.upload = false;
+    this.dialogService.saveButton = false;
     let dialogReference = this.dialog.open(DialogComponent, {
       width: '300px',
       enterAnimationDuration,
@@ -99,10 +120,9 @@ export class YardsComponent implements OnInit {
 
   editYard(yard: Yard) {
     this.router.navigate(['/home/yardUpdate']).then(r => {
-        this.stateManagerService.breadcrumbText = window.location.pathname;
-        this.stateManagerService.yardItem = yard;
-        this.stateManagerService.isPut = true;
-        this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of probs with edit vs post
+        this.stateManagerService.currentlySelectedYard = {...yard};
+        this.stateManagerService.isYardEdit = true;
+        this.stateManagerService.fabIsDisabled = true; // If we leave this enable it leads to all kinds of problems with edit vs post
       }
     );
   }

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Yard} from "../model/yard";
 import {HttpService} from "../http/http.service";
 import {Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
@@ -13,6 +12,7 @@ import {DialogComponent} from "../dialog/dialog.component";
 import {DialogService} from "../dialog/dialog.service";
 import {MatDialog} from "@angular/material/dialog";
 import {StateManagerService} from "../state/state-manager.service";
+import {Yard} from "../model/yard";
 
 @Component({
   selector: 'app-yard-post',
@@ -49,11 +49,11 @@ export class YardUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.stateManagerService.isPut) {
+    if (this.stateManagerService.isYardEdit) {
       this.yardFormGroup = this.formBuilder.group({
-        name: [this.stateManagerService.yardItem?.name, Validators.required],
-        hardinessZone: [this.stateManagerService.yardItem?.hardinessZone],
-        yardSubType: [this.stateManagerService.yardItem?.yardSubType]
+        name: [this.stateManagerService.currentlySelectedYard?.name, Validators.required],
+        hardinessZone: [this.stateManagerService.currentlySelectedYard?.hardinessZone],
+        yardSubType: [this.stateManagerService.currentlySelectedYard?.yardSubType]
       });
     } else {
       this.yardFormGroup = this.formBuilder.group({
@@ -66,22 +66,26 @@ export class YardUpdateComponent implements OnInit {
 
   postYard(): void {
     if (this.yardFormGroup.valid) {
-      if (this.stateManagerService.isPut) {
-        this.httpService.put("yard/" + this.stateManagerService.yardItem?.id, this.yardFormGroup.value).subscribe({
+      if (this.stateManagerService.isYardEdit) {
+        this.httpService.put("yard/" + this.stateManagerService.currentlySelectedYard?.id, this.yardFormGroup.value).subscribe({
           next: (body) => {
-            this.router.navigate(['/home/yards']).then(r => {
-              this.stateManagerService.yardItem = body as Yard;
-              this.stateManagerService.breadcrumbText = window.location.pathname;
-            })
+            let yardToUpdateIndex = this.stateManagerService.globalYardList.findIndex(yard => yard.id === (body as Yard).id);
+            if (yardToUpdateIndex != undefined) {
+              const thumbnailUrl = this.stateManagerService.globalYardList[yardToUpdateIndex].localThumbnailImageUrl; // this is not part of server schema, so we need it before overwriting
+              let newYardListWithUpdatedYard = this.stateManagerService.globalYardList;
+              newYardListWithUpdatedYard[yardToUpdateIndex] = body as Yard;
+              newYardListWithUpdatedYard[yardToUpdateIndex].localThumbnailImageUrl = thumbnailUrl;
+              this.stateManagerService.globalYardList = newYardListWithUpdatedYard;
+              this.router.navigate(['/home/yards']).then(r => {
+                this.stateManagerService.retrieveState().then(); // need this here otherwise vars change after check error
+              })
+            }
           }
         })
       } else {
         this.httpService.post("yards", this.yardFormGroup.value).subscribe({
           next: (body) => {
-            this.router.navigate(['/home/yards']).then(r => {
-              this.stateManagerService.yardItem = body as Yard;
-              this.stateManagerService.breadcrumbText = window.location.pathname;
-            })
+            this.router.navigate(['/home/yards']).then()
           }
         })
       }

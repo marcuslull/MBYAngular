@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Yard} from "../model/yard";
 import {Note} from "../model/note";
+import {Image} from "../model/image";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateManagerService {
+
   loggedIn: boolean = false;
   fabIsDisabled: boolean = false;
   deleteYardId: number | null = null;
-  isPut: boolean = false;
+  isYardEdit: boolean = false;
+  thumbnailSelectedFromDialog: Image | null = null;
   hardinessZone = [
     {value: 'ZONE_1', label: 'Zone 1'},
     {value: 'ZONE_2', label: 'Zone 2'},
@@ -33,67 +36,65 @@ export class StateManagerService {
     {value: 'SUB_SECTION', label: 'Sub Section'}
   ];
 
-  // we are going private here, so we can detect any change through the setter. This is key for the state manager.
-  private _breadcrumbText: string = "";
+  // Stateful fields
+  private _globalYardList: Yard[] = [];
+  private _notesListForCurrentYard: Note[] = [];
+  private _currentlySelectedYard: Yard | null = null;
+  private _imageListForCurrentYard: Image[] = [];
 
-  get breadcrumbText(): string {
-    return this._breadcrumbText;
+  get globalYardList(): Yard[] {
+    return this._globalYardList;
   }
 
-  set breadcrumbText(value: string) {
-    this._breadcrumbText = value;
+  get currentlySelectedYard(): Yard | null {
+    return this._currentlySelectedYard;
+  }
+
+  get notesListForCurrentYard(): Note[] {
+    return this._notesListForCurrentYard;
+  }
+
+  get imageListForCurrentYard(): Image[] {
+    return this._imageListForCurrentYard;
+  }
+
+  set currentlySelectedYard(value: Yard | null) {
+    this._currentlySelectedYard = value;
     this.saveState();
   }
 
-  private _yardsList: Yard[] = [];
-
-  get yardsList(): Yard[] {
-    return this._yardsList;
-  }
-
-  set yardsList(value: Yard[]) {
-    this._yardsList = value;
+  set notesListForCurrentYard(value: Note[]) {
+    this._notesListForCurrentYard = value;
     this.saveState();
   }
 
-  private _notesList: Note[] = [];
-
-  get notesList(): Note[] {
-    return this._notesList;
-  }
-
-  set notesList(value: Note[]) {
-    this._notesList = value;
+  set imageListForCurrentYard(value: Image[]) {
+    this._imageListForCurrentYard = value;
     this.saveState();
   }
 
-  private _yardItem: Yard | null = null;
-
-  get yardItem(): Yard | null {
-    return this._yardItem;
-  }
-
-  set yardItem(value: Yard | null) {
-    this._yardItem = value;
+  set globalYardList(value: Yard[]) {
+    this._globalYardList = value;
     this.saveState();
   }
 
   retrieveState() {
-    // There has been a browser nav event, lets reload the state, so we have something to display
-    const yardState = sessionStorage.getItem("yardState");
-    if (yardState) {
-      let retrievedState = JSON.parse(yardState);
-      for (const key in retrievedState) {
-        if (this.hasOwnProperty(key)) {
+    return new Promise<void>(resolve => {
+      const yardState = sessionStorage.getItem("yardState");
+      if (yardState) {
+        let retrievedState = JSON.parse(yardState);
+        for (const key in retrievedState) {
           Object.assign(this, retrievedState);
         }
+        console.log("Retrieve state finished")
       }
-    }
+      resolve()
+    })
   }
 
   private saveState() {
-    // a key var has changed, lets save the state so there is something to come back to during a browser nav event
     const yardState = JSON.stringify(this);
     sessionStorage.setItem("yardState", yardState);
+    console.log("Save state finished")
   }
 }

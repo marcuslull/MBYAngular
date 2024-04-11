@@ -7,34 +7,52 @@
     <div class="yardDetailsContainer textColor">
       <h2>Yard Details</h2>
 
-      <mat-list>
-        <mat-list-item><span class="titleSpan textColor">ID: </span>
-          <span class="textColor">
-            {{ this.stateManagerService.yardItem?.id }}
+      <div class="detailsContent">
+        <div class="detailsContainer">
+          <mat-list>
+            <mat-list-item><span class="titleSpan textColor">ID: </span>
+              <span class="textColor">
+            {{ this.stateManagerService.currentlySelectedYard?.id }}
           </span></mat-list-item>
-        <mat-list-item><span class="titleSpan textColor">Name: </span>
-          <span class="textColor">
-            {{ this.stateManagerService.yardItem?.name }}
+            <mat-list-item><span class="titleSpan textColor">Name: </span>
+              <span class="textColor">
+            {{ this.stateManagerService.currentlySelectedYard?.name }}
           </span></mat-list-item>
-        <mat-list-item><span class="titleSpan textColor">Type: </span>
-          <span class="textColor">
-            {{ this.getLabel(this.stateManagerService.yardItem?.yardSubType, "yardSubType") }}
+            <mat-list-item><span class="titleSpan textColor">Type: </span>
+              <span class="textColor">
+            {{ this.getLabel(this.stateManagerService.currentlySelectedYard?.yardSubType, "yardSubType") }}
           </span>
-        </mat-list-item>
-        <mat-list-item><span class="titleSpan textColor">Hardiness zone: </span>
-          <span class="textColor">
-            {{ this.getLabel(this.stateManagerService.yardItem?.hardinessZone, "hardinessZone") }}
+            </mat-list-item>
+            <mat-list-item><span class="titleSpan textColor">Hardiness zone: </span>
+              <span class="textColor">
+            {{ this.getLabel(this.stateManagerService.currentlySelectedYard?.hardinessZone, "hardinessZone") }}
           </span></mat-list-item>
-      </mat-list>
+          </mat-list>
+        </div>
+
+        <div class="thumbnailPickerContainer">
+          <div class="thumbnailTitleContainer">
+            <span class="thumbnailPickerTitle">Thumbnail Image</span>
+            <button (click)="openThumbnailUpdateDialog('200ms', '0ms')" class="thumbnailUpdateButton" mat-icon-button>
+              <mat-icon color="accent">edit</mat-icon>
+            </button>
+          </div>
+
+          <img [src]="this.thumbnailImageForTemplateDisplay" class="thumbnailImage" mat-card-image>
+
+        </div>
+      </div>
+
 
       <mat-divider></mat-divider>
+
 
       <h3 class="notesTitle">Notes:</h3>
 
       <div class="notesContainer">
 
         <div class="currentNotesContainer">
-          @for (note of this.stateManagerService.notesList; track note.id) {
+          @for (note of this.stateManagerService.notesListForCurrentYard; track note.id) {
             <ul>
               <li><span class="noteLineItem textColor">{{ note.comment }}</span>
                 <button class="noteDeleteIcon" (click)="deleteNote(note.id)" mat-icon-button>
@@ -74,6 +92,39 @@
 
       </div>
     </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>collections</mat-icon>
+      &nbsp;Images
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="yardDetailsContainer textColor">
+        <h2>Images</h2>
+
+        <input #fileInput (change)="onImageSelectedFromUpload($event)" class="input" type="file">
+
+        <div class="fileUploadContainer">
+
+          <button (click)="openUploadDialog()" class="upload-btn" color="accent" mat-mini-fab>
+            <mat-icon>attach_file</mat-icon>
+          </button>
+
+          <button (click)="deleteImage()" class="upload-btn" color="accent" mat-mini-fab>
+            <mat-icon>delete</mat-icon>
+          </button>
+
+        </div>
+
+        <div class="image-grid">
+          @for (image of this.stateManagerService.imageListForCurrentYard; track $index) {
+            <img src="{{image.localFile}}" alt="" class="selectable-image" (click)="currentlySelectedImage(image)"
+                 tabindex="0">
+          }
+        </div>
+      </div>
+    </ng-template>
   </mat-tab>
 
   <mat-tab>
