@@ -9,8 +9,8 @@ import {User} from "../model/user";
   providedIn: 'root'
 })
 export class HttpService {
-  // private baseUrl: string = "https://mbyapisec-7cxa644xka-uc.a.run.app/"
-  private baseUrl: string = "http://localhost:8080/"
+  private baseUrl: string = "https://mbyapisec-7cxa644xka-uc.a.run.app/"
+  // private baseUrl: string = "http://localhost:8080/"
   private apiUrl: string = "api/"
 
   private email: string = "";
