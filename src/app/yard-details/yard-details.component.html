@@ -96,6 +96,39 @@
 
   <mat-tab>
     <ng-template mat-tab-label>
+      <mat-icon>collections</mat-icon>
+      &nbsp;Images
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="yardDetailsContainer textColor">
+        <h2>Images</h2>
+
+        <input #fileInput (change)="onImageSelectedFromUpload($event)" class="input" type="file">
+
+        <div class="fileUploadContainer">
+
+          <button (click)="openUploadDialog()" class="upload-btn" color="accent" mat-mini-fab>
+            <mat-icon>attach_file</mat-icon>
+          </button>
+
+          <button (click)="deleteImage()" class="upload-btn" color="accent" mat-mini-fab>
+            <mat-icon>delete</mat-icon>
+          </button>
+
+        </div>
+
+        <div class="image-grid">
+          @for (image of this.stateManagerService.imageListForCurrentYard; track $index) {
+            <img src="{{image.localFile}}" alt="" class="selectable-image" (click)="currentlySelectedImage(image)"
+                 tabindex="0">
+          }
+        </div>
+      </div>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
       <mat-icon>text_snippet</mat-icon>
       &nbsp;Calendar
     </ng-template>

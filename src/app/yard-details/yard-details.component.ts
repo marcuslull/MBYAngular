@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {NgIf} from "@angular/common";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {DatePipe, NgIf} from "@angular/common";
 import {MatList, MatListItem} from "@angular/material/list";
 import {MatDivider} from "@angular/material/divider";
-import {MatTab, MatTabGroup, MatTabLabel} from "@angular/material/tabs";
+import {MatTab, MatTabContent, MatTabGroup, MatTabLabel} from "@angular/material/tabs";
 import {MatIcon} from "@angular/material/icon";
 import {HttpService} from "../http/http.service";
 import {Note} from "../model/note";
@@ -15,7 +15,7 @@ import {
   MatExpansionPanelDescription,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
-import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatButton, MatIconButton, MatMiniFabButton} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
 import {StateManagerService} from "../state/state-manager.service";
 import {
@@ -32,6 +32,9 @@ import {DialogService} from "../dialog/dialog.service";
 import {DialogComponent} from "../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ImageService} from "../image/image.service";
+import {of} from "rxjs";
+import {Yard} from "../model/yard";
+import {Image} from "../model/image";
 
 @Component({
   selector: 'app-yard-details',
@@ -63,14 +66,20 @@ import {ImageService} from "../image/image.service";
     MatCardHeader,
     MatCardImage,
     MatCardSubtitle,
-    MatCardTitle
+    MatCardTitle,
+    DatePipe,
+    MatTabContent,
+    MatMiniFabButton
   ],
   templateUrl: './yard-details.component.html',
   styleUrl: './yard-details.component.css',
 })
 export class YardDetailsComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef | undefined; // gives a view of the file selected on an upload
   newNoteInput: string = '';
   thumbnailImageForTemplateDisplay: string | null | undefined = "";
+  protected fileName: string = "";
+  protected readonly of = of;
 
   constructor(
     protected stateManagerService: StateManagerService,
@@ -90,6 +99,54 @@ export class YardDetailsComponent implements OnInit {
       })
       this.thumbnailImageForTemplateDisplay = this.stateManagerService.currentlySelectedYard?.localThumbnailImageUrl;
     })
+  }
+
+  deleteImage() {
+    const imageToDelete = this.stateManagerService.thumbnailSelectedFromDialog
+    const endpoint = "image/" + imageToDelete?.id;
+    this.httpService.delete(endpoint).subscribe({
+      next: value => {
+        this.imageService.getAllImageDataFromBackend().subscribe()
+      }
+    })
+  }
+
+  currentlySelectedImage(image: Image) {
+    this.stateManagerService.thumbnailSelectedFromDialog = image;
+  }
+
+  openUploadDialog() {
+    // simulates a click on a file upload form element calling onFileSelected()
+    if (this.fileInput != undefined) {
+      this.fileInput.nativeElement.click();
+    }
+  }
+
+  onImageSelectedFromUpload(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files ? target.files[0] : null;
+    if (file) {
+      this.fileName = file.name;
+      const endpoint = "yard/" + this.stateManagerService.currentlySelectedYard?.id + "/images";
+      this.httpService.multipartPost(endpoint, file).subscribe({
+        next: value => {
+          this.fileName = "Upload successful";
+          this.imageService.getAllImageDataFromBackend().subscribe();
+          this.httpService.get("yard/" + this.stateManagerService.currentlySelectedYard?.id).subscribe({
+            next: value1 => {
+              let returnedYard = value1 as Yard;
+              const possibleImageIndex = this.stateManagerService.globalYardList.findIndex(yard => yard.id === returnedYard.id);
+              if (possibleImageIndex != undefined) {
+                returnedYard.localThumbnailImageUrl = this.stateManagerService.globalYardList[possibleImageIndex].localThumbnailImageUrl;
+                let tempYardList = this.stateManagerService.globalYardList;
+                tempYardList[possibleImageIndex] = returnedYard;
+                this.stateManagerService.globalYardList = tempYardList;
+              }
+            }
+          })
+        }
+      });
+    }
   }
 
   saveNote() {
@@ -124,7 +181,7 @@ export class YardDetailsComponent implements OnInit {
   }
 
   openThumbnailUpdateDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
-    this.imageService.getAllImagedFromBackend().subscribe(() => {
+    this.imageService.getAllImageDataFromBackend().subscribe(() => {
       this.displayImageDialog(enterAnimationDuration, exitAnimationDuration);
     })
   }

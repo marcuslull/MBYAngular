@@ -17,6 +17,6 @@ export const appConfig: ApplicationConfig = {
       multi: true
     },
     JwtAuthenticationService,
-    provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),
+    provideAnimationsAsync(),
   ]
 };

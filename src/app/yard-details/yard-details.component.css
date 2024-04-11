@@ -67,3 +67,44 @@ mat-panel-description {
 .newNoteField {
   width: 100%;
 }
+
+.input {
+  display: none;
+}
+
+.fileUploadContainer {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.fileUploadContainer > button {
+  margin: 0 0 20px 20px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 30%)); /* Adjust '200px' for minimum image width */
+  gap: 40px;
+}
+
+.selectable-image {
+  cursor: pointer;
+  opacity: 1;
+  width: 100%; /* Images shrink to fit their container */
+  height: auto;
+  object-fit: cover; /* Maintains aspect ratio */
+  box-shadow: #48433e 5px 5px 5px;
+}
+
+.selectable-image:hover {
+  opacity: .7;
+  border: 1px solid #ccc;
+  box-shadow: #48433e 10px 10px 10px;
+}
+
+.selectable-image:active,
+.selectable-image:focus {
+  opacity: 1;
+  border: 3px solid var(--warning);
+  box-shadow: #48433e 10px 10px 10px;
+}

@@ -15,7 +15,7 @@ export class ImageService {
   ) {
   }
 
-  getAllImagedFromBackend(): Observable<boolean> {
+  getAllImageDataFromBackend(): Observable<boolean> {
     return new Observable(subscriber => {
       const endpoint = "yard/" + this.stateManagerService.currentlySelectedYard?.id + "/images";
       this.httpService.getAll(endpoint).subscribe({
@@ -34,8 +34,8 @@ export class ImageService {
               }
             )
           })
-          // need to trigger the setter for state saving - Is this the best way???
-          let tempImageList :Image[] = [];
+          // need to trigger the setter for state saving - TODO: Optimize this
+          let tempImageList: Image[] = [];
           tempImageList = this.stateManagerService.imageListForCurrentYard;
           this.stateManagerService.imageListForCurrentYard = tempImageList;
         }

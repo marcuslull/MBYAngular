@@ -52,7 +52,7 @@ export class DialogComponent {
       this.httpService.multipartPost(endpoint, file).subscribe({
         next: value => {
           this.fileName = "Upload successful";
-          this.imageService.getAllImagedFromBackend().subscribe()
+          this.imageService.getAllImageDataFromBackend().subscribe();
           this.httpService.get("yard/" + this.stateManagerService.currentlySelectedYard?.id).subscribe({
             next: value1 => {
               let returnedYard = value1 as Yard;
